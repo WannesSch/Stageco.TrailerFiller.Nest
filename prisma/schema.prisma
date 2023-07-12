@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+model User{
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  password  String  
+  email     String
+}
+
+model Asset{
+  id    Int   @id @default(autoincrement())
+  unit  String
+  name  String
+  description String?
+  content     String?
+  height      Float
+  width       Float
+  depth       Float
+  weight      Float
+  modelPath   String?
+  position    Json
+  rotation    Json  
+  projectId     Int
+  project       Project   @relation("ProjectToAsset", fields: [projectId], references: [projectId])
+  trailer       Trailer   @relation("TrailerWithAsset", fields: [id], references: [id])
+}
+model Project {
+  projectId     Int   @id @default(autoincrement())
+  title         String  
+  description   String?
+  venueAddress  String?
+  crewChief     String?
+  departureDate String?
+  createdAt     String?
+  updatedAt     String?
+  Trailers      Trailer[]  @relation("ProjectToTrailer")
+  Assets        Asset[]    @relation("ProjectToAsset")
+}
+model Trailer {
+  id        Int   @id @default(autoincrement())
+  width     Float 
+  length    Float
+  maxHeight Float
+  weight    Float?
+  maxWeight Float
+  projectId     Int
+  Assets    Asset[]   @relation("TrailerWithAsset")
+  project   Project   @relation("ProjectToTrailer", fields: [projectId], references: [projectId])   
+}
+
