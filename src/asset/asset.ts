@@ -3,7 +3,7 @@ export class Asset {
     readonly id: number;
     readonly unit: string;
     readonly name: string;
-    readonly description: string;
+    readonly category: number;
     readonly content?: Asset[];
     readonly height: number;
     readonly width: number;
@@ -15,12 +15,12 @@ export class Asset {
 
 
 
-    constructor(asset:{id: number, unit: string, name?: string, description?: string, content?: Asset[], height: number, width: number, depth: number, weight: number, modelPath?: string, position?: string, rotation?: string}){
+    constructor(asset:{id: number, unit: string, name?: string,category?: number, content?: Asset[], height: number, width: number, depth: number, weight: number, modelPath?: string, position?: string, rotation?: string}){
 
         this.id = asset.id;
         this.unit = asset.unit;
         this.name = asset.name;
-        this.description = asset.description;
+        this.category = asset.category;
         this.content = asset.content;
         this.height = asset.height;
         this.width = asset.width;
