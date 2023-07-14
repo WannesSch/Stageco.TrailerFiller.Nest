@@ -24,6 +24,8 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^4.16.2",
+    "csv-parse": "^5.4.0",
+    "csv-parser": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "xlsx": "^0.18.5"

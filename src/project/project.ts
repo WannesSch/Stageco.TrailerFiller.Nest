@@ -1,15 +1,27 @@
-import { Asset } from "../asset/asset";
-import { Trailer } from "../trailer/trailer";
+import { Subproject } from "prisma/prisma-client";
+import { Project as ProjectPrisma} from "prisma/prisma-client";
 
-export interface Project{
-    readonly projectId: string;
-    readonly title: string;
-    readonly description?: string;
-    readonly venueAddress?: string;
-    readonly crewChief?: string;
-    readonly departureDate?: Date;
-    readonly createdAt: Date;
-    readonly updatedAt?: Date;
-    readonly Trailers?: Trailer[];
-    readonly Assets?: Asset[];
-}
+
+export class Project {
+    readonly id : number;
+    readonly title : string;
+    readonly description : string;
+    readonly venueAddress : string;
+    readonly crewChief : string;
+    readonly createdAt : Date;
+    readonly updatedAt : Date;
+    readonly Subprojects : Subproject[];
+
+    constructor(project:{id: number, title: string, description?: string, venueAddress?: string, crewChief?: string, createdAt?: Date, updatedAt?: Date, Subprojects?: Subproject[]}){
+        this.id = project.id;
+        this.title = project.title;
+        this.description = project.description;
+        this.venueAddress = project.venueAddress;
+        this.crewChief = project.crewChief;
+        this.createdAt = project.createdAt;
+        this.updatedAt = project.updatedAt;
+        this.Subprojects = project.Subprojects;
+    }
+
+        
+    }
