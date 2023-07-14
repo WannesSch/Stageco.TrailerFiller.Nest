@@ -31,7 +31,7 @@ model Asset{
   id              Int   @id @default(autoincrement())
   unit            String
   name            String
-  description     String?    
+  category        Int?   
   height          Float
   width           Float
   depth           Float
