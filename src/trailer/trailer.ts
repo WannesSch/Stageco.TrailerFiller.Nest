@@ -20,25 +20,4 @@ constructor(trailer:{trailerId: number, height: number, width: number, depth: nu
     this.Assets = trailer.Assets;
 }
 
-static create({
-    trailerId,
-    height,
-    width,
-    depth,
-    weight,
-    maxWeight,
-    Assets
-}): Trailer {
-    return new Trailer({ 
-        trailerId,
-        height,
-        width,
-        depth,
-        weight,
-        maxWeight,
-        Assets
-    });
-}
-
-
 }

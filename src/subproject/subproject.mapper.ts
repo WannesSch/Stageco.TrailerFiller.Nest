@@ -15,6 +15,7 @@ const mapToSubproject = ({
     updatedAt,
     Trailers,
     Assets,
+    projectId,
 }: SubprojectPrisma &{Assets?: AssetPrisma[]} &{Trailers?:TrailerPrisma[]}): Subproject =>
   new Subproject({
     subprojectId,
@@ -24,7 +25,8 @@ const mapToSubproject = ({
     createdAt,
     updatedAt,
     Trailers,
-    Assets
+    Assets,
+    projectId,
   });
 
   export const mapToSubprojects = async (subprojectsPrisma: SubprojectPrisma[]): Promise<Subproject[]> =>

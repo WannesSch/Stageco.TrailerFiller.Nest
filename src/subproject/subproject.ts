@@ -10,11 +10,12 @@ export class Subproject{
     readonly departureDate?: Date;
     readonly createdAt: Date;
     readonly updatedAt?: Date;
-    readonly Trailers: any[];
-    readonly Assets: any[];
+    readonly Trailers?: Trailer[];
+    readonly Assets?: Asset[];
+    readonly projectId?: number;
 
 
-    constructor(subproject:{subprojectId: number, title: string, description?: string, venueAddress?: string, crewChief?: string, departureDate?: Date, createdAt?: Date, updatedAt?: Date, Trailers?: Trailer[], Assets?: Asset[]}){
+    constructor(subproject:{subprojectId: number, title: string, description?: string, venueAddress?: string, crewChief?: string, departureDate?: Date, createdAt?: Date, updatedAt?: Date, Trailers?: Trailer[], Assets?: Asset[], projectId?: number}){
         this.subprojectId = subproject.subprojectId;
         this.title = subproject.title;
         this.description = subproject.description;
@@ -23,9 +24,7 @@ export class Subproject{
         this.updatedAt = subproject.updatedAt;
         this.Trailers = subproject.Trailers;
         this.Assets = subproject.Assets;
+        this.projectId = subproject.projectId;
     }
 
-        static create({subprojectId, title, description ,departureDate,createdAt,updatedAt,Trailers,Assets}):Subproject{
-            return new Subproject({ subprojectId, title, description, departureDate, createdAt, updatedAt, Trailers, Assets});
-        }
     }

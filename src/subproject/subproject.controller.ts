@@ -5,7 +5,7 @@ import { Asset } from 'src/asset/asset';
 import { Trailer } from 'src/trailer/trailer';
 import { error } from 'console';
 
-@Controller('subproject')
+@Controller('api/v1/subproject')
 export class SubprojectController {
     HTTPStatus: any;
     constructor(private subprojectService: SubprojectService){}
@@ -44,11 +44,11 @@ export class SubprojectController {
         this.subprojectService.addAssets(id,assets);
        return this.HTTPStatus.OK;
     }
-    // @Put('/addTrailer/:id')
-    // async addTrailer(@Body() trailer: Trailer, @Param('id') id: string): Promise<HttpStatus>{
-    //       this.subprojectService.addTrailer(id,trailer);
-    //         return this.HTTPStatus.OK;
+    @Put('/addTrailer/:id')
+    async addTrailer(@Body() trailer: Trailer, @Param('id') id: string): Promise<HttpStatus>{
+          this.subprojectService.addTrailer(id,trailer);
+            return this.HTTPStatus.OK;
             
-    // }
+    }
 
 }

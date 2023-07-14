@@ -7,26 +7,31 @@ import { Subproject } from 'src/subproject/subproject';
 
 @Injectable()
 export class ProjectService {
-    // addProject(project: Project) {
-    //     projectDB.addProject(project);
-    // }
+    addProject(project: Project) {
+        projectDB.addProject(project);
+    }
+    getProjectById(id: string) {
+        projectDB.getProjectById(id);
+    }
+    
 
-    // updateProject(id: string ,project: Project)  {
-    //     projectDB.updateProject(id,project);
-    // }
-    // deleteProject(id: string) {
-    //     projectDB.deleteProject(id);
-    // }
+    updateProject(id: string ,project: Project)  {
+        projectDB.updateProject(id,project);
+    }
+    deleteProject(id: string) {
+        projectDB.deleteProject(id);
+    }
     // getSubprojectById(id: string) {
     //     projectDB.getSubprojectById(id);
     // }
-    // addSubproject(id: string, subproject: Subproject) {
-    //     subprojectDb.addSubproject(subproject);
-    //     projectDB.addSubproject(id,subproject);
-    // }
+
+    addSubproject(id: string, subproject: Subproject) {
+        subprojectDb.addSubproject(subproject);
+        projectDB.addSubproject(id,subproject);
+    }
 
 
-    // getAllProjects = () => projectDB.getProjects();
+    getAllProjects = () => projectDB.getAllProjects();
     
 
 }

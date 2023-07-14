@@ -84,18 +84,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
 //     });
 //     return mapToSingleSubproject(updatedSubproject);
 // }
-
 const addTrailer = async (id: string, trailer: Trailer): Promise<Subproject> => {
-    const trailerData:  Trailer ={
-      trailerId: trailer.trailerId,
-      width: trailer.width,
-      depth: trailer.depth,
-      height: trailer.height,
-      weight: trailer.weight,
-      maxWeight: trailer.maxWeight,
-      Assets: trailer.Assets
-      
-    };
     const updatedSubproject = await database.subproject.update({
       where: {
         subprojectId: parseInt(id),

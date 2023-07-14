@@ -31,32 +31,5 @@ export class Asset {
         this.rotation = asset.rotation;
 
     }
-        static create({    
-            id,
-            unit,
-            name,
-            description,
-            content,
-            height,
-            width,
-            depth,
-            weight,
-            modelPath,
-            position,
-            rotation,}):Asset{
-            return new Asset({     
-                id,
-                unit,
-                name,
-                description,
-                content,
-                height,
-                width,
-                depth,
-                weight,
-                modelPath,
-                position,
-                rotation,});
-        }
 }
 

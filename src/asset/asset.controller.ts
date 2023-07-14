@@ -3,7 +3,7 @@ import { Asset } from './asset';
 import { AssetService } from './asset.service';
 
 
-@Controller('asset')
+@Controller('api/v1/asset')
 export class AssetController {
     constructor(private readonly assetService: AssetService){}
     @Get('/all')

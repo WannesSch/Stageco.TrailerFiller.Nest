@@ -23,7 +23,5 @@ export class Project {
         this.Subprojects = project.Subprojects;
     }
 
-        static create({id, title, description ,venueAddress,crewChief,createdAt,updatedAt,Subprojects}):Project{
-            return new Project({ id, title, description, venueAddress,crewChief, createdAt, updatedAt, Subprojects});
-        }
+        
     }
