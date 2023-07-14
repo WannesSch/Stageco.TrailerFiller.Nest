@@ -16,44 +16,57 @@ model User{
   email     String
 }
 
-model Asset{
-  id    Int   @id @default(autoincrement())
-  unit  String
-  name  String
+model Project{
+  id        Int     @id @default(autoincrement())
+  title     String
   description String?
-  content     String?
-  height      Float
-  width       Float
-  depth       Float
-  weight      Float
-  modelPath   String?
-  position    Json
-  rotation    Json  
-  projectId     Int
-  project       Project   @relation("ProjectToAsset", fields: [projectId], references: [projectId])
-  trailer       Trailer   @relation("TrailerWithAsset", fields: [id], references: [id])
+  venueAddress String?
+  crewChief String?
+  createdAt DateTime?
+  updatedAt DateTime?
+  Subprojects Subproject[] @relation("ProjectToSubproject")
 }
-model Project {
-  projectId     Int   @id @default(autoincrement())
+
+model Asset{
+  id              Int   @id @default(autoincrement())
+  unit            String
+  name            String
+  description     String?    
+  height          Float
+  width           Float
+  depth           Float
+  weight          Float
+  modelPath       String?
+  position        String?
+  rotation        String?  
+  content         Asset[] @relation("content")
+  contentRelation Asset[] @relation("content")
+  subprojectId    Int?
+  subproject      Subproject?   @relation("ProjectToAsset", fields: [subprojectId], references: [subprojectId])
+  trailerId       Int?
+  trailer         Trailer?   @relation("TrailerWithAsset", fields: [trailerId], references: [id])
+}
+model Subproject {
+  subprojectId     Int   @id @default(autoincrement())
   title         String  
   description   String?
-  venueAddress  String?
-  crewChief     String?
-  departureDate String?
-  createdAt     String?
-  updatedAt     String?
+  departureDate DateTime?
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  projectId     Int?
+  project       Project?   @relation("ProjectToSubproject", fields: [projectId], references: [id])
   Trailers      Trailer[]  @relation("ProjectToTrailer")
   Assets        Asset[]    @relation("ProjectToAsset")
 }
 model Trailer {
   id        Int   @id @default(autoincrement())
   width     Float 
-  length    Float
-  maxHeight Float
+  depth    Float
+  height   Float
   weight    Float?
   maxWeight Float
-  projectId     Int
+  subprojectId  Int?
   Assets    Asset[]   @relation("TrailerWithAsset")
-  project   Project   @relation("ProjectToTrailer", fields: [projectId], references: [projectId])   
+  subproject   Subproject?   @relation("ProjectToTrailer", fields: [subprojectId], references: [subprojectId])   
 }
 

@@ -10,6 +10,20 @@ CREATE TABLE `User` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `Project` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NULL,
+    `venueAddress` VARCHAR(191) NULL,
+    `crewChief` VARCHAR(191) NULL,
+    `departureDate` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NULL,
+    `updatedAt` DATETIME(3) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Asset` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `unit` VARCHAR(191) NOT NULL,
@@ -23,23 +37,24 @@ CREATE TABLE `Asset` (
     `modelPath` VARCHAR(191) NULL,
     `position` JSON NOT NULL,
     `rotation` JSON NOT NULL,
-    `projectId` INTEGER NOT NULL,
+    `subprojectId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Project` (
-    `projectId` INTEGER NOT NULL AUTO_INCREMENT,
+CREATE TABLE `Subproject` (
+    `subprojectId` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
     `venueAddress` VARCHAR(191) NULL,
     `crewChief` VARCHAR(191) NULL,
-    `departureDate` VARCHAR(191) NULL,
-    `createdAt` VARCHAR(191) NULL,
-    `updatedAt` VARCHAR(191) NULL,
+    `departureDate` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NULL,
+    `updatedAt` DATETIME(3) NULL,
+    `projectId` INTEGER NOT NULL,
 
-    PRIMARY KEY (`projectId`)
+    PRIMARY KEY (`subprojectId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -50,16 +65,19 @@ CREATE TABLE `Trailer` (
     `maxHeight` DOUBLE NOT NULL,
     `weight` DOUBLE NULL,
     `maxWeight` DOUBLE NOT NULL,
-    `projectId` INTEGER NOT NULL,
+    `subprojectId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Asset` ADD CONSTRAINT `Asset_projectId_fkey` FOREIGN KEY (`projectId`) REFERENCES `Project`(`projectId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Asset` ADD CONSTRAINT `Asset_subprojectId_fkey` FOREIGN KEY (`subprojectId`) REFERENCES `Subproject`(`subprojectId`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Asset` ADD CONSTRAINT `Asset_id_fkey` FOREIGN KEY (`id`) REFERENCES `Trailer`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Trailer` ADD CONSTRAINT `Trailer_projectId_fkey` FOREIGN KEY (`projectId`) REFERENCES `Project`(`projectId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Subproject` ADD CONSTRAINT `Subproject_projectId_fkey` FOREIGN KEY (`projectId`) REFERENCES `Project`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Trailer` ADD CONSTRAINT `Trailer_subprojectId_fkey` FOREIGN KEY (`subprojectId`) REFERENCES `Subproject`(`subprojectId`) ON DELETE RESTRICT ON UPDATE CASCADE;
