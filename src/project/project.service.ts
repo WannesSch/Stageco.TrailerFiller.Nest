@@ -8,12 +8,13 @@ import { Subproject } from 'src/subproject/subproject';
 @Injectable()
 export class ProjectService {
     addProject(project: Project) {
-        projectDB.addProject(project);
+            projectDB.addProject(project);
+    
     }
     getProjectById(id: string) {
-        projectDB.getProjectById(id);
+        return projectDB.getProjectById(id);
     }
-    
+
 
     updateProject(id: string ,project: Project)  {
         projectDB.updateProject(id,project);

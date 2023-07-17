@@ -9,21 +9,32 @@ import { error } from 'console';
 export class SubprojectController {
     HTTPStatus: any;
     constructor(private subprojectService: SubprojectService){}
-    @Get('all')
+    @Get('/all')
         async getAllSubprojects(): Promise<Subproject[]> {
     return await this.subprojectService.getAllSubprojects();
     }
-    
-    @Get('/:id',)
-        async getProjectById(@Param('id') id: string): Promise<Subproject> {
-    const subproject = await this.subprojectService.getSubProjectById(id);
-    if (typeof(subproject)==='undefined') {
-        throw new HttpException('Forbidden', HttpStatus.NOT_FOUND);
-    }
-    return subproject;
+    @Get('/allFromProject/:id')
+        async getAllSubprojectsFromProject(@Param('id') id: string): Promise<Subproject[]> {
+    return await this.subprojectService.getAllSubprojectsFromProject(id);
     }
 
-    @Delete('/:id')
+    @Get('/allAssetsFromSubproject/:id')
+        async getAllAssetsFromSubproject(@Param('id') id: string): Promise<Asset[]> {
+    return await this.subprojectService.getAllAssetsFromSubproject(id);
+    }
+    // @Get('/allTrailersFromSubproject/:id')
+    //     async getAllTrailersFromSubproject(@Param('id') id: string): Promise<Trailer[]> {
+    // return await this.subprojectService.getAllTrailersFromSubproject(id);
+    // }
+    
+
+    
+    @Get('/get/:id',)
+        async getProjectById(@Param('id') id: string): Promise<Subproject> {
+        return this.subprojectService.getSubProjectById(id);
+    }
+
+    @Delete('/delete/:id')
     async deleteSubproject(@Param('id') id: string): Promise<void>{
          await this.subprojectService.deleteSubproject(id);
     }
