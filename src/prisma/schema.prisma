@@ -39,8 +39,7 @@ model Asset{
   modelPath       String?
   position        String?
   rotation        String?  
-  content         Asset[] @relation("content")
-  contentRelation Asset[] @relation("content")
+  content         Content[] @relation("content")
   subprojectId    Int?
   subproject      Subproject?   @relation("ProjectToAsset", fields: [subprojectId], references: [subprojectId])
   trailerId       Int?
@@ -68,5 +67,16 @@ model Trailer {
   subprojectId  Int?
   Assets    Asset[]   @relation("TrailerWithAsset")
   subproject   Subproject?   @relation("ProjectToTrailer", fields: [subprojectId], references: [subprojectId])   
+}
+
+model Content {
+  id        Int   @id @default(autoincrement())
+  name      String
+  unit      String?
+  bakId     Int?
+  weight    Float?
+  amount    Int
+  asset     Asset?   @relation("content", fields: [bakId], references: [id])
+
 }
 

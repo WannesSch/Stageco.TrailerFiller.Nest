@@ -20,9 +20,11 @@ const getProjectById = async (id: string): Promise<Project> => {
             Subprojects: true,
         },
     });
-    return mapToSingleProject(project);
+    return (project);
 };
 const addProject = async (project: Project): Promise<Project> => {
+    try{
+
     const newProject = await database.project.create({
         data: {
             title: project.title,
@@ -32,6 +34,9 @@ const addProject = async (project: Project): Promise<Project> => {
         },
     });
     return mapToSingleProject(newProject);
+} catch(error){
+    throw new Error("Project not added");
+} 
 };
 
 const updateProject = async (id: string, project: Project): Promise<Project> => {

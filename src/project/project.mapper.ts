@@ -3,7 +3,6 @@ import { Project as ProjectPrisma,
   } from "@prisma/client";
   
   import { Project } from "./project";
-  import { mapToSubprojects } from "src/subproject/subproject.mapper";
   
   const mapToProject = ({
       id,
@@ -14,6 +13,7 @@ import { Project as ProjectPrisma,
       createdAt,
       updatedAt,
       Subprojects,
+      
   }: ProjectPrisma  &{Subprojects?:SubprojectPrisma[]}): Project =>
     new Project({
         id,

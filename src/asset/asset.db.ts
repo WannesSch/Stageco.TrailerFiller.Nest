@@ -1,38 +1,37 @@
 import { mapToSingleAsset,mapToAssets } from './asset.mapper';
-import database from '../prisma/database';
 import { Asset } from './asset';
 import * as fs from 'fs';
+import { Content } from 'src/content/content';
+import database from '../prisma/database';
 
- // Cat;UniqueID;Unit;Omschrijving;kg;Aantal;Breedte;Hoogte;Diepte
-// 1;1;111220;Box Large Closed;250;1;211.5;88;116
-// 2;;101000;woodpad single;2;120;0;0;0
-// 1;2;111220;Box Large Closed;250;1;211.5;88;116
-// 2;;101005;woodpad double;6;125;0;0;0
-// 1;3;111220;Box Large Closed;250;1;211.5;88;116
-// 2;;101005;woodpad double;6;125;0;0;0
-// 1;4;111220;Box Large Closed;250;1;211.5;88;116
-// 2;;101005;woodpad double;6;125;0;0;0
 
 const csvToAssets = async (filename: string): Promise<Asset[]> => {
+  try {
     const assets: Asset[] = [];
+
+    let idStart = await database.asset.count();
+    let idStartContent = await database.content.count() +1;
+    let currentBoxForContent: Asset | undefined = undefined;
     const fileData = await fs.promises.readFile('src/' + filename + '.csv', 'utf-8');
     const lines = fileData.split('\n');
-  
-    let currentBox: Asset | null = null;
-    let nextId = 1; // Variable to track the next available ID for small stuff items
-  
-    lines.forEach((line) => {
+    let blokId = lines.length + 1 + idStart;
+    for (const line of lines) {
       const cells = line.split(';');
-  
       // Filter based on category and count
       const category = parseInt(cells[0]);
       const count = parseInt(cells[5]);
-  
+    
+      if (cells[4] && cells[4].includes(',')) {
+        cells[4] = cells[4].replace(',', '.');
+      }
+      if (cells[6] && cells[6].includes(',')) {
+        cells[6] = cells[6].replace(',', '.');
+      }
       if (category === 1 && count === 1 && cells[1].length > 0) {
         // Create a new box
-        currentBox = new Asset({
+        const currentBox = new Asset({
           category: category,
-          id: Number(cells[1]),
+          id: idStart + Number(cells[1]),
           unit: cells[2],
           name: cells[3],
           weight: Number(cells[4]),
@@ -42,46 +41,93 @@ const csvToAssets = async (filename: string): Promise<Asset[]> => {
           content: [] // Array to store little stuff
         });
         assets.push(currentBox);
-      } else if (category === 2 && count > 1 && currentBox) {
-        // Add little stuff to the current box's content
-        for (let i = 0; i < count; i++) {
-          const littleStuff = new Asset({
-            category: category,
-            id: nextId++, // Increment the ID for each little stuff item
+        currentBoxForContent = currentBox
+        await database.asset.create({
+          data: {
+            id: currentBox.id,
+            category: currentBox.category,
+            unit: currentBox.unit,
+            name: currentBox.name,
+            weight: currentBox.weight,
+            width: currentBox.width,
+            height: currentBox.height,
+            depth: currentBox.depth,
+          },
+        });
+      } else if (category === 2 && count > 1) {
+        const currentBox = currentBoxForContent;
+        if (currentBoxForContent) {
+          // Add little stuff to the current box's content
+          for (let i = 0; i < count; i++) {
+            const littleStuff = new Content({
+              id: idStartContent++, // Increment the ID for each little stuff item
+              unit: cells[2],
+              name: cells[3],
+              weight: Number(cells[4]),
+              amount: Number(cells[5]),
+              bakId: currentBox.id,
+            });
+            if (currentBox) {
+            currentBox.content.push(littleStuff);
+            }
+            await database.content.create({
+              data: {
+                id: littleStuff.id,
+                unit: littleStuff.unit,
+                name: littleStuff.name,
+                weight: littleStuff.weight,
+                amount: littleStuff.amount,
+                bakId: littleStuff.bakId,
+              },
+            });
+          }
+  
+          await database.asset.update({
+            where: {
+              id: currentBox.id,
+            },
+            data: {
+              content: {
+                connect: currentBox.content.map((littleStuff) => ({
+                  id: littleStuff.id,
+                })),
+              },
+            },
+          });
+        }
+      } else if (category === 1 && count === 1 && cells[1].length === 0) {
+        // Handle racks
+        const rack = await database.asset.create({
+          data: {
+            id: blokId++,
             unit: cells[2],
+            category: category,
             name: cells[3],
             weight: Number(cells[4]),
             width: Number(cells[6]),
             height: Number(cells[7]),
             depth: Number(cells[8]),
-          });
-          currentBox.content.push(littleStuff);
-        }
-      } else if (category === 1 && count === 1 && cells[1].length === 0) {
-        // Handle racks
-        const rack = new Asset({
-          category: category,
-          id: Number(cells[1]),
-          unit: cells[2],
-          name: cells[3],
-          weight: Number(cells[4]),
-          width: Number(cells[6]),
-          height: Number(cells[7]),
-          depth: Number(cells[8]),
+          },
         });
         assets.push(rack);
       }
-    });
-    fs.writeFile('src/assets.json', JSON.stringify(assets), (err) => {
+    }
+   {
+      fs.writeFile('src/assets.json', JSON.stringify(assets), (err) => {
         if (err) {
-            console.log(err);
+          console.error('Error during file write:', err);
+          throw err;
         } else {
-            console.log('File written successfully\n');
+          console.log('File written successfully\n');
         }
-    });
-
+      });
+    };
     return assets;
-  };
+  } catch (error) {
+    console.error('Error during CSV to assets conversion:', error);
+    throw error;
+  }
+};
         
 
 
@@ -96,6 +142,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
     });
     return mapToSingleAsset(asset);
     }
+
+
     const deleteAsset = async (id: string): Promise<void> => {
         const deletedAsset = await database.asset.delete({
         where: {
@@ -106,6 +154,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
         },
     });
     }
+
+
     const getAssets = async (): Promise<Asset[]> => {
         const assets = await database.asset.findMany({
         include: {
@@ -114,6 +164,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
     });
     return mapToAssets(assets);
     }
+
+
     const addAsset = async (asset: Asset): Promise<Asset> => {
         const newAsset = await database.asset.create({
         data: {
@@ -133,6 +185,9 @@ const getAssetById = async (id: string): Promise<Asset> => {
     });
     return mapToSingleAsset(newAsset);
     }
+
+
+  
     const updateAsset = async (id: string,asset: Asset): Promise<Asset> => {
         const updatedAsset = await database.asset.update({
         where: {
@@ -158,6 +213,74 @@ const getAssetById = async (id: string): Promise<Asset> => {
 
     return mapToSingleAsset(updatedAsset);
     }
+
+
+    const getAllNoContent = async (): Promise<Asset[]> => {
+        const assets = await database.asset.findMany({
+        include: {
+        content: false,
+        },
+    });
+    return mapToAssets(assets);
+        }
+
+        const getRotation = async (id: string): Promise<number[]> => {
+            const asset = await database.asset.findUnique({
+                where: {
+                id: parseInt(id),
+                },
+                include: {
+                content: true,
+                },
+            });
+            return mapToSingleAsset(asset).rotation.split(',').map(Number);
+          }
+
+
+          const getPosition = async (id: string): Promise<number[]> => {
+            const asset = await database.asset.findUnique({
+                where: {
+                id: parseInt(id),
+                },
+                include: {
+                content: true,
+                },
+            });
+            return mapToSingleAsset(asset).position.split(',').map(Number);
+          }
+          const setRotation = async (id: string, rotation: number[]) => {
+            const updatedAsset = await database.asset.update({
+                where: {
+                id: parseInt(id),
+                },
+                data: {
+                    rotation: rotation.toString(),
+                },
+                include: {
+                content: true,
+                },
+            });
+            return mapToSingleAsset(updatedAsset);
+          }
+          const setPosition = async (id: string, position: number[]) => {
+            const updatedAsset = await database.asset.update({
+                where: {
+                id: parseInt(id),
+                },
+                data: {
+                    position: position.toString(),
+                },
+                include: {
+                content: true,
+                },
+            });
+            return mapToSingleAsset(updatedAsset);
+          }
+          
+
+          
+
+
     
     export default {
         getAssetById,
@@ -166,4 +289,10 @@ const getAssetById = async (id: string): Promise<Asset> => {
         updateAsset,
         deleteAsset,
         csvToAssets,
+        getAllNoContent,
+        getRotation,
+        getPosition,
+        setRotation,
+        setPosition,
     };
+

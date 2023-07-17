@@ -118,10 +118,9 @@ const addTrailer = async (id: string, trailer: Trailer): Promise<Subproject> => 
         },
     });
     return mapToSingleSubproject(updatedSubproject);
-
-    
     }
 
+    
     export default {
         getSubprojectById,
         getSubprojects,

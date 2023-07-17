@@ -27,7 +27,7 @@ CREATE TABLE `Asset` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `unit` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NULL,
+    `category` INTEGER NULL,
     `height` DOUBLE NOT NULL,
     `width` DOUBLE NOT NULL,
     `depth` DOUBLE NOT NULL,
@@ -68,12 +68,15 @@ CREATE TABLE `Trailer` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `_content` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
+CREATE TABLE `Content` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `unit` VARCHAR(191) NULL,
+    `bakId` INTEGER NULL,
+    `weight` DOUBLE NULL,
+    `amount` INTEGER NOT NULL,
 
-    UNIQUE INDEX `_content_AB_unique`(`A`, `B`),
-    INDEX `_content_B_index`(`B`)
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
@@ -89,7 +92,4 @@ ALTER TABLE `Subproject` ADD CONSTRAINT `Subproject_projectId_fkey` FOREIGN KEY 
 ALTER TABLE `Trailer` ADD CONSTRAINT `Trailer_subprojectId_fkey` FOREIGN KEY (`subprojectId`) REFERENCES `Subproject`(`subprojectId`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_content` ADD CONSTRAINT `_content_A_fkey` FOREIGN KEY (`A`) REFERENCES `Asset`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_content` ADD CONSTRAINT `_content_B_fkey` FOREIGN KEY (`B`) REFERENCES `Asset`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Content` ADD CONSTRAINT `Content_bakId_fkey` FOREIGN KEY (`bakId`) REFERENCES `Asset`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
