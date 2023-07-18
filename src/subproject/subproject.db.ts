@@ -8,6 +8,7 @@ import { Asset } from 'src/asset/asset';
 import * as fs from 'fs';
 import { Content } from 'src/content/content';
 import { mapToTrailers } from 'src/trailer/trailer.mapper';
+import { csvHelper } from './subproject.helper';
 
 const getSubprojectById = async (id: string): Promise<Subproject> => {
     const subproject = await database.subproject.findUnique({
@@ -175,7 +176,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     }
 
     const csvReader = async (filename: string,id:string): Promise<Asset[]|HttpStatus> => {
-      const response = csvReader(filename,id);
+      const response = csvHelper(filename,id);
       return response;
       }
 

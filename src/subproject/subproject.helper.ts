@@ -4,7 +4,7 @@ import { Content } from "src/content/content";
 import database from "src/prisma/database";
 import * as fs from 'fs';
 
-export const csvReader = async (filename: string,id:string): Promise<Asset[]|HttpStatus> => {
+export const csvHelper = async (filename: string,id:string): Promise<Asset[]|HttpStatus> => {
     try {
         const subprojectId = parseInt(id);
       const assets: Asset[] = [];
