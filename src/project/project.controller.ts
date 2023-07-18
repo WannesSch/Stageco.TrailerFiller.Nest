@@ -13,7 +13,7 @@ export class ProjectController {
             return await this.projectService.getAllProjects();
         }
     @Get('/get/:id',)
-        async getProjectById(@Param('id') id: string): Promise<Project> {
+        async getProjectById(@Param('id') id: string): Promise<Project | HttpStatus> {
             return await this.projectService.getProjectById(id);
         }
     @Delete('/delete/:id')
