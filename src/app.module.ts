@@ -10,18 +10,12 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ProjectModule } from './project/project.module';
 import { ContentModule } from './content/content.module';
 import { APP_PIPE } from '@nestjs/core';
+import { FilesModule } from './files/files.module';
 @Module({
   controllers: [AppController],
-  providers: [AppService,
-  {
-    provide: APP_PIPE,
-    useValue: new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-    }),
-  }],
+  providers: [AppService],
   
-  imports: [SubprojectModule, ProjectModule, AssetModule, TrailerModule, PrismaModule, ContentModule],
+  imports: [SubprojectModule, ProjectModule, AssetModule, TrailerModule, PrismaModule, ContentModule, FilesModule],
 })
 
 export class AppModule {}

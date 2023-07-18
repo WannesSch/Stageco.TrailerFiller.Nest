@@ -18,3 +18,18 @@ Trailer
     "maxWeight":5000
 }
 
+
+Asset
+{
+    "id":5000,
+    "unit": "5",
+    "name":"test",
+    "category":5000,
+    "height":10,
+    "width":10,
+    "depth":10,
+    "weight":10,
+    "modelPath":"send.gltf",
+    "position":"1,2,3",
+    "rotation":"1,2,3"
+}

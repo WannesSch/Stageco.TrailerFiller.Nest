@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseFilters } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, UseFilters } from '@nestjs/common';
 import { TrailerService } from './trailer.service';
 import {Asset} from '../asset/asset';
 import {Trailer} from 'src/trailer/trailer';
 import {HttpExceptionFilter} from '../validation/http-exception';
-import { CreateTrailerDto } from 'src/validation/validation.pipe';
+
 
 @Controller('api/v1/trailer')
 @UseFilters(HttpExceptionFilter)
@@ -29,29 +29,26 @@ export class TrailerController {
     }
     
     @Put('/update/:id')
-    async update(@Param('id') id: string, @Body() trailer: Trailer): Promise<Trailer> {
+    async update(@Param('id') id: string, @Body() trailer: Trailer): Promise<HttpStatus> {
         return await this.trailerService.update(id, trailer);
     }
     @Post('/add')
-    async create(@Body() trailer: Trailer): Promise<Trailer> {
+    async create(@Body() trailer: Trailer): Promise<HttpStatus> {
         return await this.trailerService.add( trailer);
     }
     @Put('/addAsset/:id')
-    async addAssets(@Param('id') id: string, @Body() asset: Asset): Promise<Trailer> {
+    async addAssets(@Param('id') id: string, @Body() asset: Asset): Promise<HttpStatus> {
         return await this.trailerService.addAsset(id, asset);
     }
     @Put('/:trailerid/removeAsset/:id')
-    async removeAsset(@Param('trailerid') trailerid: string, @Param() id: string): Promise<Trailer> {
+    async removeAsset(@Param('trailerid') trailerid: string, @Param() id: string): Promise<HttpStatus> {
         return await this.trailerService.removeAsset(trailerid, id);
     }
     @Put('/addToSubproject/:id')
-    async addToSubproject(@Param('id') id: string, @Body() trailer: Trailer): Promise<Trailer> {
+    async addToSubproject(@Param('id') id: string, @Body() trailer: Trailer): Promise<HttpStatus> {
         return await this.trailerService.addToSubproject(id, trailer);
     }
-    // @Delete('/delete/:id')
-    // async delete(@Param('id') id: string): Promise<Trailer> {
-    //     return await this.trailerService.delete(id);
-    // }
+
 
 
 

@@ -12,10 +12,10 @@ export class Subproject{
     readonly updatedAt?: Date;
     readonly Trailers?: Trailer[];
     readonly Assets?: Asset[];
-    readonly projectId?: number;
+    readonly projectId?: string;
 
 
-    constructor(subproject:{subprojectId: number, title: string, description?: string, venueAddress?: string, crewChief?: string, departureDate?: Date, createdAt?: Date, updatedAt?: Date, Trailers?: Trailer[], Assets?: Asset[], projectId?: number}){
+    constructor(subproject:{subprojectId: number, title: string, description?: string, venueAddress?: string, crewChief?: string, departureDate?: Date, createdAt?: Date, updatedAt?: Date, Trailers?: Trailer[], Assets?: Asset[], projectId?: string}){
         this.subprojectId = subproject.subprojectId;
         this.title = subproject.title;
         this.description = subproject.description;

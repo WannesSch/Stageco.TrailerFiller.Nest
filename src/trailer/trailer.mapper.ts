@@ -5,6 +5,7 @@ import { Trailer } from "./trailer";
 const mapToTrailer = ({
     id: trailerId,
     height,
+    name,
     width,
     depth,
     weight,
@@ -14,6 +15,7 @@ const mapToTrailer = ({
 }: TrailerPrisma &{Assets?: AssetPrisma[]}): Trailer =>
   new Trailer({
     trailerId,
+    name,
     height,
     width,
     depth,

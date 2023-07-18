@@ -2,11 +2,18 @@ import { mapToSingleTrailer,mapToTrailers } from './trailer.mapper';
 import prisma from '../prisma/database';
 import { Trailer } from './trailer';
 import { Asset } from '../asset/asset';
+import { HttpStatus } from '@nestjs/common';
 
 const getAll = async (): Promise<Trailer[]> => {
-    const trailers = await prisma.trailer.findMany();
+    const trailers = await prisma.trailer.findMany({
+        include: {
+            Assets: true,
+            },
+            });
     return mapToTrailers(trailers);
     }
+
+
     const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
         let idd = Number(id);
       const trailer = await prisma.trailer.findUnique({
@@ -21,7 +28,7 @@ const getAll = async (): Promise<Trailer[]> => {
       };
 
 
-    const add = async (trailer : Trailer): Promise<Trailer> => {
+    const add = async (trailer : Trailer): Promise<HttpStatus> => {
         const newTrailer = await prisma.trailer.create({
         data: {
         height: trailer.height,
@@ -30,37 +37,44 @@ const getAll = async (): Promise<Trailer[]> => {
         maxWeight: trailer.maxWeight,
         },
         });
-        return mapToSingleTrailer(newTrailer);
+         if(mapToSingleTrailer(newTrailer)==null){
+             return HttpStatus.BAD_REQUEST;
+         }
+        return HttpStatus.CREATED;
         
     };
 
-const deleteTrailerById = async ({ id }: { id: number }) => {
-    try {
+const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => {
+    
       const findtrailer = await prisma.trailer.findFirst({
         where: {
           id: id,
         },
       });
-      if (!findtrailer) throw new Error(`trailer with id: ${id} not found`);
+      if (!findtrailer)(HttpStatus.NOT_FOUND);
       await prisma.trailer.delete({
         where: {
           id: id,
         },
       });
-    } catch (error) {
-      throw new Error(error.message);
-    }
+
+      return HttpStatus.OK;
+      
   };
   const getById = async (id: string): Promise<Trailer> => {
     let idd = Number(id);
     const trailer = await prisma.trailer.findUnique({
       where: {
         id: idd,
+
+      },
+      include: {
+        Assets: true,
       },
     });
     return mapToSingleTrailer(trailer);
   };
-  const update = async (id: string, trailer: Trailer): Promise<Trailer> => {
+  const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
     let idd = Number(id);
     const updatedTrailer = await prisma.trailer.update({
       where: {
@@ -74,7 +88,10 @@ const deleteTrailerById = async ({ id }: { id: number }) => {
         maxWeight: trailer.maxWeight,
       },
     });
-    return mapToSingleTrailer(updatedTrailer);
+     if(mapToSingleTrailer(updatedTrailer)==null){
+         return HttpStatus.NOT_FOUND;
+     }
+    return HttpStatus.OK;
   };
   const getAllFromSubproject = async (id: string): Promise<Trailer[]> => {
     let idd = Number(id);
@@ -85,17 +102,7 @@ const deleteTrailerById = async ({ id }: { id: number }) => {
     });
     return mapToTrailers(trailer);
   };
-
-  // const delete = async (id: string): Promise<void> => {
-  //   let idd = Number(id);
-  //   const deletedTrailer = await prisma.trailer.delete({
-  //     where: {
-  //       id: idd,
-  //     },
-  //   });
-  //   return void 0;
-  // };
-  const addToSubproject = async (id: string, trailer: Trailer): Promise<Trailer> => {
+  const addToSubproject = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
     let idd = Number(id);
     const updatedTrailer = await prisma.trailer.update({
       where: {
@@ -110,10 +117,13 @@ const deleteTrailerById = async ({ id }: { id: number }) => {
         subprojectId: idd,
       },
     });
-    return mapToSingleTrailer(updatedTrailer);
+     if(mapToSingleTrailer(updatedTrailer)==null){
+         return HttpStatus.NOT_FOUND;
+     }
+    return HttpStatus.OK;
   };
 
-  const removeAsset = async (trailerid: string, id: string): Promise<Trailer> => {
+  const removeAsset = async (trailerid: string, id: string): Promise<HttpStatus>=> {
     let idd = Number(trailerid);
     let iddd = Number(id);
     const updatedTrailer = await prisma.trailer.update({
@@ -128,11 +138,14 @@ const deleteTrailerById = async ({ id }: { id: number }) => {
         },
       },
     });
-    return mapToSingleTrailer(updatedTrailer);
+     if(mapToSingleTrailer(updatedTrailer)==null){
+         return HttpStatus.NOT_FOUND;
+     }
+    return HttpStatus.OK;
   };
 
 
-  const addAsset = async (id: string, asset: Asset): Promise<Trailer> => {
+  const addAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
     let idd = Number(id);
     const updatedTrailer = await prisma.trailer.update({
       where: {
@@ -146,7 +159,10 @@ const deleteTrailerById = async ({ id }: { id: number }) => {
         },
       },
     });
-    return mapToSingleTrailer(updatedTrailer);
+     if(mapToSingleTrailer(updatedTrailer)==null){
+         return HttpStatus.NOT_FOUND;
+     }
+    return HttpStatus.OK;
   };
 
 

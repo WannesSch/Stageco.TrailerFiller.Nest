@@ -5,7 +5,7 @@ import { Project as ProjectPrisma,
   import { Project } from "./project";
   
   const mapToProject = ({
-      id,
+      id: id,
       title,
       description,
       venueAddress,

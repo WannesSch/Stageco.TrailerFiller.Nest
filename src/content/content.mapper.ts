@@ -6,7 +6,7 @@ const mapToContent = ({
   unit,
   name,
   weight,
-  bakId,
+  boxId,
     amount,
 }: ContentPrisma): Content => {
     
@@ -15,7 +15,7 @@ const mapToContent = ({
     unit,
     name,
     weight,
-    bakId,
+    boxId,
     amount,
 
   });
