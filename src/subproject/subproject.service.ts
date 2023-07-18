@@ -34,6 +34,9 @@ export class SubprojectService {
     getAllSubprojects() : Promise<Subproject[]> {
         return subprojectDB.getSubprojects();
     }
+    csvReader(filename:string,id:string): Promise<Asset[]|HttpStatus> {
+        return subprojectDB.csvReader(filename,id);
+    }
 
 
 }

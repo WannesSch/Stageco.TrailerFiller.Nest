@@ -161,21 +161,29 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     return HttpStatus.OK;
     }
 
+
+
     const csvReader = async (filename: string,id:string): Promise<Asset[]|HttpStatus> => {
         try {
             const subprojectId = parseInt(id);
           const assets: Asset[] = [];
-          let idStart = await database.asset.count();
+          let idee = await database.$queryRaw`SELECT id FROM Asset ORDER BY id DESC LIMIT 1`
+          console.log(idee)
+          let idStart = 0;
+          if(await database.asset.count()>0){
+            idStart = Number(idee[0].id)
+          }
           let idStartContent = await database.content.count() +1;
           let currentBoxForContent: Asset | undefined = undefined;
+          let littleStuffff: Content | undefined = undefined;
           const fileData = await fs.promises.readFile('src/' + filename + '.csv', 'utf-8');
           const lines = fileData.split('\n');
-          let blokId = lines.length + 1 + idStart;
+
           for (const line of lines) {
             const cells = line.split(';');
-            // Filter based on category and count
             const category = parseInt(cells[0]);
             const count = parseInt(cells[5]);
+            const modelPath = cells[2]+'.glb';
           
             if (cells[4] && cells[4].includes(',')) {
               cells[4] = cells[4].replace(',', '.');
@@ -184,78 +192,52 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
               cells[6] = cells[6].replace(',', '.');
             }
             if (category === 1 && count === 1 && cells[1].length > 0) {
-              // Create a new box
-              const currentBox = new Asset({
+              const currentBox = await database.asset.create({
+                data: {
                 category: category,
-                id: idStart + Number(cells[1]),
+                id: idStart+Number(cells[1]), // Increment the ID for each box
                 unit: cells[2],
                 name: cells[3],
                 weight: Number(cells[4]),
                 width: Number(cells[6]),
                 height: Number(cells[7]),
                 depth: Number(cells[8]),
-                content: [], // Array to store little stuff
-            });
-              assets.push(currentBox);
-              currentBoxForContent = currentBox
-              await database.asset.create({
-                data: {
-                  id: currentBox.id,
-                  category: currentBox.category,
-                  unit: currentBox.unit,
-                  name: currentBox.name,
-                  weight: currentBox.weight,
-                  width: currentBox.width,
-                  height: currentBox.height,
-                  depth: currentBox.depth,
-                  subprojectId: subprojectId,
+                modelPath: modelPath,
                 },
               });
+              currentBoxForContent = currentBox;
+              assets.push(currentBox)
+              idStart += Number(cells[1]);
             } else if (category === 2 && count > 1) {
-              const currentBox = currentBoxForContent;
               if (currentBoxForContent) {
-                // Add little stuff to the current box's content
-                  const littleStuff = new Content({
+                  let littleStuff= await database.content.create({
+                    data: {
                     id: idStartContent++, // Increment the ID for each little stuff item
                     unit: cells[2],
                     name: cells[3],
                     weight: Number(cells[4]),
                     amount: Number(cells[5]),
-                    boxId: currentBox.id,
-                  });
-      
-                  if (currentBox) {
-                  currentBox.content.push(littleStuff);
-                  }
-                  await database.content.create({
-                    data: {
-                      id: littleStuff.id,
-                      unit: littleStuff.unit,
-                      name: littleStuff.name,
-                      weight: littleStuff.weight,
-                      amount: littleStuff.amount,
-                      boxId: littleStuff.boxId,
+                    boxId: currentBoxForContent.id,
                     },
                   });
+                  littleStuffff = littleStuff;
                 }
-        
                 await database.asset.update({
                   where: {
-                    id: currentBox.id,
+                    id: currentBoxForContent.id,
                   },
                   data: {
                     content: {
-                      connect: currentBox.content.map((littleStuff) => ({
-                        id: littleStuff.id,
-                      })),
+                      connect: {id: littleStuffff.id}
                     },
                   },
                 });
-      
-            } else if (category === 1 && count === 1 && cells[1].length === 0) {
+                    
+            } else if (category === 1  && cells[1].length === 0) {
+              for(let i = 1; i < count+1; i++){
               const grootObject = await database.asset.create({
                 data: {
-                  id: blokId++,
+                  id: idStart + i,
                   unit: cells[2],
                   category: category,
                   name: cells[3],
@@ -264,10 +246,14 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
                   height: Number(cells[7]),
                   depth: Number(cells[8]),
                   subprojectId: subprojectId,
+                  modelPath: modelPath,
                 },
               });
               assets.push(grootObject);
             }
+            idStart += count+1;
+          }
+            
           }
          {
             fs.writeFile('src/assets.json', JSON.stringify(assets), (err) => {

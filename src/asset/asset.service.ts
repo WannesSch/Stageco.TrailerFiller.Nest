@@ -32,9 +32,6 @@ export class AssetService {
     getAssetById(id:string): Promise<Asset> {
         return assetDB.getAssetById(id);
     }
-    csvToAssets(filename: string): Promise<Asset[]|HttpStatus>{
-        return assetDB.csvToAssets(filename);
-    }
 
     updateAsset(id: string ,asset: Asset)  {
         return assetDB.updateAsset(id,asset);

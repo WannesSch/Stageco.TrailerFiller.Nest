@@ -51,8 +51,10 @@ export class SubprojectController {
     @Put('/addTrailer/:id')
     async addTrailer(@Body() trailer: Trailer, @Param('id') id: string): Promise<HttpStatus>{
           return this.subprojectService.addTrailer(id,trailer);
-            
-            
+    }
+    @Get('/:id/csvReader/:filename/')
+    async csvReader(@Param('filename') filename: string,@Param('id') id: string): Promise<Asset[]|HttpStatus>{
+        return this.subprojectService.csvReader(filename,id);
     }
 
 }

@@ -9,11 +9,7 @@ import { Content } from '../content/content';
 export class AssetController {
     constructor(private readonly assetService: AssetService){}
 
-    @Post('/csvToAssets/:filename')
-    csvToAssets(@Param('filename') filename: string,req: Request, res: Response): Promise<Asset[]| HttpStatus>{
-            return this.assetService.csvToAssets(filename);
-        
-    }
+    
     
     @Get('/all')
     getAllAssets(): Promise<Asset[]>{
