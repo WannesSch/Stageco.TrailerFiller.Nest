@@ -9,16 +9,16 @@ export class TrailerService {
     getAllAssetsFromTrailer(id: string): Promise<Asset[]> {
         return trailerDb.getAllAssetsFromTrailer(id);
     }
-    add(trailer: Trailer): Promise<Trailer>  {
+    add(trailer: Trailer): Promise<HttpStatus>  {
         return trailerDb.add(trailer);
     }
-    addAsset(id: string, asset: Asset): Promise<Trailer> {
+    addAsset(id: string, asset: Asset): Promise<HttpStatus> {
         return trailerDb.addAsset(id, asset);
     }
-    removeAsset(trailerid: string, id: string): Promise<Trailer>  {
+    removeAsset(trailerid: string, id: string): Promise<HttpStatus>  {
         return trailerDb.removeAsset(trailerid, id);
     }
-    addToSubproject(id: string, trailer: Trailer): Promise<Trailer>  {
+    addToSubproject(id: string, trailer: Trailer): Promise<HttpStatus>  {
         return trailerDb.addToSubproject(id, trailer);
     }
 
@@ -36,7 +36,7 @@ export class TrailerService {
         }
         
     }
-    update(id: string, trailer: Trailer): Promise<Trailer> {
+    update(id: string, trailer: Trailer): Promise<HttpStatus> {
         return trailerDb.update(id, trailer);
     }
     

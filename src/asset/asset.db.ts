@@ -44,6 +44,7 @@ const getAssetById = async (id: string): Promise<Asset> => {
 
 
     const addAsset = async (asset: Asset): Promise<HttpStatus> => {
+        if(asset.rotation.length != 3) return HttpStatus.I_AM_A_TEAPOT;
         const newAsset = await database.asset.create({
         data: {
             id: asset.id,
@@ -162,10 +163,6 @@ const getAssetById = async (id: string): Promise<Asset> => {
             return HttpStatus.OK;
           }
           
-
-          
-
-
     
     export default {
         getAssetById,
