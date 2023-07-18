@@ -26,8 +26,8 @@ export class ProjectService {
     //     projectDB.getSubprojectById(id);
     // }
 
-    addSubproject(id: string, subproject: Subproject) {
-        subprojectDb.addSubproject(subproject);
+    async addSubproject(id: string, subproject: Subproject) {
+        await subprojectDb.addSubproject(subproject);
         projectDB.addSubproject(id,subproject);
     }
 

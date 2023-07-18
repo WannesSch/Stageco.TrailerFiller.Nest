@@ -40,11 +40,10 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         data: {
         title: subproject.title,
         description: subproject.description,
-        departureDate: subproject.departureDate,
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        Trailers: false,
+        Assets: false,
         },
     });
     return mapToSingleSubproject(newSubproject);

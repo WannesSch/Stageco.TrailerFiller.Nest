@@ -3,7 +3,7 @@ import { Controller,Body, Get, Param, Post, Put, Delete,  Res, HttpStatus, HttpE
 import { Subproject } from 'src/subproject/subproject';
 import { Project } from 'src/project/project';
 import { error } from 'console';
-import {HttpExceptionFilter} from '../http-exception';
+import {HttpExceptionFilter} from '../validation/http-exception';
 @Controller('api/v1/project')
 @UseFilters(HttpExceptionFilter)
 export class ProjectController {
