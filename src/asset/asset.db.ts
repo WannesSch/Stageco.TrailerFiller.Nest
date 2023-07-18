@@ -3,12 +3,12 @@ import { Asset } from './asset';
 import * as fs from 'fs';
 import { Content } from 'src/content/content';
 import database from '../prisma/database';
+import { HttpStatus } from '@nestjs/common';
 
 
-const csvToAssets = async (filename: string): Promise<Asset[]> => {
+const csvToAssets = async (filename: string): Promise<Asset[]|HttpStatus> => {
   try {
     const assets: Asset[] = [];
-
     let idStart = await database.asset.count();
     let idStartContent = await database.content.count() +1;
     let currentBoxForContent: Asset | undefined = undefined;
@@ -58,7 +58,6 @@ const csvToAssets = async (filename: string): Promise<Asset[]> => {
         const currentBox = currentBoxForContent;
         if (currentBoxForContent) {
           // Add little stuff to the current box's content
-          for (let i = 0; i < count; i++) {
             const littleStuff = new Content({
               id: idStartContent++, // Increment the ID for each little stuff item
               unit: cells[2],
@@ -67,6 +66,7 @@ const csvToAssets = async (filename: string): Promise<Asset[]> => {
               amount: Number(cells[5]),
               bakId: currentBox.id,
             });
+
             if (currentBox) {
             currentBox.content.push(littleStuff);
             }
@@ -94,7 +94,7 @@ const csvToAssets = async (filename: string): Promise<Asset[]> => {
               },
             },
           });
-        }
+
       } else if (category === 1 && count === 1 && cells[1].length === 0) {
         // Handle racks
         const rack = await database.asset.create({
@@ -115,17 +115,17 @@ const csvToAssets = async (filename: string): Promise<Asset[]> => {
    {
       fs.writeFile('src/assets.json', JSON.stringify(assets), (err) => {
         if (err) {
-          console.error('Error during file write:', err);
-          throw err;
+          console.log('Error during file write:', err);
+          return HttpStatus.INTERNAL_SERVER_ERROR;
         } else {
-          console.log('File written successfully\n');
+          console.log('File written successfully');
         }
       });
     };
     return assets;
   } catch (error) {
     console.error('Error during CSV to assets conversion:', error);
-    throw error;
+    return HttpStatus.INTERNAL_SERVER_ERROR;
   }
 };
         
@@ -144,7 +144,7 @@ const getAssetById = async (id: string): Promise<Asset> => {
     }
 
 
-    const deleteAsset = async (id: string): Promise<void> => {
+    const deleteAsset = async (id: string): Promise<HttpStatus> => {
         const deletedAsset = await database.asset.delete({
         where: {
         id: parseInt(id),
@@ -153,6 +153,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
         content: true,
         },
     });
+    if(deleteAsset == null) return HttpStatus.BAD_REQUEST;
+    return HttpStatus.CREATED;
     }
 
 
@@ -166,7 +168,7 @@ const getAssetById = async (id: string): Promise<Asset> => {
     }
 
 
-    const addAsset = async (asset: Asset): Promise<Asset> => {
+    const addAsset = async (asset: Asset): Promise<HttpStatus> => {
         const newAsset = await database.asset.create({
         data: {
             id: asset.id,
@@ -183,12 +185,13 @@ const getAssetById = async (id: string): Promise<Asset> => {
             
         },
     });
-    return mapToSingleAsset(newAsset);
+    if(mapToSingleAsset(newAsset)==null) return HttpStatus.I_AM_A_TEAPOT;
+    return HttpStatus.OK;
     }
 
 
   
-    const updateAsset = async (id: string,asset: Asset): Promise<Asset> => {
+    const updateAsset = async (id: string,asset: Asset): Promise<HttpStatus> => {
         const updatedAsset = await database.asset.update({
         where: {
         id: parseInt(id),
@@ -211,7 +214,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
         },            
     });
 
-    return mapToSingleAsset(updatedAsset);
+    if( mapToSingleAsset(updatedAsset)==null) return HttpStatus.I_AM_A_TEAPOT;
+    return HttpStatus.OK;
     }
 
 
@@ -248,7 +252,9 @@ const getAssetById = async (id: string): Promise<Asset> => {
             });
             return mapToSingleAsset(asset).position.split(',').map(Number);
           }
-          const setRotation = async (id: string, rotation: number[]) => {
+          const setRotation = async (id: string, rotation: number[]):Promise<HttpStatus> => {
+            if(rotation.length != 3) return HttpStatus.BAD_REQUEST;
+
             const updatedAsset = await database.asset.update({
                 where: {
                 id: parseInt(id),
@@ -260,9 +266,12 @@ const getAssetById = async (id: string): Promise<Asset> => {
                 content: true,
                 },
             });
-            return mapToSingleAsset(updatedAsset);
+            if(mapToSingleAsset(updatedAsset)==null) return HttpStatus.BAD_REQUEST;
+            return HttpStatus.OK;
           }
-          const setPosition = async (id: string, position: number[]) => {
+          const setPosition = async (id: string, position: number[]): Promise<HttpStatus> => {
+
+            if(position.length != 3) return HttpStatus.BAD_REQUEST;
             const updatedAsset = await database.asset.update({
                 where: {
                 id: parseInt(id),
@@ -274,7 +283,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
                 content: true,
                 },
             });
-            return mapToSingleAsset(updatedAsset);
+            if(mapToSingleAsset(updatedAsset)==null) return HttpStatus.BAD_REQUEST;
+            return HttpStatus.OK;
           }
           
 

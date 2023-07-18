@@ -3,7 +3,7 @@ import { TrailerService } from './trailer.service';
 import {Asset} from '../asset/asset';
 import {Trailer} from 'src/trailer/trailer';
 import {HttpExceptionFilter} from '../validation/http-exception';
-import { CreateTrailerDto } from 'src/validation/validation.pipe';
+
 
 @Controller('api/v1/trailer')
 @UseFilters(HttpExceptionFilter)

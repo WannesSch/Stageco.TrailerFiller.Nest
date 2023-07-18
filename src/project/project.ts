@@ -3,7 +3,7 @@ import { Project as ProjectPrisma} from "prisma/prisma-client";
 
 
 export class Project {
-    readonly id : number;
+    readonly id? : number;
     readonly title : string;
     readonly description : string;
     readonly venueAddress : string;
@@ -22,6 +22,4 @@ export class Project {
         this.updatedAt = project.updatedAt;
         this.Subprojects = project.Subprojects;
     }
-
-        
     }

@@ -10,13 +10,9 @@ export class AssetController {
     constructor(private readonly assetService: AssetService){}
 
     @Post('/csvToAssets/:filename')
-    csvToAssets(@Param('filename') filename: string,req: Request, res: Response): Promise<Asset[]>{
-        try {
+    csvToAssets(@Param('filename') filename: string,req: Request, res: Response): Promise<Asset[]| HttpStatus>{
             return this.assetService.csvToAssets(filename);
-        }
-        catch(error){
-            throw new HttpException('Forbidden', HttpStatus.NOT_FOUND);
-        }
+        
     }
     
     @Get('/all')
@@ -33,39 +29,28 @@ export class AssetController {
         return this.assetService.getAssetById(id);
     }
 
-    @Get('/getWeight/:id')
-    getAssetWeight(@Param('id') id: string): Promise<number>{
-        return this.assetService.getAssetWeight(id);
-    }
-    @Get('/getByUnit/:unit')
-    getAssetByUnit(@Param('unit') unit: string): Promise<Asset[]>{
-        return this.assetService.getAssetsByUnit(unit);
-    }
+    // @Get('/getWeight/:id')
+    // getAssetWeight(@Param('id') id: string): Promise<number>{
+    //     return this.assetService.getAssetWeight(id);
+    // }
+    
     @Put('/update/:id')
-    updateAsset(@Body() asset: Asset,@Param('id') id:string): Promise<void>{
-        this.assetService.updateAsset(id,asset);
-        return void 0;
+    updateAsset(@Body() asset: Asset,@Param('id') id:string): Promise<HttpStatus>{
+        return this.assetService.updateAsset(id,asset);
     }
     @Post('/add')
-    addAsset(@Body() asset: Asset): Promise<void>{    
-            this.assetService.addAsset(asset);
-        return void 0;
-    }
-    @Put('/addContent/:id')
-    addContent(@Body() content: Content[],@Param('id') id: string): Promise<void>{
-            this.assetService.addContent(id,content);
-        return void 0;
+    addAsset(@Body() asset: Asset): Promise<HttpStatus>{    
+            return this.assetService.addAsset(asset);
     }
 
     @Put('/setPosition/:id')
-    setPosition(@Param('id') id: string,@Body() position: number[]): Promise<void>{
-        this.assetService.setPosition(id,position);
-        return void 0;
+    setPosition(@Param('id') id: string,@Body() position: number[]): Promise<HttpStatus>{
+        return this.assetService.setPosition(id,position);
+
     }
     @Put('/setRotation/:id')
-    setRotation(@Param('id') id: string,@Body() rotation: number[]): Promise<void>{
-        this.assetService.setRotation(id,rotation);
-        return void 0;
+    setRotation(@Param('id') id: string,@Body() rotation: number[]): Promise<HttpStatus>{
+        return this.assetService.setRotation(id,rotation);
     }
     @Get('/getRotation/:id')
     getRotation(@Param('id') id: string): Promise<number[]>{
@@ -75,6 +60,12 @@ export class AssetController {
     getPosition(@Param('id') id: string): Promise<number[]>{
         return this.assetService.getPosition(id);
     }
+
+    // @Get('/getContent/:id')
+    // getContent(@Param('id') id: string): Promise<Content>{
+    //     return this.assetService.getContent(id);
+    // }
+    
 
         
     

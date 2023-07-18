@@ -12,14 +12,7 @@ import { ContentModule } from './content/content.module';
 import { APP_PIPE } from '@nestjs/core';
 @Module({
   controllers: [AppController],
-  providers: [AppService,
-  {
-    provide: APP_PIPE,
-    useValue: new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-    }),
-  }],
+  providers: [AppService],
   
   imports: [SubprojectModule, ProjectModule, AssetModule, TrailerModule, PrismaModule, ContentModule],
 })

@@ -30,7 +30,7 @@ export class ProjectController {
         }
     @Post('/add')
         async addProject(@Body() project: Project): Promise<HttpStatus>{
-                await this.projectService.addProject(project);       
+               return await this.projectService.addProject(project);       
         }
             
 

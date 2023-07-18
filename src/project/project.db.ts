@@ -26,9 +26,7 @@ const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
     if(project === null) return HttpStatus.NOT_FOUND;
     return (project);
 };
-const addProject = async (project: Project): Promise<Project> => {
-    try{
-
+const addProject = async (project: Project): Promise<HttpStatus> => {
     const newProject = await database.project.create({
         data: {
             title: project.title,
@@ -37,13 +35,11 @@ const addProject = async (project: Project): Promise<Project> => {
             crewChief: project.crewChief,
         },
     });
-    return mapToSingleProject(newProject);
-} catch(error){
-    throw new Error("Project not added");
-} 
+    if(mapToSingleProject(newProject)==null) return HttpStatus.BAD_REQUEST
+    return HttpStatus.OK;
 };
 
-const updateProject = async (id: string, project: Project): Promise<Project> => {
+const updateProject = async (id: string, project: Project): Promise<HttpStatus> => {
     const updatedProject = await database.project.update({
         where: {
             id: Number(id),
@@ -55,20 +51,31 @@ const updateProject = async (id: string, project: Project): Promise<Project> => 
             crewChief: project.crewChief,
         },
     });
-    return mapToSingleProject(updatedProject);
+    if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST
+    return HttpStatus.OK;
 };
 
-const deleteProject = async (id: string): Promise<Project> => {
-    if(!id) throw new Error("No id provided");
+const deleteProject = async (id: string): Promise<HttpStatus> => {
     const deletedProject = await database.project.delete({
         where: {
             id: Number(id),
         },
     });
-    return mapToSingleProject(deletedProject);
+    if(mapToSingleProject(deletedProject)==null) return HttpStatus.BAD_REQUEST
+    return HttpStatus.OK;
 };
 
-const addSubproject = async (id: string, subproject: Subproject): Promise<Project> => {
+const addSubproject = async (id: string, subproject: Subproject): Promise<HttpStatus> => {
+    const subProject = await database.subproject.create({
+        data: {
+            title: subproject.title,
+            description: subproject.description,
+            project: {
+                connect: {id: parseInt(id)},
+            },
+        },
+    });
+
     const updatedProject = await database.project.update({
       where: {
         id: parseInt(id),
@@ -82,7 +89,8 @@ const addSubproject = async (id: string, subproject: Subproject): Promise<Projec
         Subprojects: true,
       },
     });
-    return mapToSingleProject(updatedProject);
+    if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST
+    return HttpStatus.OK;
 }
 
 
