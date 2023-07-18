@@ -7,7 +7,16 @@ async function bootstrap() {
   // app.useGlobalPipes(new ValidationPipe({
   //   transform: true,
   // }));
-  app.enableCors();
+  
+  const corsOptions: CorsOptions = {
+    origin: ['http://localhost', 'http://localhost:3000'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  };
+
+  app.enableCors(corsOptions);
+
   await app.listen(4000);
 }
 bootstrap();
