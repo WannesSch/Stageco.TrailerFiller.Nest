@@ -21,19 +21,18 @@ const getAll = async (): Promise<Trailer[]> => {
       };
 
 
-    const add = async (trailer: Trailer): Promise<Trailer> => {
+    const add = async (trailer : Trailer): Promise<Trailer> => {
         const newTrailer = await prisma.trailer.create({
         data: {
         height: trailer.height,
         width: trailer.width,
         depth: trailer.depth,
-        weight: trailer.weight,
         maxWeight: trailer.maxWeight,
         },
         });
         return mapToSingleTrailer(newTrailer);
-        }
-    
+        
+    };
 
 const deleteTrailerById = async ({ id }: { id: number }) => {
     try {

@@ -2,6 +2,7 @@ import { mapToProjects,mapToSingleProject } from './project.mapper';
 import database from '../prisma/database';
 import { Project } from './project';
 import { Subproject } from 'src/subproject/subproject';
+import { HttpStatus } from '@nestjs/common';
 
 const getAllProjects = async (): Promise<Project[]> => {
     const projects = await database.project.findMany({
@@ -11,7 +12,9 @@ const getAllProjects = async (): Promise<Project[]> => {
     });
     return mapToProjects(projects);
 };
-const getProjectById = async (id: string): Promise<Project> => {
+const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
+    if(!id) throw new Error("No id provided");
+    
     const project = await database.project.findUnique({
         where: {
             id: Number(id),
@@ -20,6 +23,7 @@ const getProjectById = async (id: string): Promise<Project> => {
             Subprojects: true,
         },
     });
+    if(project === null) return HttpStatus.NOT_FOUND;
     return (project);
 };
 const addProject = async (project: Project): Promise<Project> => {
@@ -55,6 +59,7 @@ const updateProject = async (id: string, project: Project): Promise<Project> => 
 };
 
 const deleteProject = async (id: string): Promise<Project> => {
+    if(!id) throw new Error("No id provided");
     const deletedProject = await database.project.delete({
         where: {
             id: Number(id),

@@ -8,7 +8,7 @@ export class Subproject{
     readonly title: string;
     readonly description?: string;
     readonly departureDate?: Date;
-    readonly createdAt: Date;
+    readonly createdAt?: Date;
     readonly updatedAt?: Date;
     readonly Trailers?: Trailer[];
     readonly Assets?: Asset[];

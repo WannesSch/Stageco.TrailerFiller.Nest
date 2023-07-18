@@ -1,0 +1,20 @@
+
+Project
+{
+    "id" : 1,
+    "title": "Werchter",
+    "venueAddress":"Werchter",
+    "crewChief": "Jonny",
+    "createdAt": "2023-07-14",
+    "updatedAt": "2023-07-14",
+    "Subprojects":{}
+}
+
+Trailer
+{
+    "height":5,
+    "width": 5,
+    "depth":5,
+    "maxWeight":5000
+}
+

@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { Asset } from 'src/asset/asset';
 import {Trailer} from 'src/trailer/trailer'
 import trailerDb from './trailer.db';
+import { max } from 'class-validator';
 
 @Injectable()
 export class TrailerService {
@@ -30,7 +31,12 @@ export class TrailerService {
         return trailerDb.getAll();
     }
     getById(id: string): Promise<Trailer> {
-        return trailerDb.getById(id);
+        try {
+            return trailerDb.getById(id);
+        } catch (error) {
+            HttpStatus.NOT_FOUND
+        }
+        
     }
     update(id: string, trailer: Trailer): Promise<Trailer> {
         return trailerDb.update(id, trailer);

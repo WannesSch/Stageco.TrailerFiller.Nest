@@ -2,7 +2,8 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseFilters } from '@ne
 import { TrailerService } from './trailer.service';
 import {Asset} from '../asset/asset';
 import {Trailer} from 'src/trailer/trailer';
-import {HttpExceptionFilter} from '../http-exception';
+import {HttpExceptionFilter} from '../validation/http-exception';
+import { CreateTrailerDto } from 'src/validation/validation.pipe';
 
 @Controller('api/v1/trailer')
 @UseFilters(HttpExceptionFilter)
@@ -33,7 +34,7 @@ export class TrailerController {
     }
     @Post('/add')
     async create(@Body() trailer: Trailer): Promise<Trailer> {
-        return await this.trailerService.add(trailer);
+        return await this.trailerService.add( trailer);
     }
     @Put('/addAsset/:id')
     async addAssets(@Param('id') id: string, @Body() asset: Asset): Promise<Trailer> {

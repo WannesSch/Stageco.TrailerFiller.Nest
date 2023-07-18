@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, UseFilters } from '@nestjs/common';
 import { Asset } from './asset';
 import { AssetService } from './asset.service';
-import {HttpExceptionFilter} from '../http-exception';
+import {HttpExceptionFilter} from '../validation/http-exception';
 import { Content } from '../content/content';
 
 @Controller('api/v1/asset')

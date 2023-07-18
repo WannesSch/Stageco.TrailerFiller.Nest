@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -8,10 +8,20 @@ import { AssetModule } from './asset/asset.module';
 import { TrailerModule } from './trailer/trailer.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProjectModule } from './project/project.module';
+import { ContentModule } from './content/content.module';
+import { APP_PIPE } from '@nestjs/core';
 @Module({
   controllers: [AppController],
-  providers: [AppService],
-  imports: [SubprojectModule, ProjectModule, AssetModule, TrailerModule, PrismaModule],
+  providers: [AppService,
+  {
+    provide: APP_PIPE,
+    useValue: new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  }],
+  
+  imports: [SubprojectModule, ProjectModule, AssetModule, TrailerModule, PrismaModule, ContentModule],
 })
 
 export class AppModule {}
