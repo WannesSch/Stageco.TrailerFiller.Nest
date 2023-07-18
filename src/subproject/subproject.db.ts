@@ -196,7 +196,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
             const cells = line.split(';');
             const category = parseInt(cells[0]);
             const count = parseInt(cells[5]);
-            const modelPath = cells[2]+'.glb';
+            const modelPath = cells[2]+'.gltf';
           
             if (cells[4] && cells[4].includes(',')) {
               cells[4] = cells[4].replace(',', '.');
