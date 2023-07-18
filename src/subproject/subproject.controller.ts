@@ -27,7 +27,6 @@ export class SubprojectController {
     // return await this.subprojectService.getAllTrailersFromSubproject(id);
     // }
     
-
     
     @Get('/get/:id',)
         async getProjectById(@Param('id') id: string): Promise<Subproject> {
@@ -35,30 +34,24 @@ export class SubprojectController {
     }
 
     @Delete('/delete/:id')
-    async deleteSubproject(@Param('id') id: string): Promise<void>{
-         await this.subprojectService.deleteSubproject(id);
+    async deleteSubproject(@Param('id') id: string): Promise<HttpStatus>{
+         return await this.subprojectService.deleteSubproject(id);
     }
     
     @Put('/update/:id')
-    async updateSubproject(@Body() subproject: Subproject,@Param('id') id: string): Promise<void>{
+    async updateSubproject(@Body() subproject: Subproject,@Param('id') id: string): Promise<HttpStatus>{
         return await this.subprojectService.updateSubproject(id,subproject);
     }
 
     @Put('/addAssets/:id')
     addAssets(@Body() assets: Asset[], @Param('id') id: string): Promise<HttpStatus>{
-        if(assets.length==0){
-            throw new HttpException('Forbidden', HttpStatus.NOT_FOUND);
-        }
-        if(id==null){
-            throw new HttpException('Forbidden', HttpStatus.NOT_FOUND);
-        }
-        this.subprojectService.addAssets(id,assets);
-       return this.HTTPStatus.OK;
+       return this.subprojectService.addAssets(id,assets);
+       
     }
     @Put('/addTrailer/:id')
     async addTrailer(@Body() trailer: Trailer, @Param('id') id: string): Promise<HttpStatus>{
-          this.subprojectService.addTrailer(id,trailer);
-            return this.HTTPStatus.OK;
+          return this.subprojectService.addTrailer(id,trailer);
+            
             
     }
 

@@ -59,6 +59,7 @@ model Subproject {
 }
 model Trailer {
   id        Int   @id @default(autoincrement())
+  name      String?
   width     Float 
   depth    Float
   height   Float
@@ -73,10 +74,10 @@ model Content {
   id        Int   @id @default(autoincrement())
   name      String
   unit      String?
-  bakId     Int?
+  boxId     Int?
   weight    Float?
   amount    Int
-  asset     Asset?   @relation("content", fields: [bakId], references: [id])
+  asset     Asset?   @relation("content", fields: [boxId], references: [id])
 
 }
 
