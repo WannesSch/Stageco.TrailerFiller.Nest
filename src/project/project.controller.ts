@@ -17,19 +17,19 @@ export class ProjectController {
             return await this.projectService.getProjectById(id);
         }
     @Delete('/delete/:id')
-        async deleteProject(@Param('id') id: string): Promise<void>{
-            await this.projectService.deleteProject(id);
+        async deleteProject(@Param('id') id: string): Promise<HttpStatus>{
+            return await this.projectService.deleteProject(id);
         }
     @Put('/update/:id')
-        async updateProject(@Body() project: Project,@Param('id') id: string): Promise<void>{
+        async updateProject(@Body() project: Project,@Param('id') id: string): Promise<HttpStatus>{
             return await this.projectService.updateProject(id,project);
         }
     @Put('/addSubproject/:id')
-        async addSubproject(@Body() subproject: Subproject,@Param('id') id: string): Promise<void>{
+        async addSubproject(@Body() subproject: Subproject,@Param('id') id: string): Promise<HttpStatus>{
             return await this.projectService.addSubproject(id,subproject);
         }
     @Post('/add')
-        async addProject(@Body() project: Project): Promise<void>{
+        async addProject(@Body() project: Project): Promise<HttpStatus>{
                 await this.projectService.addProject(project);       
         }
             
