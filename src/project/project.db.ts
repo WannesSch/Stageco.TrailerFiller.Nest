@@ -17,7 +17,7 @@ const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
     
     const project = await database.project.findUnique({
         where: {
-            id: Number(id),
+            id: (id),
         },
         include: {
             Subprojects: true,
@@ -29,6 +29,7 @@ const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
 const addProject = async (project: Project): Promise<HttpStatus> => {
     const newProject = await database.project.create({
         data: {
+            id: project.id,
             title: project.title,
             description: project.description,
             venueAddress: project.venueAddress,
@@ -42,7 +43,7 @@ const addProject = async (project: Project): Promise<HttpStatus> => {
 const updateProject = async (id: string, project: Project): Promise<HttpStatus> => {
     const updatedProject = await database.project.update({
         where: {
-            id: Number(id),
+            id: (id),
         },
         data: {
             title: project.title,
@@ -58,7 +59,7 @@ const updateProject = async (id: string, project: Project): Promise<HttpStatus> 
 const deleteProject = async (id: string): Promise<HttpStatus> => {
     const deletedProject = await database.project.delete({
         where: {
-            id: Number(id),
+            id: (id),
         },
     });
     if(mapToSingleProject(deletedProject)==null) return HttpStatus.BAD_REQUEST
@@ -71,14 +72,15 @@ const addSubproject = async (id: string, subproject: Subproject): Promise<HttpSt
             title: subproject.title,
             description: subproject.description,
             project: {
-                connect: {id: parseInt(id)},
+                connect: {id: (id)},
             },
         },
     });
+    
 
     const updatedProject = await database.project.update({
       where: {
-        id: parseInt(id),
+        id: (id),
       },
       data: {
         Subprojects: {

@@ -84,7 +84,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const getAllSubprojectsFromProject = async (id: string): Promise<Subproject[]> => {
         const subprojects = await database.subproject.findMany({
         where: {
-        projectId: parseInt(id),
+        projectId: (id),
         },
         include: {
         Trailers: false,

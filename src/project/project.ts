@@ -3,7 +3,7 @@ import { Project as ProjectPrisma} from "prisma/prisma-client";
 
 
 export class Project {
-    readonly id? : number;
+    readonly id : string;
     readonly title : string;
     readonly description : string;
     readonly venueAddress : string;
@@ -12,7 +12,7 @@ export class Project {
     readonly updatedAt : Date;
     readonly Subprojects : Subproject[];
 
-    constructor(project:{id: number, title: string, description?: string, venueAddress?: string, crewChief?: string, createdAt?: Date, updatedAt?: Date, Subprojects?: Subproject[]}){
+    constructor(project:{id: string, title: string, description?: string, venueAddress?: string, crewChief?: string, createdAt?: Date, updatedAt?: Date, Subprojects?: Subproject[]}){
         this.id = project.id;
         this.title = project.title;
         this.description = project.description;
