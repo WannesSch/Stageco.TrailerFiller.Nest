@@ -85,16 +85,6 @@ const deleteTrailerById = async ({ id }: { id: number }) => {
     });
     return mapToTrailers(trailer);
   };
-
-  // const delete = async (id: string): Promise<void> => {
-  //   let idd = Number(id);
-  //   const deletedTrailer = await prisma.trailer.delete({
-  //     where: {
-  //       id: idd,
-  //     },
-  //   });
-  //   return void 0;
-  // };
   const addToSubproject = async (id: string, trailer: Trailer): Promise<Trailer> => {
     let idd = Number(id);
     const updatedTrailer = await prisma.trailer.update({

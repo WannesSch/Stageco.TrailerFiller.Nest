@@ -138,7 +138,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
       },
       data: {
         Trailers: {
-          connect: {id: trailer.trailerId}
+          connect: {id: newTrailer.id}
         },
       },
       include: {

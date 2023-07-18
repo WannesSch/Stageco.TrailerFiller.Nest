@@ -25,10 +25,6 @@ export class AssetController {
         return this.assetService.getAssetById(id);
     }
 
-    // @Get('/getWeight/:id')
-    // getAssetWeight(@Param('id') id: string): Promise<number>{
-    //     return this.assetService.getAssetWeight(id);
-    // }
     
     @Put('/update/:id')
     updateAsset(@Body() asset: Asset,@Param('id') id:string): Promise<HttpStatus>{
@@ -57,11 +53,6 @@ export class AssetController {
         return this.assetService.getPosition(id);
     }
 
-    // @Get('/getContent/:id')
-    // getContent(@Param('id') id: string): Promise<Content>{
-    //     return this.assetService.getContent(id);
-    // }
-    
 
         
     

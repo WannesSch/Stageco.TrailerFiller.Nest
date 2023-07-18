@@ -48,10 +48,7 @@ export class TrailerController {
     async addToSubproject(@Param('id') id: string, @Body() trailer: Trailer): Promise<Trailer> {
         return await this.trailerService.addToSubproject(id, trailer);
     }
-    // @Delete('/delete/:id')
-    // async delete(@Param('id') id: string): Promise<Trailer> {
-    //     return await this.trailerService.delete(id);
-    // }
+
 
 
 

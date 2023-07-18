@@ -21,9 +21,7 @@ export class TrailerService {
     addToSubproject(id: string, trailer: Trailer): Promise<Trailer>  {
         return trailerDb.addToSubproject(id, trailer);
     }
-    // delete(id: string): Promise<Trailer>  {
-    //     return trailerDb.delete(id);
-    // }
+
     getAllFromSubproject(id: string): Promise<Trailer[]>  {
         return trailerDb.getAllFromSubproject(id);
     }

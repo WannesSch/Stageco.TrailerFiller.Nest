@@ -22,9 +22,7 @@ export class ProjectService {
     deleteProject(id: string): Promise<HttpStatus> {
         return projectDB.deleteProject(id);
     }
-    // getSubprojectById(id: string) {
-    //     projectDB.getSubprojectById(id);
-    // }
+ 
 
     async addSubproject(id: string, subproject: Subproject) : Promise<HttpStatus> {
          return projectDB.addSubproject(id,subproject);

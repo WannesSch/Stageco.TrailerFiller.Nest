@@ -22,10 +22,10 @@ export class SubprojectController {
         async getAllAssetsFromSubproject(@Param('id') id: string): Promise<Asset[]> {
     return await this.subprojectService.getAllAssetsFromSubproject(id);
     }
-    // @Get('/allTrailersFromSubproject/:id')
-    //     async getAllTrailersFromSubproject(@Param('id') id: string): Promise<Trailer[]> {
-    // return await this.subprojectService.getAllTrailersFromSubproject(id);
-    // }
+    @Get('/allTrailersFromSubproject/:id')
+        async getAllTrailersFromSubproject(@Param('id') id: string): Promise<Trailer[]> {
+    return await this.subprojectService.getAllTrailersFromSubproject(id);
+    }
     
     
     @Get('/get/:id',)
