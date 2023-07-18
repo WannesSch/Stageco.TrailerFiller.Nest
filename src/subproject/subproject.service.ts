@@ -3,13 +3,12 @@ import subprojectDB from './subproject.db';
 import { Subproject } from './subproject';
 import { Trailer } from 'src/trailer/trailer';
 import { Asset } from 'src/asset/asset';
-import trailerDb from 'src/trailer/trailer.db';
 
 @Injectable()
 export class SubprojectService {
-    // getAllTrailersFromSubproject(id: string): Promise<Trailer[]> {
-    //     subprojectDB.getAllTrailersFromSubproject(id);
-    // }
+    getAllTrailersFromSubproject(id: string): Promise<Trailer[]> {
+        return subprojectDB.getAllTrailersFromSubproject(id);
+    }
     getAllAssetsFromSubproject(id: string): Promise<Asset[]> {
         return subprojectDB.getAllAssetsFromSubproject(id);
     }

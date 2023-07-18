@@ -77,14 +77,13 @@ const addSubproject = async (id: string, subproject: Subproject): Promise<HttpSt
         },
     });
     
-
     const updatedProject = await database.project.update({
       where: {
         id: (id),
       },
       data: {
         Subprojects: {
-          connect: {subprojectId: subproject.subprojectId}
+          connect: {subprojectId: subProject.subprojectId}
         },
       },
       include: {

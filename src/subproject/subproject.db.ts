@@ -7,6 +7,7 @@ import { mapToAssets } from 'src/asset/asset.mapper';
 import { Asset } from 'src/asset/asset';
 import * as fs from 'fs';
 import { Content } from 'src/content/content';
+import { mapToTrailers } from 'src/trailer/trailer.mapper';
 
 const getSubprojectById = async (id: string): Promise<Subproject> => {
     const subproject = await database.subproject.findUnique({
@@ -105,6 +106,18 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         },
     });
     return mapToAssets(subproject.Assets);
+    }
+    const getAllTrailersFromSubproject = async (id: string): Promise<Trailer[]> => {
+        const subproject = await database.subproject.findUnique({
+        where: {
+        subprojectId: parseInt(id),
+        },
+        include: {
+        Trailers: true,
+        Assets: true,
+        },
+    });
+    return mapToTrailers(subproject.Trailers);
     }
 
     const addTrailer = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
@@ -284,4 +297,5 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         getAllAssetsFromSubproject,
         getAllSubprojectsFromProject,
         csvReader,
+        getAllTrailersFromSubproject
     };
