@@ -27,6 +27,7 @@ const getProjectById = async (id: string): Promise<Project | HttpStatus> => {
   return newProject;
 };
 const addProject = async (project: Project): Promise<HttpStatus> => {
+  if (project == null) return HttpStatus.BAD_REQUEST;
   const newProject = await database.project.create({
     data: {
       id: project.id,
