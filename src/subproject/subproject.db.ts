@@ -48,7 +48,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     
 
     const updateSubproject = async (id: string,subproject: Subproject): Promise<HttpStatus> => {
-        let updatedAt = (Date.now()).toString();
+
+        let updatedAt = new Date(Date.now()).toISOString();
         console.log(updatedAt)
         const updatedSubproject = await database.subproject.update({
         where: {

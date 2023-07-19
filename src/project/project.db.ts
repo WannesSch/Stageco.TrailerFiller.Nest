@@ -44,9 +44,8 @@ const addProject = async (project: Project): Promise<HttpStatus> => {
 };
 
 const updateProject = async (id: string, project: Project): Promise<HttpStatus> => {
-    let updatedDate: Date;
-    let updatedAt= updatedDate.setDate(Date.now()).toString();
-    console.log(updatedAt)
+    let updatedAt = new Date(Date.now()).toISOString();
+        console.log(updatedAt)
     const updatedProject = await database.project.update({
         where: {
             id: (id),
