@@ -97,16 +97,6 @@ export const csvHelper = async (filename: string,id:string): Promise<Asset[]|Htt
       }
         
       }
-     {
-        fs.writeFile('src/assets.json', JSON.stringify(assets), (err) => {
-          if (err) {
-            console.log('Error during file write:', err);
-            return HttpStatus.INTERNAL_SERVER_ERROR;
-          } else {
-            console.log('File written successfully');
-          }
-        });
-      };
       return assets;
     } catch (error) {
       console.error('Error during CSV to assets conversion:', error);

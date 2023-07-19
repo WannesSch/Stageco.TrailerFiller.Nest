@@ -165,18 +165,6 @@ const getAssetById = async (id: string): Promise<Asset> => {
             return HttpStatus.OK;
           }
 
-          const getAllAssetsFromSubproject = async (id: string): Promise<Asset[]> => {
-            const assets = await database.asset.findMany({
-                where: {
-                    subprojectId: parseInt(id),
-                },
-                include: {
-                content: true,
-                },
-            });
-            return mapToAssets(assets);
-            }
-          
     
     export default {
         getAssetById,
@@ -189,6 +177,5 @@ const getAssetById = async (id: string): Promise<Asset> => {
         getPosition,
         setRotation,
         setPosition,
-        getAllAssetsFromSubproject
     };
 
