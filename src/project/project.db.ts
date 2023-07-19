@@ -44,6 +44,8 @@ const addProject = async (project: Project): Promise<HttpStatus> => {
 };
 
 const updateProject = async (id: string, project: Project): Promise<HttpStatus> => {
+    let updatedDate: Date;
+    let updatedAt= updatedDate.setDate(Date.now()).toString();
     const updatedProject = await database.project.update({
         where: {
             id: (id),
@@ -53,6 +55,7 @@ const updateProject = async (id: string, project: Project): Promise<HttpStatus> 
             description: project.description,
             venueAddress: project.venueAddress,
             crewChief: project.crewChief,
+            updatedAt: updatedAt,
         },
     });
     if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST
