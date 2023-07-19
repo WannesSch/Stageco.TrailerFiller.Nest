@@ -20,9 +20,6 @@ export class SubprojectService {
     }
 
     
-    addTrailer(id: string, trailer: Trailer):Promise<HttpStatus> {
-        return subprojectDB.addTrailer(id,trailer);
-    }
     addAssets(id: string, assets: Asset[]):Promise<HttpStatus>{
         return subprojectDB.addAssets(id,assets);
     }

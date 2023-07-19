@@ -108,38 +108,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     return mapToTrailers(subproject.Trailers);
     }
 
-    const addTrailer = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
-
-    const newTrailer = await database.trailer.create({
-      data: {
-        name: trailer.name,
-        height: trailer.height,
-        width: trailer.width,
-        depth: trailer.depth,
-        maxWeight: trailer.maxWeight,
-        subprojectId: parseInt(id),
-      },
-    });
-    const updatedSubproject = await database.subproject.update({
-      where: {
-        subprojectId: parseInt(id),
-      },
-      data: {
-        Trailers: {
-          connect: {id: newTrailer.id}
-        },
-      },
-      include: {
-        Trailers: true,
-        Assets: true,
-      },
-    });
-    if(mapToSingleSubproject(updatedSubproject)==null){
-        return HttpStatus.BAD_REQUEST;
-    }
-    return HttpStatus.OK;
-
-}
+    
 
     const addAssets = async (id: string, assets): Promise<HttpStatus> => {
         const updatedSubproject = await database.subproject.update({
@@ -203,7 +172,6 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         getSubprojects,
         addSubproject,
         updateSubproject,
-        addTrailer,
         deleteSubproject,
         addAssets,
         getAllAssetsFromSubproject,
