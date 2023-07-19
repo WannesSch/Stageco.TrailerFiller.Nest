@@ -6,6 +6,9 @@ import { Asset } from 'src/asset/asset';
 
 @Injectable()
 export class SubprojectService {
+    deleteAsset(id: string, assetId: string): HttpStatus | PromiseLike<HttpStatus> {
+        throw new Error('Method not implemented.');
+    }
     getAllTrailersFromSubproject(id: string): Promise<Trailer[]> {
         return subprojectDB.getAllTrailersFromSubproject(id);
     }
