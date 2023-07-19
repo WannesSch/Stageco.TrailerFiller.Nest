@@ -17,8 +17,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
     return mapToSingleSubproject(subproject);
@@ -29,8 +29,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
     if(mapToSingleSubproject(deletedSubproject)==null){
@@ -41,8 +41,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const getSubprojects = async (): Promise<Subproject[]> => {
         const subprojects = await database.subproject.findMany({
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
     return mapToSubprojects(subprojects);
@@ -60,8 +60,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         departureDate: subproject.departureDate,
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
      if(mapToSingleSubproject(updatedSubproject)==null){
@@ -76,8 +76,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         projectId: (id),
         },
         include: {
-        Trailers: false,
-        Assets: false,
+        trailers: false,
+        assets: false,
         },
     });
     return mapToSubprojects(subprojects);
@@ -103,11 +103,11 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
-    return mapToTrailers(subproject.Trailers);
+    return mapToTrailers(subproject.trailers);
     }
 
     
@@ -118,13 +118,13 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         data: {
-        Assets: {
+        assets: {
         create: assets,
         },
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
      if(mapToSingleSubproject(updatedSubproject)==null){

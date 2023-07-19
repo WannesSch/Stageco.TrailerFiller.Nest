@@ -41,7 +41,7 @@ model Asset{
   rotation        String?  
   content         Content[] @relation("content")
   subprojectId    Int?
-  subproject      Subproject?   @relation("ProjectToAsset", fields: [subprojectId], references: [id])
+  subproject      Subproject?   @relation("SubprojectToAsset", fields: [subprojectId], references: [id])
   trailerId       Int?
   trailer         Trailer?   @relation("TrailerWithAsset", fields: [trailerId], references: [id])
 }
@@ -55,20 +55,19 @@ model Subproject {
   updatedAt     String?
   projectId     String?
   project       Project?   @relation("ProjectToSubproject", fields: [projectId], references: [id])
-  Trailers      Trailer[]  @relation("ProjectToTrailer")
-  Assets        Asset[]    @relation("ProjectToAsset")
+  trailers      Trailer[]  @relation("SubprojectToTrailer")
+  assets        Asset[]    @relation("SubprojectToAsset")
 }
 model Trailer {
   id        Int   @id @default(autoincrement())
-  name      String?
   width     Float 
   depth    Float
   height   Float
   weight    Float?
   maxWeight Float
   subprojectId  Int?
-  Assets    Asset[]   @relation("TrailerWithAsset")
-  subproject   Subproject?   @relation("ProjectToTrailer", fields: [subprojectId], references: [id])   
+  assets    Asset[]   @relation("TrailerWithAsset")
+  subproject   Subproject?   @relation("SubprojectToTrailer", fields: [subprojectId], references: [id])   
 }
 
 model Content {

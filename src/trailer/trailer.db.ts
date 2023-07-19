@@ -8,7 +8,7 @@ import { mapToSingleSubproject } from 'src/subproject/subproject.mapper';
 const getAll = async (): Promise<Trailer[]> => {
     const trailers = await database.trailer.findMany({
         include: {
-            Assets: true,
+            assets: true,
             },
             });
     return mapToTrailers(trailers);
@@ -22,10 +22,10 @@ const getAll = async (): Promise<Trailer[]> => {
             id: idd,
           },
           include: {
-            Assets: true,
+            assets: true,
           },
         });
-        return mapToSingleTrailer(trailer).Assets;
+        return mapToSingleTrailer(trailer).assets;
       };
 
 
@@ -54,7 +54,7 @@ const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => 
 
       },
       include: {
-        Assets: true,
+        assets: true,
       },
     });
     return mapToSingleTrailer(trailer);
@@ -91,7 +91,6 @@ const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => 
 
     const newTrailer = await database.trailer.create({
       data: {
-        name: trailer.name,
         height: trailer.height,
         width: trailer.width,
         depth: trailer.depth,
@@ -104,13 +103,13 @@ const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => 
         id: parseInt(id),
       },
       data: {
-        Trailers: {
+        trailers: {
           connect: {id: newTrailer.id}
         },
       },
       include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
       },
     });
     if(mapToSingleSubproject(updatedSubproject)==null){
@@ -128,7 +127,7 @@ const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => 
         id: idd,
       },
       data: {
-        Assets: {
+        assets: {
           disconnect: {
             id: iddd,
           },
@@ -149,7 +148,7 @@ const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => 
         id: idd,
       },
       data: {
-        Assets: {
+        assets: {
           connect: {
             id: asset.id,
           },

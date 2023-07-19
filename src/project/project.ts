@@ -1,5 +1,4 @@
-import { Subproject } from "prisma/prisma-client";
-import { Project as ProjectPrisma} from "prisma/prisma-client";
+import { Subproject } from "../subproject/subproject";
 
 
 export class Project {
