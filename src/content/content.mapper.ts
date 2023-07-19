@@ -1,5 +1,5 @@
-import { Content } from "./content";
-import { Content as ContentPrisma } from "@prisma/client";
+import { Content } from './content';
+import { Content as ContentPrisma } from '@prisma/client';
 
 const mapToContent = ({
   id,
@@ -7,9 +7,8 @@ const mapToContent = ({
   name,
   weight,
   boxId,
-    amount,
+  amount,
 }: ContentPrisma): Content => {
-    
   return new Content({
     id,
     unit,
@@ -17,7 +16,6 @@ const mapToContent = ({
     weight,
     boxId,
     amount,
-
   });
 };
 
@@ -28,5 +26,3 @@ export const mapToSingleContent = (contentPrisma: ContentPrisma): Content =>
   mapToContent(contentPrisma);
 
 export default { mapToContents, mapToSingleContent };
-
-

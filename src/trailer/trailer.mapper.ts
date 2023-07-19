@@ -1,17 +1,16 @@
-import { Trailer as TrailerPrisma, Asset as AssetPrisma } from "@prisma/client";
+import { Trailer as TrailerPrisma, Asset as AssetPrisma } from '@prisma/client';
 
-import { Trailer } from "./trailer";
+import { Trailer } from './trailer';
 
 const mapToTrailer = ({
-    id,
-    height,
-    width,
-    depth,
-    weight,
-    maxWeight,
-    assets,
-  
-}: TrailerPrisma &{assets?: AssetPrisma[]}): Trailer =>
+  id,
+  height,
+  width,
+  depth,
+  weight,
+  maxWeight,
+  assets,
+}: TrailerPrisma & { assets?: AssetPrisma[] }): Trailer =>
   new Trailer({
     id,
     height,
@@ -20,7 +19,6 @@ const mapToTrailer = ({
     weight,
     maxWeight,
     assets,
-
   });
 
 export const mapToTrailers = (trailersPrisma: TrailerPrisma[]): Trailer[] =>
