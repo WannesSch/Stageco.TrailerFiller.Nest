@@ -24,15 +24,6 @@ export class ProjectService {
     deleteProject(id: string): Promise<HttpStatus> {
         return projectDB.deleteProject(id);
     }
-    getAllSubprojectsFromProject(id: string): Promise<Subproject[]> {
-        return projectDb.getAllSubprojectsFromProject(id);
-    }
- 
-
-    async addSubproject(id: string, subproject: Subproject) : Promise<HttpStatus> {
-         return projectDB.addSubproject(id,subproject);
-        
-    }
     getAllProjects(){
         return projectDB.getAllProjects();
     }
