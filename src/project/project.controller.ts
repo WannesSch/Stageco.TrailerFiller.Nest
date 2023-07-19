@@ -1,8 +1,6 @@
 import { ProjectService } from './project.service';
 import { Controller,Body, Get, Param, Post, Put, Delete,  Res, HttpStatus, HttpException, HttpCode, UseFilters } from '@nestjs/common';
-import { Subproject } from 'src/subproject/subproject';
 import { Project } from 'src/project/project';
-import { error } from 'console';
 import {HttpExceptionFilter} from '../validation/http-exception';
 @Controller('api/v1/project')
 @UseFilters(HttpExceptionFilter)

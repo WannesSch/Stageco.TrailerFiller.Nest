@@ -5,8 +5,6 @@ import { Trailer } from 'src/trailer/trailer';
 import { HttpStatus } from '@nestjs/common';
 import { mapToAssets } from 'src/asset/asset.mapper';
 import { Asset } from 'src/asset/asset';
-import * as fs from 'fs';
-import { Content } from 'src/content/content';
 import { mapToTrailers } from 'src/trailer/trailer.mapper';
 import { csvHelper } from './subproject.helper';
 import { mapToSingleProject } from 'src/project/project.mapper';
@@ -50,6 +48,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     
 
     const updateSubproject = async (id: string,subproject: Subproject): Promise<HttpStatus> => {
+        let updatedAt = (Date.now()).toString();
+        console.log(updatedAt)
         const updatedSubproject = await database.subproject.update({
         where: {
         id: parseInt(id),
@@ -58,6 +58,9 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         title: subproject.title,
         description: subproject.description,
         departureDate: subproject.departureDate,
+        crewChief: subproject.crewChief,
+        updatedAt: updatedAt,
+
         },
         include: {
         trailers: true,
