@@ -13,10 +13,9 @@ export const csvHelper = async (
     const assets: Asset[] = [];
     const idee =
       await database.$queryRaw`SELECT id FROM Asset ORDER BY id DESC LIMIT 1`;
-
-    let idStart = 0;
+    let idStart = 1;
     if ((await database.asset.count()) > 0) {
-      idStart = Number(idee[0].id);
+      idStart = Number(idee[0].id) +1;
     }
     let idStartContent = (await database.content.count()) + 1;
     let currentBoxForContent: Asset | undefined = undefined;
@@ -26,7 +25,6 @@ export const csvHelper = async (
       'utf-8',
     );
     const lines = fileData.split('\n');
-
     for (const line of lines) {
       const cells = line.split(';');
       const category = parseInt(cells[0]);
@@ -39,17 +37,19 @@ export const csvHelper = async (
       if (cells[6] && cells[6].includes(',')) {
         cells[6] = cells[6].replace(',', '.');
       }
+      
       if (category === 1 && count === 1 && cells[1].length > 0) {
         const currentBox = await database.asset.create({
           data: {
-            category: category,
-            id: idStart + Number(cells[1]), // Increment the ID for each box
+            
+            id: idStart,
             unit: cells[2],
             name: cells[3],
             weight: Number(cells[4]),
             width: Number(cells[6]),
             height: Number(cells[7]),
             depth: Number(cells[8]),
+            category: category,
             subprojectId: subprojectId,
             modelPath: modelPath,
           },
