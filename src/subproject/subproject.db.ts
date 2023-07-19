@@ -84,17 +84,19 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     }
 
     const getAllAssetsFromSubproject = async (id: string): Promise<Asset[]> => {
-        const subproject = await database.subproject.findUnique({
+        const assets = await database.asset.findMany({
         where: {
-        id: parseInt(id),
+        subprojectId: parseInt(id),
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        content: true,
+
         },
     });
-    return mapToAssets(subproject.Assets);
+    return mapToAssets(assets);
     }
+
+    
     const getAllTrailersFromSubproject = async (id: string): Promise<Trailer[]> => {
         const subproject = await database.subproject.findUnique({
         where: {

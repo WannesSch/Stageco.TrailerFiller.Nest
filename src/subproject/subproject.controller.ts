@@ -53,6 +53,11 @@ export class SubprojectController {
        return this.subprojectService.addAssets(id,assets);
        
     }
+    @Delete('/deleteAsset/:id/:assetId')
+    async deleteAsset(@Param('id') id: string,@Param('assetId') assetId: string): Promise<HttpStatus>{
+        return await this.subprojectService.deleteAsset(id,assetId);
+    }
+    
     @Get('/:id/csvReader/:filename/')
     async csvReader(@Param('filename') filename: string,@Param('id') id: string): Promise<Asset[]|HttpStatus>{
         return this.subprojectService.csvReader(filename,id);
