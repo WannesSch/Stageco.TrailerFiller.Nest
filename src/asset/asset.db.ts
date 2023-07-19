@@ -148,6 +148,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
           const setPosition = async (id: string, position: number[]): Promise<HttpStatus> => {
 
             if(position.length != 3) return HttpStatus.BAD_REQUEST;
+            console.log(position)
+            console.log(position.toString())
             const updatedAsset = await database.asset.update({
                 where: {
                 id: parseInt(id),

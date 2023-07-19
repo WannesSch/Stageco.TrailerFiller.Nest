@@ -101,7 +101,7 @@ const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => 
     });
     const updatedSubproject = await database.subproject.update({
       where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
       },
       data: {
         Trailers: {

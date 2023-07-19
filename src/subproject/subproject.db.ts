@@ -14,7 +14,7 @@ import { mapToSingleProject } from 'src/project/project.mapper';
 const getSubprojectById = async (id: string): Promise<Subproject> => {
     const subproject = await database.subproject.findUnique({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -26,7 +26,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const deleteSubproject = async (id: string): Promise<HttpStatus> => {
         const deletedSubproject = await database.subproject.delete({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -52,7 +52,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const updateSubproject = async (id: string,subproject: Subproject): Promise<HttpStatus> => {
         const updatedSubproject = await database.subproject.update({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         data: {
         title: subproject.title,
@@ -86,7 +86,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const getAllAssetsFromSubproject = async (id: string): Promise<Asset[]> => {
         const subproject = await database.subproject.findUnique({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -98,7 +98,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const getAllTrailersFromSubproject = async (id: string): Promise<Trailer[]> => {
         const subproject = await database.subproject.findUnique({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -113,7 +113,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const addAssets = async (id: string, assets): Promise<HttpStatus> => {
         const updatedSubproject = await database.subproject.update({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         data: {
         Assets: {
@@ -153,7 +153,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
           },
           data: {
             Subprojects: {
-              connect: {subprojectId: subProject.subprojectId}
+              connect: {id: subProject.id}
             },
           },
           include: {
@@ -172,6 +172,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         getSubprojects,
         addSubproject,
         updateSubproject,
+
         deleteSubproject,
         addAssets,
         getAllAssetsFromSubproject,

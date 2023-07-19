@@ -4,19 +4,19 @@ import { Subproject as SubprojectPrisma} from "prisma/prisma-client";
 
 export class Subproject{
     
-    readonly subprojectId: number;
+    readonly id: number;
     readonly title: string;
     readonly description?: string;
-    readonly departureDate?: Date;
-    readonly createdAt?: Date;
-    readonly updatedAt?: Date;
+    readonly departureDate?: string;
+    readonly createdAt?: string;
+    readonly updatedAt?: string;
     readonly Trailers?: Trailer[];
     readonly Assets?: Asset[];
     readonly projectId?: string;
 
 
-    constructor(subproject:{subprojectId: number, title: string, description?: string, venueAddress?: string, crewChief?: string, departureDate?: Date, createdAt?: Date, updatedAt?: Date, Trailers?: Trailer[], Assets?: Asset[], projectId?: string}){
-        this.subprojectId = subproject.subprojectId;
+    constructor(subproject:{id: number, title: string, description?: string, crewChief?: string, departureDate?: string, createdAt?: string, updatedAt?: string, Trailers?: Trailer[], Assets?: Asset[], projectId?: string}){
+        this.id = subproject.id;
         this.title = subproject.title;
         this.description = subproject.description;
         this.departureDate = subproject.departureDate;

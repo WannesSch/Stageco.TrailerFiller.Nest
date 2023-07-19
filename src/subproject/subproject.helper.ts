@@ -6,10 +6,10 @@ import * as fs from 'fs';
 
 export const csvHelper = async (filename: string,id:string): Promise<Asset[]|HttpStatus> => {
     try {
-        const subprojectId = parseInt(id);
+      const subprojectId = parseInt(id);
       const assets: Asset[] = [];
       let idee = await database.$queryRaw`SELECT id FROM Asset ORDER BY id DESC LIMIT 1`
-      console.log(idee)
+    
       let idStart = 0;
       if(await database.asset.count()>0){
         idStart = Number(idee[0].id)
