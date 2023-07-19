@@ -7,10 +7,7 @@ import { Content } from 'src/content/content';
 @Injectable()
 export class AssetService {
 
-    getAllAssetsFromSubproject(id: string): Promise<Asset[]> {
-        return assetDB.getAllAssetsFromSubproject(id);
-    }
-    
+
     getAssetWeight(id: string): Promise<number> {
         throw new Error('Method not implemented.');
     }

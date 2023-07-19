@@ -15,10 +15,6 @@ export class AssetController {
     getAllAssets(): Promise<Asset[]>{
         return this.assetService.getAllAssets();
     }
-    @Get('/getAllFromSubproject/:id')
-    getAllAssetsFromSubproject(@Param('id') id: string): Promise<Asset[]>{
-        return this.assetService.getAllAssetsFromSubproject(id);
-    }
     
     @Get('/getAllNoContent')
     getAllAssetsZonderContent(): Promise<Asset[]>{
