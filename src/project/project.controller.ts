@@ -24,6 +24,10 @@ export class ProjectController {
         async updateProject(@Body() project: Project,@Param('id') id: string): Promise<HttpStatus>{
             return await this.projectService.updateProject(id,project);
         }
+        @Get('/allFromProject/:id')
+        async getAllSubprojectsFromProject(@Param('id') id: string): Promise<Subproject[]> {
+    return await this.projectService.getAllSubprojectsFromProject(id);
+    }
     @Put('/addSubproject/:id')
         async addSubproject(@Body() subproject: Subproject,@Param('id') id: string): Promise<HttpStatus>{
             return await this.projectService.addSubproject(id,subproject);

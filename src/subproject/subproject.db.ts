@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import { Content } from 'src/content/content';
 import { mapToTrailers } from 'src/trailer/trailer.mapper';
 import { csvHelper } from './subproject.helper';
+import { mapToSingleProject } from 'src/project/project.mapper';
 
 const getSubprojectById = async (id: string): Promise<Subproject> => {
     const subproject = await database.subproject.findUnique({
@@ -46,22 +47,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     });
     return mapToSubprojects(subprojects);
     }
-    const addSubproject = async (subproject: Subproject): Promise<HttpStatus> => {
-        const newSubproject = await database.subproject.create({
-        data: {
-        title: subproject.title,
-        description: subproject.description,
-        },
-        include: {
-        Trailers: false,
-        Assets: false,
-        },
-    });
-    if(mapToSingleSubproject(newSubproject)==null){
-        return HttpStatus.BAD_REQUEST;
-    }
-    return HttpStatus.OK;
-    }
+    
+
     const updateSubproject = async (id: string,subproject: Subproject): Promise<HttpStatus> => {
         const updatedSubproject = await database.subproject.update({
         where: {
@@ -180,6 +167,34 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
       return response;
       }
 
+      const addSubproject = async (id: string, subproject: Subproject): Promise<HttpStatus> => {
+        const subProject = await database.subproject.create({
+            data: {
+                title: subproject.title,
+                description: subproject.description,
+                project: {
+                    connect: {id: (id)},
+                },
+            },
+        });
+        
+        const updatedProject = await database.project.update({
+          where: {
+            id: (id),
+          },
+          data: {
+            Subprojects: {
+              connect: {subprojectId: subProject.subprojectId}
+            },
+          },
+          include: {
+            Subprojects: true,
+          },
+        });
+        if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST
+        return HttpStatus.OK;
+    }
+
     
 
     
@@ -194,5 +209,6 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         getAllAssetsFromSubproject,
         getAllSubprojectsFromProject,
         csvReader,
-        getAllTrailersFromSubproject
+        getAllTrailersFromSubproject,
+
     };

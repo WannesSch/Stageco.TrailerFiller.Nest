@@ -22,8 +22,8 @@ model Project{
   description String?
   venueAddress String?
   crewChief String?
-  createdAt DateTime?
-  updatedAt DateTime?
+  createdAt String?
+  updatedAt String?
   Subprojects Subproject[] @relation("ProjectToSubproject")
 }
 
