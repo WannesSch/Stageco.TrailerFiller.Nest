@@ -7,7 +7,7 @@ import { HttpStatus } from '@nestjs/common';
 const getAllProjects = async (): Promise<Project[]> => {
     const projects = await database.project.findMany({
         include: {
-            Subprojects: false,
+            subprojects: false,
         },
     });
     return mapToProjects(projects);
@@ -20,7 +20,7 @@ const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
             id: (id),
         },
         include: {
-            Subprojects: false,
+            subprojects: false,
         },
     });
     if(project === null) return HttpStatus.NOT_FOUND;

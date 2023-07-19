@@ -158,12 +158,12 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
             id: (id),
           },
           data: {
-            Subprojects: {
+            subprojects: {
               connect: {id: subProject.id}
             },
           },
           include: {
-            Subprojects: true,
+            subprojects: true,
           },
         });
         if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST

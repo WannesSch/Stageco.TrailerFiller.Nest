@@ -24,7 +24,7 @@ model Project{
   crewChief String?
   createdAt String?
   updatedAt String?
-  Subprojects Subproject[] @relation("ProjectToSubproject")
+  subprojects Subproject[] @relation("ProjectToSubproject")
 }
 
 model Asset{
