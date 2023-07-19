@@ -43,6 +43,7 @@ export const csvHelper = async (filename: string,id:string): Promise<Asset[]|Htt
             width: Number(cells[6]),
             height: Number(cells[7]),
             depth: Number(cells[8]),
+            subprojectId: subprojectId,
             modelPath: modelPath,
             },
           });
