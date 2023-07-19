@@ -12,9 +12,9 @@ import { Project as ProjectPrisma,
       crewChief,
       createdAt,
       updatedAt,
-      Subprojects,
+      subprojects,
       
-  }: ProjectPrisma  &{Subprojects?:SubprojectPrisma[]}): Project =>
+  }: ProjectPrisma  &{subprojects?:SubprojectPrisma[]}): Project =>
     new Project({
         id,
         title,
@@ -23,7 +23,7 @@ import { Project as ProjectPrisma,
         crewChief,
         createdAt,
         updatedAt,
-        Subprojects,
+        subprojects,
     });
   
     export const mapToProjects = async (projectsPrisma: ProjectPrisma[]): Promise<Project[]> =>

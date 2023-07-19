@@ -5,8 +5,6 @@ import { Trailer } from 'src/trailer/trailer';
 import { HttpStatus } from '@nestjs/common';
 import { mapToAssets } from 'src/asset/asset.mapper';
 import { Asset } from 'src/asset/asset';
-import * as fs from 'fs';
-import { Content } from 'src/content/content';
 import { mapToTrailers } from 'src/trailer/trailer.mapper';
 import { csvHelper } from './subproject.helper';
 import { mapToSingleProject } from 'src/project/project.mapper';
@@ -17,8 +15,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
     return mapToSingleSubproject(subproject);
@@ -29,8 +27,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
     if(mapToSingleSubproject(deletedSubproject)==null){
@@ -41,8 +39,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const getSubprojects = async (): Promise<Subproject[]> => {
         const subprojects = await database.subproject.findMany({
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
     return mapToSubprojects(subprojects);
@@ -50,6 +48,9 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     
 
     const updateSubproject = async (id: string,subproject: Subproject): Promise<HttpStatus> => {
+
+        let updatedAt = new Date(Date.now()).toISOString();
+        console.log(updatedAt)
         const updatedSubproject = await database.subproject.update({
         where: {
         id: parseInt(id),
@@ -58,10 +59,13 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         title: subproject.title,
         description: subproject.description,
         departureDate: subproject.departureDate,
+        crewChief: subproject.crewChief,
+        updatedAt: updatedAt,
+
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
      if(mapToSingleSubproject(updatedSubproject)==null){
@@ -76,8 +80,8 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         projectId: (id),
         },
         include: {
-        Trailers: false,
-        Assets: false,
+        trailers: false,
+        assets: false,
         },
     });
     return mapToSubprojects(subprojects);
@@ -103,11 +107,11 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
-    return mapToTrailers(subproject.Trailers);
+    return mapToTrailers(subproject.trailers);
     }
 
     
@@ -118,13 +122,13 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         id: parseInt(id),
         },
         data: {
-        Assets: {
+        assets: {
         create: assets,
         },
         },
         include: {
-        Trailers: true,
-        Assets: true,
+        trailers: true,
+        assets: true,
         },
     });
      if(mapToSingleSubproject(updatedSubproject)==null){
@@ -158,12 +162,12 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
             id: (id),
           },
           data: {
-            Subprojects: {
+            subprojects: {
               connect: {id: subProject.id}
             },
           },
           include: {
-            Subprojects: true,
+            subprojects: true,
           },
         });
         if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST

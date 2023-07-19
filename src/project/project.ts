@@ -1,5 +1,4 @@
-import { Subproject } from "prisma/prisma-client";
-import { Project as ProjectPrisma} from "prisma/prisma-client";
+import { Subproject } from "../subproject/subproject";
 
 
 export class Project {
@@ -10,9 +9,9 @@ export class Project {
     readonly crewChief : string;
     readonly createdAt : string;
     readonly updatedAt : string;
-    readonly Subprojects : Subproject[];
+    readonly subprojects : Subproject[];
 
-    constructor(project:{id: string, title: string, description?: string, venueAddress?: string, crewChief?: string, createdAt?: string, updatedAt?: string, Subprojects?: Subproject[]}){
+    constructor(project:{id: string, title: string, description?: string, venueAddress?: string, crewChief?: string, createdAt?: string, updatedAt?: string, subprojects?: Subproject[]}){
         this.id = project.id;
         this.title = project.title;
         this.description = project.description;
@@ -20,6 +19,6 @@ export class Project {
         this.crewChief = project.crewChief;
         this.createdAt = project.createdAt;
         this.updatedAt = project.updatedAt;
-        this.Subprojects = project.Subprojects;
+        this.subprojects = project.subprojects;
     }
     }

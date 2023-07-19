@@ -7,7 +7,7 @@ import { HttpStatus } from '@nestjs/common';
 const getAllProjects = async (): Promise<Project[]> => {
     const projects = await database.project.findMany({
         include: {
-            Subprojects: false,
+            subprojects: false,
         },
     });
     return mapToProjects(projects);
@@ -20,7 +20,7 @@ const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
             id: (id),
         },
         include: {
-            Subprojects: false,
+            subprojects: false,
         },
     });
     if(project === null) return HttpStatus.NOT_FOUND;
@@ -44,8 +44,8 @@ const addProject = async (project: Project): Promise<HttpStatus> => {
 };
 
 const updateProject = async (id: string, project: Project): Promise<HttpStatus> => {
-    let updatedDate: Date;
-    let updatedAt= updatedDate.setDate(Date.now()).toString();
+    let updatedAt = new Date(Date.now()).toISOString();
+        console.log(updatedAt)
     const updatedProject = await database.project.update({
         where: {
             id: (id),
