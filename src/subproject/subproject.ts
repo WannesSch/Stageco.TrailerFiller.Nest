@@ -7,6 +7,7 @@ export class Subproject{
     readonly id: number;
     readonly title: string;
     readonly description?: string;
+    readonly crewChief?: string;
     readonly departureDate?: string;
     readonly createdAt?: string;
     readonly updatedAt?: string;
@@ -19,6 +20,7 @@ export class Subproject{
         this.id = subproject.id;
         this.title = subproject.title;
         this.description = subproject.description;
+        this.crewChief = subproject.crewChief;
         this.departureDate = subproject.departureDate;
         this.createdAt = subproject.createdAt;
         this.updatedAt = subproject.updatedAt;

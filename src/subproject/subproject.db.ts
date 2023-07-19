@@ -141,6 +141,10 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
             data: {
                 title: subproject.title,
                 description: subproject.description,
+                departureDate: subproject.departureDate,
+                createdAt: subproject.createdAt,
+                crewChief: subproject.crewChief,
+                updatedAt: subproject.updatedAt,
                 project: {
                     connect: {id: (id)},
                 },

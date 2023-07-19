@@ -49,6 +49,7 @@ model Subproject {
   id     Int   @id @default(autoincrement())
   title         String  
   description   String?
+  crewChief     String?
   departureDate String?
   createdAt     String?
   updatedAt     String?

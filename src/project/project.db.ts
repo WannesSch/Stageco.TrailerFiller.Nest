@@ -20,11 +20,12 @@ const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
             id: (id),
         },
         include: {
-            Subprojects: true,
+            Subprojects: false,
         },
     });
     if(project === null) return HttpStatus.NOT_FOUND;
-    return (project);
+     let newProject = mapToSingleProject(project);
+    return (newProject);
 };
 const addProject = async (project: Project): Promise<HttpStatus> => {
     const newProject = await database.project.create({
