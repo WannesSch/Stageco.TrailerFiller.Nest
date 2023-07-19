@@ -32,14 +32,14 @@ export class TrailerController {
         return await this.trailerService.update(id, trailer);
     }
     @Put('/addAsset/:id')
-    async addAssets(@Param('id') id: string, @Body() asset: Asset): Promise<HttpStatus> {
+    async addAssets(@Param('id') id: string, @Body() asset: Asset): Promise<HttpStatus | Error> {;
         return await this.trailerService.addAsset(id, asset);
     }
     @Put('/:trailerid/removeAsset/:id')
     async removeAsset(@Param('trailerid') trailerid: string, @Param() id: string): Promise<HttpStatus> {
         return await this.trailerService.removeAsset(trailerid, id);
     }
-    @Put('/addTrailer/:id')
+    @Post('/addTrailer/:id')
     async addTrailer(@Param('id') id: string, @Body() trailer: Trailer): Promise<HttpStatus> {
         return await this.trailerService.addTrailer(id, trailer);
     }

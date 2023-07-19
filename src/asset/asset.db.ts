@@ -164,7 +164,7 @@ const getAssetById = async (id: string): Promise<Asset> => {
             if(mapToSingleAsset(updatedAsset)==null) return HttpStatus.BAD_REQUEST;
             return HttpStatus.OK;
           }
-          
+
     
     export default {
         getAssetById,

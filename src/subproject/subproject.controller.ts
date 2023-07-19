@@ -13,8 +13,8 @@ export class SubprojectController {
         async getAllSubprojects(): Promise<Subproject[]> {
     return await this.subprojectService.getAllSubprojects();
     }
-    @Get('getAllSubprojectsFromProject/:id')
-    async getAllSubprojectsFromProject(id:string): Promise<Subproject[]> {
+    @Get('/getAllSubprojectsFromProject/:id')
+    async getAllSubprojectsFromProject(@Param ('id') id:string): Promise<Subproject[]> {
         return this.subprojectService.getAllSubprojectsFromProject(id);
     }
     @Post('/add/:id')
