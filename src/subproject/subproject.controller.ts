@@ -13,10 +13,15 @@ export class SubprojectController {
         async getAllSubprojects(): Promise<Subproject[]> {
     return await this.subprojectService.getAllSubprojects();
     }
-    @Get('/allFromProject/:id')
-        async getAllSubprojectsFromProject(@Param('id') id: string): Promise<Subproject[]> {
-    return await this.subprojectService.getAllSubprojectsFromProject(id);
+    @Get('getAllSubprojectsFromProject/:id')
+    async getAllSubprojectsFromProject(id:string): Promise<Subproject[]> {
+        return this.subprojectService.getAllSubprojectsFromProject(id);
     }
+    @Post('/add/:id')
+        async addSubproject(@Body() subproject: Subproject,@Param('id') id: string): Promise<HttpStatus>{
+    return await this.subprojectService.addSubproject(id,subproject);
+    }
+    
 
     @Get('/allAssetsFromSubproject/:id')
         async getAllAssetsFromSubproject(@Param('id') id: string): Promise<Asset[]> {
@@ -47,10 +52,6 @@ export class SubprojectController {
     addAssets(@Body() assets: Asset[], @Param('id') id: string): Promise<HttpStatus>{
        return this.subprojectService.addAssets(id,assets);
        
-    }
-    @Put('/addTrailer/:id')
-    async addTrailer(@Body() trailer: Trailer, @Param('id') id: string): Promise<HttpStatus>{
-          return this.subprojectService.addTrailer(id,trailer);
     }
     @Get('/:id/csvReader/:filename/')
     async csvReader(@Param('filename') filename: string,@Param('id') id: string): Promise<Asset[]|HttpStatus>{

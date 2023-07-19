@@ -8,11 +8,11 @@ export class Project {
     readonly description : string;
     readonly venueAddress : string;
     readonly crewChief : string;
-    readonly createdAt : Date;
-    readonly updatedAt : Date;
+    readonly createdAt : string;
+    readonly updatedAt : string;
     readonly Subprojects : Subproject[];
 
-    constructor(project:{id: string, title: string, description?: string, venueAddress?: string, crewChief?: string, createdAt?: Date, updatedAt?: Date, Subprojects?: Subproject[]}){
+    constructor(project:{id: string, title: string, description?: string, venueAddress?: string, crewChief?: string, createdAt?: string, updatedAt?: string, Subprojects?: Subproject[]}){
         this.id = project.id;
         this.title = project.title;
         this.description = project.description;

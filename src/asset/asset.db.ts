@@ -44,7 +44,7 @@ const getAssetById = async (id: string): Promise<Asset> => {
 
 
     const addAsset = async (asset: Asset): Promise<HttpStatus> => {
-        if(asset.rotation.length != 3) return HttpStatus.I_AM_A_TEAPOT;
+        
         const newAsset = await database.asset.create({
         data: {
             id: asset.id,
@@ -58,10 +58,10 @@ const getAssetById = async (id: string): Promise<Asset> => {
             modelPath: asset.modelPath,
             position: asset.position,
             rotation: asset.rotation,
-            
+
         },
     });
-    if(mapToSingleAsset(newAsset)==null) return HttpStatus.I_AM_A_TEAPOT;
+    if(mapToSingleAsset(newAsset)==null) return HttpStatus.BAD_REQUEST;
     return HttpStatus.OK;
     }
 
@@ -148,6 +148,8 @@ const getAssetById = async (id: string): Promise<Asset> => {
           const setPosition = async (id: string, position: number[]): Promise<HttpStatus> => {
 
             if(position.length != 3) return HttpStatus.BAD_REQUEST;
+            console.log(position)
+            console.log(position.toString())
             const updatedAsset = await database.asset.update({
                 where: {
                 id: parseInt(id),

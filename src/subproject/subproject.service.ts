@@ -15,9 +15,11 @@ export class SubprojectService {
     getAllSubprojectsFromProject(id: string): Promise<Subproject[]> {
         return subprojectDB.getAllSubprojectsFromProject(id);
     }
-    addTrailer(id: string, trailer: Trailer):Promise<HttpStatus> {
-        return subprojectDB.addTrailer(id,trailer);
+    addSubproject(id:string,subproject: Subproject):Promise<HttpStatus> {
+        return subprojectDB.addSubproject(id,subproject);
     }
+
+    
     addAssets(id: string, assets: Asset[]):Promise<HttpStatus>{
         return subprojectDB.addAssets(id,assets);
     }

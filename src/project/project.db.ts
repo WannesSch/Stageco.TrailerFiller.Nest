@@ -13,7 +13,7 @@ const getAllProjects = async (): Promise<Project[]> => {
     return mapToProjects(projects);
 };
 const getProjectById = async (id: string): Promise<Project | HttpStatus>=> {
-    if(!id) throw new Error("No id provided");
+    if(id == null) return HttpStatus.BAD_REQUEST;
     
     const project = await database.project.findUnique({
         where: {
@@ -34,6 +34,8 @@ const addProject = async (project: Project): Promise<HttpStatus> => {
             description: project.description,
             venueAddress: project.venueAddress,
             crewChief: project.crewChief,
+            createdAt: project.createdAt,
+            updatedAt: project.updatedAt,
         },
     });
     if(mapToSingleProject(newProject)==null) return HttpStatus.BAD_REQUEST
@@ -66,34 +68,6 @@ const deleteProject = async (id: string): Promise<HttpStatus> => {
     return HttpStatus.OK;
 };
 
-const addSubproject = async (id: string, subproject: Subproject): Promise<HttpStatus> => {
-    const subProject = await database.subproject.create({
-        data: {
-            title: subproject.title,
-            description: subproject.description,
-            project: {
-                connect: {id: (id)},
-            },
-        },
-    });
-    
-    const updatedProject = await database.project.update({
-      where: {
-        id: (id),
-      },
-      data: {
-        Subprojects: {
-          connect: {subprojectId: subProject.subprojectId}
-        },
-      },
-      include: {
-        Subprojects: true,
-      },
-    });
-    if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST
-    return HttpStatus.OK;
-}
-
 
 export default {
     getAllProjects,
@@ -101,6 +75,6 @@ export default {
     addProject,
     updateProject,
     deleteProject,
-    addSubproject,
+
 
 };

@@ -13,7 +13,6 @@ export class TrailerController {
     async getAll(): Promise<Trailer[]> {
         return await this.trailerService.getAll();
     }
-
     @Get('/get/:id')
     async getById(@Param('id') id: string): Promise<Trailer> {
         return await this.trailerService.getById(id);
@@ -32,10 +31,6 @@ export class TrailerController {
     async update(@Param('id') id: string, @Body() trailer: Trailer): Promise<HttpStatus> {
         return await this.trailerService.update(id, trailer);
     }
-    @Post('/add')
-    async create(@Body() trailer: Trailer): Promise<HttpStatus> {
-        return await this.trailerService.add( trailer);
-    }
     @Put('/addAsset/:id')
     async addAssets(@Param('id') id: string, @Body() asset: Asset): Promise<HttpStatus> {
         return await this.trailerService.addAsset(id, asset);
@@ -44,9 +39,9 @@ export class TrailerController {
     async removeAsset(@Param('trailerid') trailerid: string, @Param() id: string): Promise<HttpStatus> {
         return await this.trailerService.removeAsset(trailerid, id);
     }
-    @Put('/addToSubproject/:id')
-    async addToSubproject(@Param('id') id: string, @Body() trailer: Trailer): Promise<HttpStatus> {
-        return await this.trailerService.addToSubproject(id, trailer);
+    @Put('/addTrailer/:id')
+    async addTrailer(@Param('id') id: string, @Body() trailer: Trailer): Promise<HttpStatus> {
+        return await this.trailerService.addTrailer(id, trailer);
     }
 
 

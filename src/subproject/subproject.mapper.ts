@@ -7,7 +7,7 @@ import { Subproject } from "./subproject";
 import { mapToTrailers } from "src/trailer/trailer.mapper";
 
 const mapToSubproject = ({
-    subprojectId,
+    id,
     title,
     description,
     departureDate,
@@ -18,7 +18,7 @@ const mapToSubproject = ({
     projectId,
 }: SubprojectPrisma &{Assets?: AssetPrisma[]} &{Trailers?:TrailerPrisma[]}): Subproject =>
   new Subproject({
-    subprojectId,
+    id,
     title,
     description,
     departureDate,

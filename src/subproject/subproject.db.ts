@@ -9,11 +9,12 @@ import * as fs from 'fs';
 import { Content } from 'src/content/content';
 import { mapToTrailers } from 'src/trailer/trailer.mapper';
 import { csvHelper } from './subproject.helper';
+import { mapToSingleProject } from 'src/project/project.mapper';
 
 const getSubprojectById = async (id: string): Promise<Subproject> => {
     const subproject = await database.subproject.findUnique({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -25,7 +26,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const deleteSubproject = async (id: string): Promise<HttpStatus> => {
         const deletedSubproject = await database.subproject.delete({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -46,26 +47,12 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     });
     return mapToSubprojects(subprojects);
     }
-    const addSubproject = async (subproject: Subproject): Promise<HttpStatus> => {
-        const newSubproject = await database.subproject.create({
-        data: {
-        title: subproject.title,
-        description: subproject.description,
-        },
-        include: {
-        Trailers: false,
-        Assets: false,
-        },
-    });
-    if(mapToSingleSubproject(newSubproject)==null){
-        return HttpStatus.BAD_REQUEST;
-    }
-    return HttpStatus.OK;
-    }
+    
+
     const updateSubproject = async (id: string,subproject: Subproject): Promise<HttpStatus> => {
         const updatedSubproject = await database.subproject.update({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         data: {
         title: subproject.title,
@@ -99,7 +86,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const getAllAssetsFromSubproject = async (id: string): Promise<Asset[]> => {
         const subproject = await database.subproject.findUnique({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -111,7 +98,7 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     const getAllTrailersFromSubproject = async (id: string): Promise<Trailer[]> => {
         const subproject = await database.subproject.findUnique({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         include: {
         Trailers: true,
@@ -121,43 +108,12 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
     return mapToTrailers(subproject.Trailers);
     }
 
-    const addTrailer = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
-
-    const newTrailer = await database.trailer.create({
-      data: {
-        name: trailer.name,
-        height: trailer.height,
-        width: trailer.width,
-        depth: trailer.depth,
-        maxWeight: trailer.maxWeight,
-        subprojectId: parseInt(id),
-      },
-    });
-    const updatedSubproject = await database.subproject.update({
-      where: {
-        subprojectId: parseInt(id),
-      },
-      data: {
-        Trailers: {
-          connect: {id: newTrailer.id}
-        },
-      },
-      include: {
-        Trailers: true,
-        Assets: true,
-      },
-    });
-    if(mapToSingleSubproject(updatedSubproject)==null){
-        return HttpStatus.BAD_REQUEST;
-    }
-    return HttpStatus.OK;
-
-}
+    
 
     const addAssets = async (id: string, assets): Promise<HttpStatus> => {
         const updatedSubproject = await database.subproject.update({
         where: {
-        subprojectId: parseInt(id),
+        id: parseInt(id),
         },
         data: {
         Assets: {
@@ -180,6 +136,34 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
       return response;
       }
 
+      const addSubproject = async (id: string, subproject: Subproject): Promise<HttpStatus> => {
+        const subProject = await database.subproject.create({
+            data: {
+                title: subproject.title,
+                description: subproject.description,
+                project: {
+                    connect: {id: (id)},
+                },
+            },
+        });
+        
+        const updatedProject = await database.project.update({
+          where: {
+            id: (id),
+          },
+          data: {
+            Subprojects: {
+              connect: {id: subProject.id}
+            },
+          },
+          include: {
+            Subprojects: true,
+          },
+        });
+        if(mapToSingleProject(updatedProject)==null) return HttpStatus.BAD_REQUEST
+        return HttpStatus.OK;
+    }
+
     
 
     
@@ -188,11 +172,12 @@ const getSubprojectById = async (id: string): Promise<Subproject> => {
         getSubprojects,
         addSubproject,
         updateSubproject,
-        addTrailer,
+
         deleteSubproject,
         addAssets,
         getAllAssetsFromSubproject,
         getAllSubprojectsFromProject,
         csvReader,
-        getAllTrailersFromSubproject
+        getAllTrailersFromSubproject,
+
     };

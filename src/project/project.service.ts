@@ -3,6 +3,8 @@ import projectDB from './project.db';
 import { Project } from './project';
 import subprojectDb from 'src/subproject/subproject.db';
 import { Subproject } from 'src/subproject/subproject';
+import { promiseHooks } from 'v8';
+import projectDb from './project.db';
 
 
 @Injectable()
@@ -21,12 +23,6 @@ export class ProjectService {
     }
     deleteProject(id: string): Promise<HttpStatus> {
         return projectDB.deleteProject(id);
-    }
- 
-
-    async addSubproject(id: string, subproject: Subproject) : Promise<HttpStatus> {
-         return projectDB.addSubproject(id,subproject);
-        
     }
     getAllProjects(){
         return projectDB.getAllProjects();
