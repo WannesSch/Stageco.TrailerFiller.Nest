@@ -4,6 +4,6 @@ import { RotationController } from './rotation.controller';
 
 @Module({
   providers: [RotationService],
-  controllers: [RotationController]
+  controllers: [RotationController],
 })
 export class RotationModule {}

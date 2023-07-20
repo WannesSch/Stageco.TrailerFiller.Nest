@@ -12,7 +12,6 @@ const getAssetById = async (id: string): Promise<Asset> => {
       content: true,
       position: true,
       rotation: true,
-
     },
   });
   return mapToSingleAsset(asset);
@@ -61,7 +60,7 @@ const addAsset = async (asset: Asset): Promise<HttpStatus> => {
       },
       rotation: {
         connect: { assetId: asset.rotation.assetId },
-      }
+      },
     },
   });
   if (mapToSingleAsset(newAsset) == null) return HttpStatus.BAD_REQUEST;
@@ -74,7 +73,7 @@ const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
       id: parseInt(id),
     },
     data: {
-      id: asset.id,
+      id: parseInt(id),
       unit: asset.unit,
       name: asset.name,
       category: asset.category,
@@ -84,19 +83,19 @@ const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
       weight: asset.weight,
       modelPath: asset.modelPath,
       position: {
-        update: { 
+        update: {
           x: asset.position.x,
           y: asset.position.y,
-          z: asset.position.z
-         },
+          z: asset.position.z,
+        },
       },
       rotation: {
-        update: { 
+        update: {
           x: asset.position.x,
           y: asset.position.y,
-          z: asset.position.z
-         },
-      }
+          z: asset.position.z,
+        },
+      },
     },
     include: {
       content: true,
@@ -115,9 +114,6 @@ const getAllNoContent = async (): Promise<Asset[]> => {
   });
   return mapToAssets(assets);
 };
-
-
-
 
 export default {
   getAssetById,

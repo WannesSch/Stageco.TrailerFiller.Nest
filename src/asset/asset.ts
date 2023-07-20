@@ -2,7 +2,6 @@ import { Content } from '../content/content';
 import { Position } from '../position/position';
 import { Rotation } from '../rotation/rotation';
 
-
 export class Asset {
   readonly id: number;
   readonly unit: string;
