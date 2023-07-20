@@ -37,13 +37,13 @@ model Asset{
   depth           Float
   weight          Float
   modelPath       String?
-  position        String?
-  rotation        String?  
   content         Content[] @relation("content")
   subprojectId    Int?
   subproject      Subproject?   @relation("SubprojectToAsset", fields: [subprojectId], references: [id])
   trailerId       Int?
   trailer         Trailer?   @relation("TrailerWithAsset", fields: [trailerId], references: [id])
+  position      Position?   @relation("AssetPosition")
+  rotation      Rotation?   @relation("AssetRotation")
 }
 model Subproject {
   id     Int   @id @default(autoincrement())
@@ -81,3 +81,20 @@ model Content {
 
 }
 
+model Position{
+  id Int  @id @default(autoincrement())
+  x     Float?
+  y     Float?
+  z     Float?
+  assetId Int  @unique
+  asset Asset   @relation("AssetPosition", fields: [assetId], references: [id])
+}
+
+model Rotation{
+  id    Int  @id @default(autoincrement())
+  x     Float?
+  y     Float?
+  z     Float?
+  assetId Int  @unique
+  asset Asset   @relation("AssetRotation", fields: [assetId], references: [id])
+}

@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE `position` MODIFY `x` DOUBLE NULL,
+    MODIFY `y` DOUBLE NULL,
+    MODIFY `z` DOUBLE NULL;
+
+-- AlterTable
+ALTER TABLE `rotation` MODIFY `x` DOUBLE NULL,
+    MODIFY `y` DOUBLE NULL,
+    MODIFY `z` DOUBLE NULL;
