@@ -92,9 +92,9 @@ const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
       },
       rotation: {
         update: {
-          x: asset.position.x,
-          y: asset.position.y,
-          z: asset.position.z,
+          x: asset.rotation.x,
+          y: asset.rotation.y,
+          z: asset.rotation.z,
         },
       },
     },

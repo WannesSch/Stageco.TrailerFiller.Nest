@@ -43,7 +43,7 @@ export class TrailerController {
   ): Promise<HttpStatus> {
     return await this.trailerService.update(id, trailer);
   }
-  @Put('/addAsset/:id')
+  @Put('/addAsset/:id/:assetId')
   async addAssets(
     @Param('id') id: string,
     @Body() asset: Asset,

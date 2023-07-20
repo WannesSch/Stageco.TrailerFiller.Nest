@@ -17,6 +17,7 @@ const mapToAsset = ({
   position,
   rotation,
   content,
+  isLocked,
 }: AssetPrisma & { position?: PositionPrisma } & {
   rotation?: RotationPrisma;
 } & { content?: ContentPrisma[] }): Asset =>
@@ -33,6 +34,7 @@ const mapToAsset = ({
     position,
     rotation,
     content,
+    isLocked,
   });
 
 export const mapToAssets = (assetsPrisma: AssetPrisma[]): Asset[] =>

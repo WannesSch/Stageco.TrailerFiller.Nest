@@ -16,10 +16,9 @@ const getAll = async (): Promise<Trailer[]> => {
 };
 
 const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
-  const idd = Number(id);
   const assets = await database.asset.findMany({
     where: {
-      trailerId: idd,
+      trailerId: Number(id),
     },
     include: {
       content: false,
@@ -50,10 +49,9 @@ const deleteTrailerById = async ({
   return HttpStatus.OK;
 };
 const getById = async (id: string): Promise<Trailer> => {
-  const idd = Number(id);
   const trailer = await database.trailer.findUnique({
     where: {
-      id: idd,
+      id: Number(id),
     },
     include: {
       assets: true,
@@ -62,10 +60,9 @@ const getById = async (id: string): Promise<Trailer> => {
   return mapToSingleTrailer(trailer);
 };
 const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
-  const idd = Number(id);
   const updatedTrailer = await database.trailer.update({
     where: {
-      id: idd,
+      id: Number(id),
     },
     data: {
       height: trailer.height,
@@ -81,10 +78,9 @@ const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
   return HttpStatus.OK;
 };
 const getAllFromSubproject = async (id: string): Promise<Trailer[]> => {
-  const idd = Number(id);
   const trailer = await database.trailer.findMany({
     where: {
-      subprojectId: idd,
+      subprojectId: Number(id),
     },
   });
   return mapToTrailers(trailer);
@@ -105,7 +101,7 @@ const addTrailer = async (
   });
   const updatedSubproject = await database.subproject.update({
     where: {
-      id: parseInt(id),
+      id: Number(id),
     },
     data: {
       trailers: {
@@ -127,16 +123,15 @@ const removeAsset = async (
   trailerid: string,
   id: string,
 ): Promise<HttpStatus> => {
-  const idd = Number(trailerid);
-  const iddd = Number(id);
+
   const updatedTrailer = await database.trailer.update({
     where: {
-      id: idd,
+      id: parseInt(trailerid),
     },
     data: {
       assets: {
         disconnect: {
-          id: iddd,
+          id: parseInt(id),
         },
       },
     },
@@ -166,10 +161,9 @@ const addAsset = async (
     );
   }
 
-  const idd = Number(id);
   const updatedTrailer = await database.trailer.update({
     where: {
-      id: idd,
+      id: Number(id),
     },
     data: {
       assets: {
@@ -182,6 +176,39 @@ const addAsset = async (
   if (mapToSingleTrailer(updatedTrailer) == null) {
     return HttpStatus.NOT_FOUND;
   }
+  const updatedAsset = await database.asset.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: {
+      id: parseInt(id),
+      unit: asset.unit,
+      name: asset.name,
+      category: asset.category,
+      height: asset.height,
+      width: asset.width,
+      depth: asset.depth,
+      weight: asset.weight,
+      modelPath: asset.modelPath,
+      isLocked: asset.isLocked,
+      trailerId: parseInt(id),
+      position: {
+        update: {
+          x: asset.position.x,
+          y: asset.position.y,
+          z: asset.position.z,
+        },
+      },
+      rotation: {
+        update: {
+          x: asset.rotation.x,
+          y: asset.rotation.y,
+          z: asset.rotation.z,
+        },
+      },
+    },
+  });
+
   return HttpStatus.OK;
 };
 
