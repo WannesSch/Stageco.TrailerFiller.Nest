@@ -123,11 +123,11 @@ const getAllAssetsFromSubproject = async (id: string): Promise<Asset[]> => {
     },
     include: {
       content: true,
-      position: false,
-      rotation: false,
+      position: true,
+      rotation: true,
     },
   });
-  return mapToAssets(assets);
+  return (assets);
 };
 
 const getAllTrailersFromSubproject = async (id: string): Promise<Trailer[]> => {
