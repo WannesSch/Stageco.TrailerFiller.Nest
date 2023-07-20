@@ -43,12 +43,12 @@ export class TrailerController {
   ): Promise<HttpStatus> {
     return await this.trailerService.update(id, trailer);
   }
-  @Put('/addAsset/:id')
+  @Put('/addAsset/:id/:assetId')
   async addAssets(
     @Param('id') id: string,
-    @Body() asset: Asset,
+    @Param() assetId: string,
   ): Promise<HttpStatus | HttpException> {
-    return await this.trailerService.addAsset(id, asset);
+    return await this.trailerService.addAsset(id, assetId);
   }
   @Put('/:trailerid/removeAsset/:id')
   async removeAsset(

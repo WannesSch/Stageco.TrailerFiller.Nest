@@ -8,8 +8,8 @@ export class TrailerService {
   getAllAssetsFromTrailer(id: string): Promise<Asset[]> {
     return trailerDb.getAllAssetsFromTrailer(id);
   }
-  addAsset(id: string, asset: Asset): Promise<HttpStatus | HttpException> {
-    return trailerDb.addAsset(id, asset);
+  addAsset(id: string, assetId:string): Promise<HttpStatus | HttpException> {
+    return trailerDb.addAsset(id, assetId);
   }
   removeAsset(trailerid: string, id: string): Promise<HttpStatus> {
     return trailerDb.removeAsset(trailerid, id);
