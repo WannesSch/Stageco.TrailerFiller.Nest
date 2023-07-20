@@ -2,7 +2,10 @@ import { HttpStatus } from '@nestjs/common';
 import { Asset } from 'src/asset/asset';
 import { Content } from 'src/content/content';
 import database from 'src/prisma/database';
+import { mapToSingleAsset } from 'src/asset/asset.mapper';
 import * as fs from 'fs';
+import { Position } from 'src/position/position';
+import { connect } from 'http2';
 
 export const csvHelper = async (
   filename: string,
@@ -17,6 +20,7 @@ export const csvHelper = async (
     if ((await database.asset.count()) > 0) {
       idStart = Number(idee[0].id) +1;
     }
+    
     let idStartContent = (await database.content.count()) + 1;
     let currentBoxForContent: Asset | undefined = undefined;
     let littleStuffff: Content | undefined = undefined;
@@ -41,7 +45,6 @@ export const csvHelper = async (
       if (category === 1 && count === 1 && cells[1].length > 0) {
         const currentBox = await database.asset.create({
           data: {
-            
             id: idStart,
             unit: cells[2],
             name: cells[3],
@@ -52,10 +55,26 @@ export const csvHelper = async (
             category: category,
             subprojectId: subprojectId,
             modelPath: modelPath,
+            position: {
+              create: { 
+                id: idStart ,
+                x: 0,
+                y: 0,
+                z: 0 
+            },
+          },
+            rotation: {
+              create: { 
+                id: idStart ,
+                x: 0,
+                y: 0,
+                z: 0 
+            },
+            }
           },
         });
-        currentBoxForContent = currentBox;
-        assets.push(currentBox);
+        currentBoxForContent = mapToSingleAsset(currentBox);
+        assets.push(mapToSingleAsset(currentBox));
         idStart += Number(cells[1]);
       } else if (category === 2 && count > 1) {
         if (currentBoxForContent) {
@@ -83,6 +102,7 @@ export const csvHelper = async (
         });
       } else if (category === 1 && cells[1].length === 0) {
         for (let i = 1; i < count + 1; i++) {
+
           const grootObject = await database.asset.create({
             data: {
               id: idStart + i,
@@ -95,9 +115,25 @@ export const csvHelper = async (
               depth: Number(cells[8]),
               subprojectId: subprojectId,
               modelPath: modelPath,
+              position: {
+                create: { 
+                  id: idStart + i,
+                  x: 0,
+                  y: 0,
+                  z: 0 
+              },
+            },
+              rotation: {
+                create: { 
+                  id: idStart + i,
+                  x: 0,
+                  y: 0,
+                  z: 0 
+              },
+              }
             },
           });
-          assets.push(grootObject);
+          assets.push(mapToSingleAsset(grootObject));
         }
         idStart += count + 1;
       }
@@ -108,3 +144,4 @@ export const csvHelper = async (
     return HttpStatus.INTERNAL_SERVER_ERROR;
   }
 };
+

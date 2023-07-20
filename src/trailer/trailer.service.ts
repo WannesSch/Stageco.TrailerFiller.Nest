@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Asset } from 'src/asset/asset';
 import { Trailer } from 'src/trailer/trailer';
 import trailerDb from './trailer.db';
@@ -8,7 +8,7 @@ export class TrailerService {
   getAllAssetsFromTrailer(id: string): Promise<Asset[]> {
     return trailerDb.getAllAssetsFromTrailer(id);
   }
-  addAsset(id: string, asset: Asset): Promise<HttpStatus> {
+  addAsset(id: string, asset: Asset): Promise<HttpStatus | HttpException> {
     return trailerDb.addAsset(id, asset);
   }
   removeAsset(trailerid: string, id: string): Promise<HttpStatus> {

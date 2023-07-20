@@ -1,4 +1,7 @@
 import { Content } from '../content/content';
+import { Position } from '../position/position';
+import { Rotation } from '../rotation/rotation';
+
 
 export class Asset {
   readonly id: number;
@@ -10,8 +13,8 @@ export class Asset {
   readonly depth: number;
   readonly weight?: number;
   readonly modelPath?: string;
-  readonly position: string;
-  readonly rotation: string;
+  readonly position?: Position;
+  readonly rotation?: Rotation;
   readonly content?: Content[];
 
   constructor(asset: {
@@ -25,8 +28,8 @@ export class Asset {
     depth: number;
     weight?: number;
     modelPath?: string;
-    position?: string;
-    rotation?: string;
+    position?: Position;
+    rotation?: Rotation;
   }) {
     this.id = asset.id;
     this.unit = asset.unit;

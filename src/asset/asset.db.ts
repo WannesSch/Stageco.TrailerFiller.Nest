@@ -10,6 +10,9 @@ const getAssetById = async (id: string): Promise<Asset> => {
     },
     include: {
       content: true,
+      position: true,
+      rotation: true,
+
     },
   });
   return mapToSingleAsset(asset);
@@ -22,6 +25,8 @@ const deleteAsset = async (id: string): Promise<HttpStatus> => {
     },
     include: {
       content: true,
+      position: true,
+      rotation: true,
     },
   });
   if (deletedAsset == null) return HttpStatus.BAD_REQUEST;
@@ -32,6 +37,8 @@ const getAssets = async (): Promise<Asset[]> => {
   const assets = await database.asset.findMany({
     include: {
       content: true,
+      position: true,
+      rotation: true,
     },
   });
   return mapToAssets(assets);
@@ -49,8 +56,12 @@ const addAsset = async (asset: Asset): Promise<HttpStatus> => {
       depth: asset.depth,
       weight: asset.weight,
       modelPath: asset.modelPath,
-      position: asset.position,
-      rotation: asset.rotation,
+      position: {
+        connect: { assetId: asset.position.assetId },
+      },
+      rotation: {
+        connect: { assetId: asset.rotation.assetId },
+      }
     },
   });
   if (mapToSingleAsset(newAsset) == null) return HttpStatus.BAD_REQUEST;
@@ -72,8 +83,12 @@ const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
       depth: asset.depth,
       weight: asset.weight,
       modelPath: asset.modelPath,
-      position: asset.position,
-      rotation: asset.rotation,
+      position: {
+        connect: { assetId: asset.position.assetId },
+      },
+      rotation: {
+        connect: { assetId: asset.rotation.assetId },
+      }
     },
     include: {
       content: true,
@@ -93,70 +108,8 @@ const getAllNoContent = async (): Promise<Asset[]> => {
   return mapToAssets(assets);
 };
 
-const getRotation = async (id: string): Promise<number[]> => {
-  const asset = await database.asset.findUnique({
-    where: {
-      id: parseInt(id),
-    },
-    include: {
-      content: true,
-    },
-  });
-  return mapToSingleAsset(asset).rotation.split(',').map(Number);
-};
 
-const getPosition = async (id: string): Promise<number[]> => {
-  const asset = await database.asset.findUnique({
-    where: {
-      id: parseInt(id),
-    },
-    include: {
-      content: true,
-    },
-  });
-  return mapToSingleAsset(asset).position.split(',').map(Number);
-};
-const setRotation = async (
-  id: string,
-  rotation: number[],
-): Promise<HttpStatus> => {
-  if (rotation.length != 3) return HttpStatus.BAD_REQUEST;
 
-  const updatedAsset = await database.asset.update({
-    where: {
-      id: parseInt(id),
-    },
-    data: {
-      rotation: rotation.toString(),
-    },
-    include: {
-      content: true,
-    },
-  });
-  if (mapToSingleAsset(updatedAsset) == null) return HttpStatus.BAD_REQUEST;
-  return HttpStatus.OK;
-};
-const setPosition = async (
-  id: string,
-  position: number[],
-): Promise<HttpStatus> => {
-  if (position.length != 3) return HttpStatus.BAD_REQUEST;
-  console.log(position);
-  console.log(position.toString());
-  const updatedAsset = await database.asset.update({
-    where: {
-      id: parseInt(id),
-    },
-    data: {
-      position: position.toString(),
-    },
-    include: {
-      content: true,
-    },
-  });
-  if (mapToSingleAsset(updatedAsset) == null) return HttpStatus.BAD_REQUEST;
-  return HttpStatus.OK;
-};
 
 export default {
   getAssetById,
@@ -165,8 +118,4 @@ export default {
   updateAsset,
   deleteAsset,
   getAllNoContent,
-  getRotation,
-  getPosition,
-  setRotation,
-  setPosition,
 };

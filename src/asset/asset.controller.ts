@@ -44,26 +44,4 @@ export class AssetController {
     return this.assetService.addAsset(asset);
   }
 
-  @Put('/setPosition/:id')
-  setPosition(
-    @Param('id') id: string,
-    @Body() position: number[],
-  ): Promise<HttpStatus> {
-    return this.assetService.setPosition(id, position);
-  }
-  @Put('/setRotation/:id')
-  setRotation(
-    @Param('id') id: string,
-    @Body() rotation: number[],
-  ): Promise<HttpStatus> {
-    return this.assetService.setRotation(id, rotation);
-  }
-  @Get('/getRotation/:id')
-  getRotation(@Param('id') id: string): Promise<number[]> {
-    return this.assetService.getRotation(id);
-  }
-  @Get('/getPosition/:id')
-  getPosition(@Param('id') id: string): Promise<number[]> {
-    return this.assetService.getPosition(id);
-  }
 }

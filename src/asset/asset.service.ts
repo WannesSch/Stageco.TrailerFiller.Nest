@@ -4,21 +4,11 @@ import { Asset } from './asset';
 
 @Injectable()
 export class AssetService {
-  getPosition(id: string): Promise<number[]> {
-    return assetDB.getPosition(id);
-  }
-  getRotation(id: string): Promise<number[]> {
-    return assetDB.getRotation(id);
-  }
+  
   getAllNoContent(): Promise<Asset[]> {
     return assetDB.getAllNoContent();
   }
-  setRotation(id: string, rotation: number[]): Promise<HttpStatus> {
-    return assetDB.setRotation(id, rotation);
-  }
-  setPosition(id: string, position: number[]): Promise<HttpStatus> {
-    return assetDB.setPosition(id, position);
-  }
+  
 
   addAsset(asset: Asset): Promise<HttpStatus> {
     return assetDB.addAsset(asset);

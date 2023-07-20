@@ -2,8 +2,9 @@ import { mapToSingleTrailer,mapToTrailers } from './trailer.mapper';
 import database from '../prisma/database';
 import { Trailer } from './trailer';
 import { Asset } from '../asset/asset';
-import { HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { mapToSingleSubproject } from 'src/subproject/subproject.mapper';
+import { mapToAssets } from 'src/asset/asset.mapper';
 
 const getAll = async (): Promise<Trailer[]> => {
     const trailers = await database.trailer.findMany({
@@ -17,15 +18,18 @@ const getAll = async (): Promise<Trailer[]> => {
 
     const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
         let idd = Number(id);
-      const trailer = await database.trailer.findUnique({
+      const assets = await database.asset.findMany({
           where: {
-            id: idd,
+            trailerId: idd,
           },
           include: {
-            assets: true,
+            content: false,
+            position: true,
+            rotation: true,
+
           },
         });
-        return mapToSingleTrailer(trailer).assets;
+        return mapToAssets(assets);
       };
 
 
@@ -142,7 +146,19 @@ const deleteTrailerById = async ({ id }: { id: number }):Promise<HttpStatus> => 
   };
 
 
-  const addAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
+  const addAsset = async (id: string, asset: Asset): Promise<HttpStatus | HttpException> => {
+    let triller = await database.trailer.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        assets: true,
+      },
+    });
+    if(mapToAssets(triller.assets).includes(asset)){
+        return new HttpException('Asset already exists in this trailer', HttpStatus.BAD_REQUEST);
+    }
+
     let idd = Number(id);
     const updatedTrailer = await database.trailer.update({
       where: {
