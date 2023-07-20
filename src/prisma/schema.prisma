@@ -83,19 +83,17 @@ model Content {
 }
 
 model Position{
-  id Int  @id @default(autoincrement())
+  id Int  @id @default(autoincrement()) @unique
   x     Float?
   y     Float?
   z     Float?
-  assetId Int  @unique
-  asset Asset   @relation("AssetPosition", fields: [assetId], references: [id])
+  asset Asset   @relation("AssetPosition", fields: [id], references: [id])
 }
 
 model Rotation{
-  id    Int  @id @default(autoincrement())
+  id    Int  @id @default(autoincrement())@unique
   x     Float?
   y     Float?
   z     Float?
-  assetId Int  @unique
-  asset Asset   @relation("AssetRotation", fields: [assetId], references: [id])
+  asset Asset   @relation("AssetRotation", fields: [id], references: [id])
 }

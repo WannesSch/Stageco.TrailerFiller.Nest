@@ -56,10 +56,10 @@ const addAsset = async (asset: Asset): Promise<HttpStatus> => {
       weight: asset.weight,
       modelPath: asset.modelPath,
       position: {
-        connect: { assetId: asset.position.assetId },
+        connect: { id: asset.position.id },
       },
       rotation: {
-        connect: { assetId: asset.rotation.assetId },
+        connect: { id: asset.rotation.id },
       },
     },
   });
@@ -82,6 +82,7 @@ const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
       depth: asset.depth,
       weight: asset.weight,
       modelPath: asset.modelPath,
+      isLocked: asset.isLocked,
       position: {
         update: {
           x: asset.position.x,

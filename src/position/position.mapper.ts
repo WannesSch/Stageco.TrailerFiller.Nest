@@ -1,13 +1,12 @@
 import { Position as PositionPrisma } from '@prisma/client';
 import { Position } from './position';
 
-const mapToPosition = ({ id, x, y, z,assetId }: PositionPrisma): Position => {
+const mapToPosition = ({ id, x, y, z }: PositionPrisma): Position => {
   return new Position({
     id,
     x,
     y,
     z,
-    assetId
 
   });
 };

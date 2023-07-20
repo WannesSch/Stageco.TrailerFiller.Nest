@@ -56,7 +56,6 @@ export const csvHelper = async (
             modelPath: modelPath,
             position: {
               create: {
-                id: idStart,
                 x: 0,
                 y: 0,
                 z: 0,
@@ -64,7 +63,6 @@ export const csvHelper = async (
             },
             rotation: {
               create: {
-                id: idStart,
                 x: 0,
                 y: 0,
                 z: 0,
@@ -121,7 +119,6 @@ export const csvHelper = async (
               modelPath: modelPath,
               position: {
                 create: {
-                  id: idStart + i,
                   x: 0,
                   y: 0,
                   z: 0,
@@ -129,7 +126,6 @@ export const csvHelper = async (
               },
               rotation: {
                 create: {
-                  id: idStart + i,
                   x: 0,
                   y: 0,
                   z: 0,
