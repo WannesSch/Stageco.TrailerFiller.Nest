@@ -178,10 +178,10 @@ const addAsset = async (
   }
   const updatedAsset = await database.asset.update({
     where: {
-      id: parseInt(id),
+      id: asset.id,
     },
     data: {
-      id: parseInt(id),
+      id: asset.id,
       unit: asset.unit,
       name: asset.name,
       category: asset.category,
