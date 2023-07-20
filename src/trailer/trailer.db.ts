@@ -144,7 +144,7 @@ const removeAsset = async (
 
 const addAsset = async (
   id: string,
-  assetId: string,
+  asset: Asset,
 ): Promise<HttpStatus | HttpException> => {
   const triller = await database.trailer.findUnique({
     where: {
@@ -154,10 +154,12 @@ const addAsset = async (
       assets: true,
     },
   });
-  if (triller == null) {
-    throw new HttpException('Trailer not found', HttpStatus.NOT_FOUND);
+  if (mapToAssets(triller.assets).includes(asset)) {
+    return new HttpException(
+      'Asset already exists in this trailer',
+      HttpStatus.BAD_REQUEST,
+    );
   }
-
 
   const updatedTrailer = await database.trailer.update({
     where: {
@@ -166,7 +168,7 @@ const addAsset = async (
     data: {
       assets: {
         connect: {
-          id: Number(assetId),
+          id: asset.id,
         },
       },
     },
@@ -174,6 +176,39 @@ const addAsset = async (
   if (mapToSingleTrailer(updatedTrailer) == null) {
     return HttpStatus.NOT_FOUND;
   }
+  const updatedAsset = await database.asset.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: {
+      id: parseInt(id),
+      unit: asset.unit,
+      name: asset.name,
+      category: asset.category,
+      height: asset.height,
+      width: asset.width,
+      depth: asset.depth,
+      weight: asset.weight,
+      modelPath: asset.modelPath,
+      isLocked: asset.isLocked,
+      trailerId: parseInt(id),
+      position: {
+        update: {
+          x: asset.position.x,
+          y: asset.position.y,
+          z: asset.position.z,
+        },
+      },
+      rotation: {
+        update: {
+          x: asset.rotation.x,
+          y: asset.rotation.y,
+          z: asset.rotation.z,
+        },
+      },
+    },
+  });
+
   return HttpStatus.OK;
 };
 
