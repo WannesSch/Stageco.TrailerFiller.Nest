@@ -26,7 +26,7 @@ const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
       rotation: true,
     },
   });
-  return mapToAssets(assets);
+  return (assets);
 };
 
 const deleteTrailerById = async ({

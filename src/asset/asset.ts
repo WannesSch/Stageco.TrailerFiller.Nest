@@ -30,7 +30,7 @@ export class Asset {
     modelPath?: string;
     position?: Position;
     rotation?: Rotation;
-    isLocked?: boolean;
+    isLocked: boolean;
   }) {
     this.id = asset.id;
     this.unit = asset.unit;
