@@ -16,10 +16,9 @@ const getAll = async (): Promise<Trailer[]> => {
 };
 
 const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
-  const idd = Number(id);
   const assets = await database.asset.findMany({
     where: {
-      trailerId: idd,
+      trailerId: Number(id),
     },
     include: {
       content: false,
@@ -50,10 +49,9 @@ const deleteTrailerById = async ({
   return HttpStatus.OK;
 };
 const getById = async (id: string): Promise<Trailer> => {
-  const idd = Number(id);
   const trailer = await database.trailer.findUnique({
     where: {
-      id: idd,
+      id: Number(id),
     },
     include: {
       assets: true,
@@ -62,10 +60,9 @@ const getById = async (id: string): Promise<Trailer> => {
   return mapToSingleTrailer(trailer);
 };
 const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
-  const idd = Number(id);
   const updatedTrailer = await database.trailer.update({
     where: {
-      id: idd,
+      id: Number(id),
     },
     data: {
       height: trailer.height,
@@ -81,10 +78,9 @@ const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
   return HttpStatus.OK;
 };
 const getAllFromSubproject = async (id: string): Promise<Trailer[]> => {
-  const idd = Number(id);
   const trailer = await database.trailer.findMany({
     where: {
-      subprojectId: idd,
+      subprojectId: Number(id),
     },
   });
   return mapToTrailers(trailer);
@@ -105,7 +101,7 @@ const addTrailer = async (
   });
   const updatedSubproject = await database.subproject.update({
     where: {
-      id: parseInt(id),
+      id: Number(id),
     },
     data: {
       trailers: {
@@ -127,16 +123,15 @@ const removeAsset = async (
   trailerid: string,
   id: string,
 ): Promise<HttpStatus> => {
-  const idd = Number(trailerid);
-  const iddd = Number(id);
+
   const updatedTrailer = await database.trailer.update({
     where: {
-      id: idd,
+      id: parseInt(trailerid),
     },
     data: {
       assets: {
         disconnect: {
-          id: iddd,
+          id: parseInt(id),
         },
       },
     },
@@ -149,7 +144,7 @@ const removeAsset = async (
 
 const addAsset = async (
   id: string,
-  asset: Asset,
+  assetId: string,
 ): Promise<HttpStatus | HttpException> => {
   const triller = await database.trailer.findUnique({
     where: {
@@ -159,22 +154,19 @@ const addAsset = async (
       assets: true,
     },
   });
-  if (mapToAssets(triller.assets).includes(asset)) {
-    return new HttpException(
-      'Asset already exists in this trailer',
-      HttpStatus.BAD_REQUEST,
-    );
+  if (triller == null) {
+    throw new HttpException('Trailer not found', HttpStatus.NOT_FOUND);
   }
 
-  const idd = Number(id);
+
   const updatedTrailer = await database.trailer.update({
     where: {
-      id: idd,
+      id: Number(id),
     },
     data: {
       assets: {
         connect: {
-          id: asset.id,
+          id: Number(assetId),
         },
       },
     },

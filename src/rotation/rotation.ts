@@ -5,7 +5,6 @@ export class Rotation {
   readonly x?: number;
   readonly y?: number;
   readonly z?: number;
-  readonly assetId?: number;
   readonly asset?: Asset;
 
   constructor(rotation: {
@@ -13,14 +12,12 @@ export class Rotation {
     x: number;
     y: number;
     z: number;
-    assetId?: number;
     asset?: Asset;
   }) {
     this.id = rotation.id;
     this.x = rotation.x;
     this.y = rotation.y;
     this.z = rotation.z;
-    this.assetId = rotation.assetId;
     this.asset = rotation.asset;
   }
 }
