@@ -120,6 +120,8 @@ const getAllAssetsFromSubproject = async (id: string): Promise<Asset[]> => {
     },
     include: {
       content: true,
+      position: false,
+      rotation: false,
     },
   });
   return mapToAssets(assets);
