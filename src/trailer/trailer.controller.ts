@@ -46,7 +46,7 @@ export class TrailerController {
   @Put('/addAsset/:id/:assetId')
   async addAssets(
     @Param('id') id: string,
-    @Param() asset: Asset,
+    @Body() asset: Asset,
   ): Promise<HttpStatus | HttpException> {
     return await this.trailerService.addAsset(id, asset);
   }
