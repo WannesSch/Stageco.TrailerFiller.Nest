@@ -79,8 +79,6 @@ const updateSubproject = async (
   offset = Math.abs(offset / 60);
   time.setHours(time.getHours() + offset);
   const tijd = time.toISOString();  
-  const updatedAt =  new Date(Date.now()).toISOString();
-  console.log(updatedAt);
   const updatedSubproject = await database.subproject.update({
     where: {
       id: parseInt(id),

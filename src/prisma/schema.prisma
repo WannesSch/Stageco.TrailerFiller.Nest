@@ -44,6 +44,7 @@ model Asset{
   trailer         Trailer?   @relation("TrailerWithAsset", fields: [trailerId], references: [id])
   position      Position?   @relation("AssetPosition")
   rotation      Rotation?   @relation("AssetRotation")
+  isLocked        Boolean @default(false)
 }
 model Subproject {
   id     Int   @id @default(autoincrement())
