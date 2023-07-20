@@ -84,10 +84,18 @@ const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
       weight: asset.weight,
       modelPath: asset.modelPath,
       position: {
-        connect: { assetId: asset.position.assetId },
+        update: { 
+          x: asset.position.x,
+          y: asset.position.y,
+          z: asset.position.z
+         },
       },
       rotation: {
-        connect: { assetId: asset.rotation.assetId },
+        update: { 
+          x: asset.position.x,
+          y: asset.position.y,
+          z: asset.position.z
+         },
       }
     },
     include: {
