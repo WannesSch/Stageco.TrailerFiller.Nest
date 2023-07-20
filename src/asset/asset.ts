@@ -2,7 +2,6 @@ import { Content } from '../content/content';
 import { Position } from '../position/position';
 import { Rotation } from '../rotation/rotation';
 
-
 export class Asset {
   readonly id: number;
   readonly unit: string;
@@ -16,6 +15,7 @@ export class Asset {
   readonly position?: Position;
   readonly rotation?: Rotation;
   readonly content?: Content[];
+  readonly isLocked : boolean;
 
   constructor(asset: {
     id: number;
@@ -30,6 +30,7 @@ export class Asset {
     modelPath?: string;
     position?: Position;
     rotation?: Rotation;
+    isLocked?: boolean;
   }) {
     this.id = asset.id;
     this.unit = asset.unit;

@@ -1,8 +1,8 @@
 import { Asset as AssetPrisma } from '@prisma/client';
 import { Asset } from './asset';
 import { Content as ContentPrisma } from '@prisma/client';
-import {Position as PositionPrisma} from '@prisma/client';
-import {Rotation as RotationPrisma} from '@prisma/client';
+import { Position as PositionPrisma } from '@prisma/client';
+import { Rotation as RotationPrisma } from '@prisma/client';
 
 const mapToAsset = ({
   id,
@@ -19,8 +19,7 @@ const mapToAsset = ({
   content,
 }: AssetPrisma & { position?: PositionPrisma } & {
   rotation?: RotationPrisma;
-} & { content?: ContentPrisma[] }
-): Asset =>
+} & { content?: ContentPrisma[] }): Asset =>
   new Asset({
     id,
     unit,

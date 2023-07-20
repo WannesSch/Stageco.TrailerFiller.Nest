@@ -4,8 +4,6 @@ import { Content } from 'src/content/content';
 import database from 'src/prisma/database';
 import { mapToSingleAsset } from 'src/asset/asset.mapper';
 import * as fs from 'fs';
-import { Position } from 'src/position/position';
-import { connect } from 'http2';
 
 export const csvHelper = async (
   filename: string,
@@ -18,9 +16,9 @@ export const csvHelper = async (
       await database.$queryRaw`SELECT id FROM Asset ORDER BY id DESC LIMIT 1`;
     let idStart = 1;
     if ((await database.asset.count()) > 0) {
-      idStart = Number(idee[0].id) +1;
+      idStart = Number(idee[0].id) + 1;
     }
-    
+    let newWeight = 0;
     let idStartContent = (await database.content.count()) + 1;
     let currentBoxForContent: Asset | undefined = undefined;
     let littleStuffff: Content | undefined = undefined;
@@ -41,8 +39,9 @@ export const csvHelper = async (
       if (cells[6] && cells[6].includes(',')) {
         cells[6] = cells[6].replace(',', '.');
       }
-      
+
       if (category === 1 && count === 1 && cells[1].length > 0) {
+        newWeight = 0;
         const currentBox = await database.asset.create({
           data: {
             id: idStart,
@@ -56,21 +55,19 @@ export const csvHelper = async (
             subprojectId: subprojectId,
             modelPath: modelPath,
             position: {
-              create: { 
-                id: idStart ,
+              create: {
                 x: 0,
                 y: 0,
-                z: 0 
+                z: 0,
+              },
             },
-          },
             rotation: {
-              create: { 
-                id: idStart ,
+              create: {
                 x: 0,
                 y: 0,
-                z: 0 
+                z: 0,
+              },
             },
-            }
           },
         });
         currentBoxForContent = mapToSingleAsset(currentBox);
@@ -89,20 +86,25 @@ export const csvHelper = async (
             },
           });
           littleStuffff = littleStuff;
+          
+          
         }
+        
+        newWeight += littleStuffff.amount * littleStuffff.weight ;
         await database.asset.update({
           where: {
             id: currentBoxForContent.id,
           },
           data: {
+            weight:  Number(cells[4]) + newWeight,
             content: {
               connect: { id: littleStuffff.id },
             },
           },
         });
       } else if (category === 1 && cells[1].length === 0) {
+        newWeight = 0;
         for (let i = 1; i < count + 1; i++) {
-
           const grootObject = await database.asset.create({
             data: {
               id: idStart + i,
@@ -116,21 +118,19 @@ export const csvHelper = async (
               subprojectId: subprojectId,
               modelPath: modelPath,
               position: {
-                create: { 
-                  id: idStart + i,
+                create: {
                   x: 0,
                   y: 0,
-                  z: 0 
+                  z: 0,
+                },
               },
-            },
               rotation: {
-                create: { 
-                  id: idStart + i,
+                create: {
                   x: 0,
                   y: 0,
-                  z: 0 
+                  z: 0,
+                },
               },
-              }
             },
           });
           assets.push(mapToSingleAsset(grootObject));
@@ -144,4 +144,3 @@ export const csvHelper = async (
     return HttpStatus.INTERNAL_SERVER_ERROR;
   }
 };
-

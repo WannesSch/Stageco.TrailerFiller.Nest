@@ -74,8 +74,11 @@ const updateSubproject = async (
   id: string,
   subproject: Subproject,
 ): Promise<HttpStatus> => {
-  const updatedAt = new Date(Date.now()).toISOString();
-  console.log(updatedAt);
+  const time = new Date(Date.now());
+  var offset = time.getTimezoneOffset();
+  offset = Math.abs(offset / 60);
+  time.setHours(time.getHours() + offset);
+  const tijd = time.toISOString();  
   const updatedSubproject = await database.subproject.update({
     where: {
       id: parseInt(id),
@@ -85,7 +88,7 @@ const updateSubproject = async (
       description: subproject.description,
       departureDate: subproject.departureDate,
       crewChief: subproject.crewChief,
-      updatedAt: updatedAt,
+      updatedAt: tijd,
     },
     include: {
       trailers: true,

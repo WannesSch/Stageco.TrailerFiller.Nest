@@ -4,11 +4,9 @@ import { Asset } from './asset';
 
 @Injectable()
 export class AssetService {
-  
   getAllNoContent(): Promise<Asset[]> {
     return assetDB.getAllNoContent();
   }
-  
 
   addAsset(asset: Asset): Promise<HttpStatus> {
     return assetDB.addAsset(asset);
