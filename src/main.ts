@@ -4,9 +4,6 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // app.useGlobalPipes(new ValidationPipe({
-  //   transform: true,
-  // }));
 
   const corsOptions: CorsOptions = {
     origin: ['http://localhost', 'http://localhost:3000'],
