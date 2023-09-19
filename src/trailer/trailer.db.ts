@@ -21,7 +21,7 @@ const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
       trailerId: Number(id),
     },
     include: {
-      content: false,
+      content: true,
       position: true,
       rotation: true,
     },
