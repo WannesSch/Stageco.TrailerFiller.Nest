@@ -7,9 +7,12 @@ const mapToTrailer = ({
   height,
   width,
   depth,
+  type,
   weight,
   type,
   maxWeight,
+  description,
+  licensePlate,
   assets,
 }: TrailerPrisma & { assets?: AssetPrisma[] }): Trailer =>
   new Trailer({
@@ -20,6 +23,8 @@ const mapToTrailer = ({
     type,
     weight,
     maxWeight,
+    description,
+    licensePlate,
     assets,
   });
 

@@ -9,6 +9,8 @@ export class Trailer {
   readonly type?: string;
   readonly maxWeight: number;
   readonly assets?: Asset[];
+  readonly licensePlate?: string
+  readonly description?:  string
 
   constructor(trailer: {
     id: number;
@@ -18,6 +20,8 @@ export class Trailer {
     weight?: number;
     type?: string;
     maxWeight?: number;
+    licensePlate?: string
+    description?:  string
     assets?: Asset[];
   }) {
     this.id = trailer.id;
@@ -26,6 +30,9 @@ export class Trailer {
     this.depth = trailer.depth;
     this.type = trailer.type;
     this.weight = trailer.weight;
+    this.description = trailer.description;
+    this.licensePlate = trailer.licensePlate;
+    this.type = trailer.type;
     this.maxWeight = trailer.maxWeight;
     this.assets = trailer.assets;
   }

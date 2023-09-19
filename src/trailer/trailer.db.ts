@@ -53,6 +53,8 @@ const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
       depth: trailer.depth,
       weight: trailer.weight,
       type: trailer.type,
+      description: trailer.description,
+      licensePlate: trailer.licensePlate,
       maxWeight: trailer.maxWeight,
     },
   });
@@ -80,6 +82,9 @@ const addTrailer = async (
       width: trailer.width,
       depth: trailer.depth,
       maxWeight: trailer.maxWeight,
+      type: trailer.type,
+      description: trailer.description,
+      licensePlate: trailer.licensePlate,
       subprojectId: parseInt(id),
     },
   });
@@ -99,6 +104,18 @@ const addTrailer = async (
   });
   if (mapToSingleSubproject(updatedSubproject) == null) {
     return HttpStatus.BAD_REQUEST;
+  }
+  return HttpStatus.OK;
+};
+
+const deleteTrailerById = async (id: number): Promise<HttpStatus> => {
+  const deletedTrailer = await database.trailer.delete({
+    where: {
+      id: id,
+    },
+  });
+  if (mapToSingleTrailer(deletedTrailer) == null) {
+    return HttpStatus.NOT_FOUND;
   }
   return HttpStatus.OK;
 };
@@ -198,10 +215,10 @@ const addAsset = async (
 
 export default {
   getAll,
-  deleteTrailerById,
   getById,
   update,
   getAllFromSubproject,
+  deleteTrailerById,
   removeAsset,
   addAsset,
   addTrailer,

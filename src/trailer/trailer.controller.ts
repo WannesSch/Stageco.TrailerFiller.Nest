@@ -37,6 +37,13 @@ export class TrailerController {
     return await this.trailerService.getAllAssetsFromTrailer(id);
   }
 
+  @Delete( '/delete/:id')
+  async delete(@Param('id') id: string): Promise<HttpStatus> {
+    return await this.trailerService.delete(id);
+  }
+
+
+
   @Put('/update/:id')
   async update(
     @Param('id') id: string,
@@ -57,10 +64,6 @@ export class TrailerController {
     @Param('id') id: string,
   ): Promise<HttpStatus> {
     return await this.trailerService.removeAsset(trailerid, id);
-  }
-  @Delete( '/delete/:id')
-  async delete(@Param('id') id: string): Promise<HttpStatus> {
-    return await this.trailerService.delete(id);
   }
   @Post('/addTrailer/:id')
   async addTrailer(
