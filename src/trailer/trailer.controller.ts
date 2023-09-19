@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -36,6 +37,13 @@ export class TrailerController {
     return await this.trailerService.getAllAssetsFromTrailer(id);
   }
 
+  @Delete( '/delete/:id')
+  async delete(@Param('id') id: string): Promise<HttpStatus> {
+    return await this.trailerService.delete(id);
+  }
+
+
+
   @Put('/update/:id')
   async update(
     @Param('id') id: string,
@@ -57,6 +65,7 @@ export class TrailerController {
   ): Promise<HttpStatus> {
     return await this.trailerService.removeAsset(trailerid, id);
   }
+ 
   @Post('/addTrailer/:id')
   async addTrailer(
     @Param('id') id: string,

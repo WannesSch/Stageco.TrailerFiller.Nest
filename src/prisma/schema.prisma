@@ -68,6 +68,8 @@ model Trailer {
   maxWeight Float
   subprojectId  Int?
   type      String?
+  licensePlate String?
+  description  String?
   assets    Asset[]   @relation("TrailerWithAsset")
   subproject   Subproject?   @relation("SubprojectToTrailer", fields: [subprojectId], references: [id])   
 }
