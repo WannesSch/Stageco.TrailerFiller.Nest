@@ -12,6 +12,7 @@ import { FilesModule } from './files/files.module';
 import { PositionService } from './position/position.service';
 import { PositionModule } from './position/position.module';
 import { RotationModule } from './rotation/rotation.module';
+import { UserModule } from './user/user.module';
 @Module({
   controllers: [AppController],
   providers: [AppService, PositionService],
@@ -26,6 +27,7 @@ import { RotationModule } from './rotation/rotation.module';
     FilesModule,
     PositionModule,
     RotationModule,
+    UserModule,
   ],
 })
 export class AppModule {}

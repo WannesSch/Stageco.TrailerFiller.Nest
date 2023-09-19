@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 model User{
@@ -67,6 +67,7 @@ model Trailer {
   weight    Float?
   maxWeight Float
   subprojectId  Int?
+  type      String?
   assets    Asset[]   @relation("TrailerWithAsset")
   subproject   Subproject?   @relation("SubprojectToTrailer", fields: [subprojectId], references: [id])   
 }

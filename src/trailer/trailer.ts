@@ -6,6 +6,7 @@ export class Trailer {
   readonly width: number;
   readonly depth: number;
   readonly weight?: number;
+  readonly type?: string;
   readonly maxWeight: number;
   readonly assets?: Asset[];
 
@@ -15,6 +16,7 @@ export class Trailer {
     width: number;
     depth: number;
     weight?: number;
+    type?: string;
     maxWeight?: number;
     assets?: Asset[];
   }) {
@@ -22,6 +24,7 @@ export class Trailer {
     this.height = trailer.height;
     this.width = trailer.width;
     this.depth = trailer.depth;
+    this.type = trailer.type;
     this.weight = trailer.weight;
     this.maxWeight = trailer.maxWeight;
     this.assets = trailer.assets;

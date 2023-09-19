@@ -69,6 +69,7 @@ const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
       width: trailer.width,
       depth: trailer.depth,
       weight: trailer.weight,
+      type: trailer.type,
       maxWeight: trailer.maxWeight,
     },
   });

@@ -26,7 +26,7 @@ export class UserService {
       console.log("User already exists");
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    return await userDB.createUser({ name, password: hashedPassword,email });
+    return await userDB.createUser({ name, password:hashedPassword,email });
   }
 
   async authenticate({ name, password }): Promise<string> {
@@ -40,7 +40,7 @@ export class UserService {
 
   private generateJWTToken(name: string): string {
     const jwtSecret = process.env.JWT_SECRET;
-    const options = { expiresIn: '8h', issuer: 'MovieRate' };
+    const options = { expiresIn: '8h', issuer: 'Stageco' };
     try {
       return jwt.sign({ name }, jwtSecret, options);
     } catch (err) {
