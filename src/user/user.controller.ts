@@ -16,8 +16,10 @@ export class UserController {
     }
   }
   @Post('register')
-    async register(@Body() name, password,email, @Res() res: Response) {
+    async register(@Body() name:string, password:string,email:string, @Res() res: Response) {
     try {
+      console.log(name,password,email)
+      
       const newUser = await this.userService.createUser({name,password,email});
       res.status(HttpStatus.OK).json({ message: 'User created', newUser });
     } catch (error) {

@@ -29,25 +29,8 @@ const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
   return (assets);
 };
 
-const deleteTrailerById = async ({
-  id,
-}: {
-  id: number;
-}): Promise<HttpStatus> => {
-  const findtrailer = await database.trailer.findFirst({
-    where: {
-      id: id,
-    },
-  });
-  if (!findtrailer) HttpStatus.NOT_FOUND;
-  await database.trailer.delete({
-    where: {
-      id: id,
-    },
-  });
 
-  return HttpStatus.OK;
-};
+
 const getById = async (id: string): Promise<Trailer> => {
   const trailer = await database.trailer.findUnique({
     where: {

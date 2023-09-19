@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from './user';
 import userDB from './user.db'; // Import your userDB module
 import jwt from 'jsonwebtoken';
+import { stringify } from 'querystring';
 
 const bcrypt = require('bcrypt');
 
@@ -20,12 +21,16 @@ export class UserService {
     return userDB.getUserByName(name);
   }
 
-  async createUser({ name, password,email }): Promise<User> {
+  async createUser({name,password,email}): Promise<User> {
+    name = stringify(name)
+    
     const existingUser = await this.getUserByName(name);
     if (existingUser) {
       console.log("User already exists");
     }
+    console.log(password)
     const hashedPassword = await bcrypt.hash(password, 12);
+    console.log(hashedPassword)
     return await userDB.createUser({ name, password:hashedPassword,email });
   }
 
