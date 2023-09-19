@@ -17,9 +17,7 @@ export class TrailerService {
   addTrailer(id: string, trailer: Trailer): Promise<HttpStatus> {
     return trailerDb.addTrailer(id, trailer);
   }
-  delete(id: string): Promise<HttpStatus> {
-    return trailerDb.deleteTrailerById(Number(id));
-  }
+ 
 
 
   getAllFromSubproject(id: string): Promise<Trailer[]> {
