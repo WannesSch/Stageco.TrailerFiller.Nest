@@ -29,25 +29,8 @@ const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
   return (assets);
 };
 
-const deleteTrailerById = async ({
-  id,
-}: {
-  id: number;
-}): Promise<HttpStatus> => {
-  const findtrailer = await database.trailer.findFirst({
-    where: {
-      id: id,
-    },
-  });
-  if (!findtrailer) HttpStatus.NOT_FOUND;
-  await database.trailer.delete({
-    where: {
-      id: id,
-    },
-  });
 
-  return HttpStatus.OK;
-};
+
 const getById = async (id: string): Promise<Trailer> => {
   const trailer = await database.trailer.findUnique({
     where: {
@@ -68,8 +51,10 @@ const update = async (id: string, trailer: Trailer): Promise<HttpStatus> => {
       height: trailer.height,
       width: trailer.width,
       depth: trailer.depth,
-      type: trailer.type,
       weight: trailer.weight,
+      type: trailer.type,
+      description: trailer.description,
+      licensePlate: trailer.licensePlate,
       maxWeight: trailer.maxWeight,
     },
   });
@@ -96,8 +81,10 @@ const addTrailer = async (
       height: trailer.height,
       width: trailer.width,
       depth: trailer.depth,
-      type: trailer.type,
       maxWeight: trailer.maxWeight,
+      type: trailer.type,
+      description: trailer.description,
+      licensePlate: trailer.licensePlate,
       subprojectId: parseInt(id),
     },
   });
@@ -117,6 +104,18 @@ const addTrailer = async (
   });
   if (mapToSingleSubproject(updatedSubproject) == null) {
     return HttpStatus.BAD_REQUEST;
+  }
+  return HttpStatus.OK;
+};
+
+const deleteTrailerById = async (id: number): Promise<HttpStatus> => {
+  const deletedTrailer = await database.trailer.delete({
+    where: {
+      id: id,
+    },
+  });
+  if (mapToSingleTrailer(deletedTrailer) == null) {
+    return HttpStatus.NOT_FOUND;
   }
   return HttpStatus.OK;
 };
@@ -216,10 +215,10 @@ const addAsset = async (
 
 export default {
   getAll,
-  deleteTrailerById,
   getById,
   update,
   getAllFromSubproject,
+  deleteTrailerById,
   removeAsset,
   addAsset,
   addTrailer,
