@@ -28,6 +28,7 @@ export class Trailer {
     this.height = trailer.height;
     this.width = trailer.width;
     this.depth = trailer.depth;
+    this.type = trailer.type;
     this.weight = trailer.weight;
     this.description = trailer.description;
     this.licensePlate = trailer.licensePlate;

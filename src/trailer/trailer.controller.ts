@@ -65,7 +65,6 @@ export class TrailerController {
   ): Promise<HttpStatus> {
     return await this.trailerService.removeAsset(trailerid, id);
   }
- 
   @Post('/addTrailer/:id')
   async addTrailer(
     @Param('id') id: string,

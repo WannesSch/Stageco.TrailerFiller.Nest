@@ -62,9 +62,6 @@ CREATE TABLE "Trailer" (
     "weight" DOUBLE PRECISION,
     "maxWeight" DOUBLE PRECISION NOT NULL,
     "subprojectId" INTEGER,
-    "type" TEXT,
-    "licensePlate" TEXT,
-    "description" TEXT,
 
     CONSTRAINT "Trailer_pkey" PRIMARY KEY ("id")
 );

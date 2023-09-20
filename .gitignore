@@ -1,8 +1,7 @@
 # compiled output
 /dist
 /node_modules
-
-
+/src/prisma/migrations
 .env
 # Logs
 logs
