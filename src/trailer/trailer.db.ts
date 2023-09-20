@@ -177,39 +177,6 @@ const addAsset = async (
   if (mapToSingleTrailer(updatedTrailer) == null) {
     return HttpStatus.NOT_FOUND;
   }
-  const updatedAsset = await database.asset.update({
-    where: {
-      id: asset.id,
-    },
-    data: {
-      id: asset.id,
-      unit: asset.unit,
-      name: asset.name,
-      category: asset.category,
-      height: asset.height,
-      width: asset.width,
-      depth: asset.depth,
-      weight: asset.weight,
-      modelPath: asset.modelPath,
-      isLocked: asset.isLocked,
-      trailerId: parseInt(id),
-      position: {
-        update: {
-          x: asset.position.x,
-          y: asset.position.y,
-          z: asset.position.z,
-        },
-      },
-      rotation: {
-        update: {
-          x: asset.rotation.x,
-          y: asset.rotation.y,
-          z: asset.rotation.z,
-        },
-      },
-    },
-  });
-
   return HttpStatus.OK;
 };
 
