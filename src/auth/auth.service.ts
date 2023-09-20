@@ -9,7 +9,7 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async signIn(name, pass) {
+  async logIn(name, pass) {
     const user = await this.userService.getUserByName(name);
     if (user?.password !== pass) {
       throw new UnauthorizedException();
