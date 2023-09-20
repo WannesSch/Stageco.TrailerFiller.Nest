@@ -7,12 +7,16 @@ import {
   Post,
   Put,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { Asset } from './asset';
 import { AssetService } from './asset.service';
 import { HttpExceptionFilter } from '../validation/http-exception';
+import { AuthGuards } from '../auth/auth.guards';
 
+@UseGuards(AuthGuards())
 @Controller('api/v1/asset')
+
 @UseFilters(HttpExceptionFilter)
 export class AssetController {
   constructor(private readonly assetService: AssetService) {}
@@ -44,3 +48,4 @@ export class AssetController {
     return this.assetService.addAsset(asset);
   }
 }
+

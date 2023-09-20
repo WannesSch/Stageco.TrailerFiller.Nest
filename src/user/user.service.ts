@@ -3,6 +3,7 @@ import { User } from './user';
 import userDB from './user.db'; // Import your userDB module
 import { stringify } from 'querystring';
 import { UserInput } from './userInput';
+import { JwtPayload } from 'jsonwebtoken';
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
