@@ -22,7 +22,7 @@ export class UserService {
   }
 
   async createUser(user:User): Promise<User> {
-    console.log(user)    
+       
     const existingUser = await userDB.getUserByName(user.name);
     if (existingUser) {
       console.log("User already exists");
@@ -32,7 +32,6 @@ export class UserService {
   }
 
   async authenticate({ name, password }: UserInput): Promise<string> {
-    console.log(name, password)
     const user = await userDB.getUserByName(name);
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
@@ -46,7 +45,6 @@ export class UserService {
     
     const options = { expiresIn: '8h', issuer: 'Stageco' };
     try {
-      console.log('JWT Secret:', jwtSecret, 'options:', options, 'name:', name);
       return jwt.sign({ name }, jwtSecret, options); 
     } catch (err) {
       console.log(err);

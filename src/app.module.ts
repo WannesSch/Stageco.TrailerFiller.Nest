@@ -13,7 +13,6 @@ import { PositionService } from './position/position.service';
 import { PositionModule } from './position/position.module';
 import { RotationModule } from './rotation/rotation.module';
 import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
 @Module({
   controllers: [AppController],
   providers: [AppService, PositionService],
@@ -29,7 +28,6 @@ import { AuthModule } from './auth/auth.module';
     PositionModule,
     RotationModule,
     UserModule,
-    AuthModule,
   ],
 })
 export class AppModule {}
