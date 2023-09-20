@@ -7,7 +7,6 @@ const mapToTrailer = ({
   height,
   width,
   depth,
-  type,
   weight,
   type,
   maxWeight,

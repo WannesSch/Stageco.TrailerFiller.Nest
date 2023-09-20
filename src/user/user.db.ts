@@ -2,11 +2,11 @@ import { User } from '../user/user';
 import database from '../prisma/database';
 
 
-const createUser = async ({
-    name,
-    password,
-    email,
-}): Promise<User> => {
+const createUser = async (
+    name:string,
+    password:string,
+    email:string,
+): Promise<User> => {
     try {
         const userPrisma = await database.user.create({
             data: {
@@ -45,7 +45,7 @@ const getUserById = async ({ id }): Promise<User> => {
     }
 };
 
-const getUserByName = async ({ name }): Promise<User> => {
+const getUserByName = async ( name:string ): Promise<User> => {
     try {
         const userPrisma = await database.user.findFirst({
             where: {name},

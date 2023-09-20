@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user';
 import userDB from './user.db'; // Import your userDB module
-import jwt from 'jsonwebtoken';
+
 import { stringify } from 'querystring';
-
+import { UserInput } from './userInput';
 const bcrypt = require('bcrypt');
-
+var jwt = require('jsonwebtoken');
 
 @Injectable()
 export class UserService {
@@ -21,21 +21,19 @@ export class UserService {
     return userDB.getUserByName(name);
   }
 
-  async createUser({name,password,email}): Promise<User> {
-    name = stringify(name)
-    
-    const existingUser = await this.getUserByName(name);
+  async createUser(user:User): Promise<User> {
+    console.log(user)    
+    const existingUser = await userDB.getUserByName(user.name);
     if (existingUser) {
       console.log("User already exists");
     }
-    console.log(password)
-    const hashedPassword = await bcrypt.hash(password, 12);
-    console.log(hashedPassword)
-    return await userDB.createUser({ name, password:hashedPassword,email });
+    const hashedPassword = await bcrypt.hash(user.password, 12);
+    return await userDB.createUser(user.name, hashedPassword, user.email);
   }
 
-  async authenticate({ name, password }): Promise<string> {
-    const user = await this.getUserByName(name);
+  async authenticate({ name, password }: UserInput): Promise<string> {
+    console.log(name, password)
+    const user = await userDB.getUserByName(name);
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       console.log("Invalid password");
@@ -45,12 +43,14 @@ export class UserService {
 
   private generateJWTToken(name: string): string {
     const jwtSecret = process.env.JWT_SECRET;
+    
     const options = { expiresIn: '8h', issuer: 'Stageco' };
     try {
-      return jwt.sign({ name }, jwtSecret, options);
+      console.log('JWT Secret:', jwtSecret, 'options:', options, 'name:', name);
+      return jwt.sign({ name }, jwtSecret, options); 
     } catch (err) {
       console.log(err);
-      throw err; // You may want to handle this error differently
+      throw err; 
     }
   }
 }
