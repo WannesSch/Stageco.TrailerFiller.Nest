@@ -12,7 +12,7 @@ export class FileController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('photo', { dest: './uploads' }))
   uploadSingle(@UploadedFile() file) {
-    console.log(file);
+  console.log(file);
   }
 
   @Post('uploads')
@@ -20,4 +20,4 @@ export class FileController {
   uploadMultiple(@UploadedFiles() files) {
     console.log(files);
   }
-}
+  }
