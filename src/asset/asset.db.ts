@@ -56,17 +56,24 @@ const addAsset = async (asset: Asset): Promise<Asset|HttpStatus> => {
       weight: asset.weight,
       modelPath: asset.modelPath,
       position: {
-        connect: { id: asset.position.id },
+        create: {
+          x: 0,
+          y: 0,
+          z: 0, 
+        },
       },
       rotation: {
-        connect: { id: asset.rotation.id },
+        create: {
+          x: 0,
+          y: 0,
+          z: 0,
+        },
       },
     },
   });
   if (mapToSingleAsset(newAsset) == null) return HttpStatus.BAD_REQUEST;
   return newAsset;
 };
-
 const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
   const updatedAsset = await database.asset.update({
     where: {
