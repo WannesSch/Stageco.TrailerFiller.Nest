@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user';
 import userDB from './user.db'; // Import your userDB module
-
 import { stringify } from 'querystring';
 import { UserInput } from './userInput';
 const bcrypt = require('bcrypt');
