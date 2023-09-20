@@ -43,7 +43,7 @@ const getAssets = async (): Promise<Asset[]> => {
   return mapToAssets(assets);
 };
 
-const addAsset = async (asset: Asset): Promise<HttpStatus> => {
+const addAsset = async (asset: Asset): Promise<Asset|HttpStatus> => {
   const newAsset = await database.asset.create({
     data: {
       id: asset.id,
@@ -64,7 +64,7 @@ const addAsset = async (asset: Asset): Promise<HttpStatus> => {
     },
   });
   if (mapToSingleAsset(newAsset) == null) return HttpStatus.BAD_REQUEST;
-  return HttpStatus.OK;
+  return newAsset;
 };
 
 const updateAsset = async (id: string, asset: Asset): Promise<HttpStatus> => {
