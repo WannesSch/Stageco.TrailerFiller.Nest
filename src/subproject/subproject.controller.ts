@@ -95,8 +95,6 @@ export class SubprojectController {
     @Param('id') id: string,
     @Body() formData: any,
     @UploadedFile() file: Express.Multer.File) {
-      console.log("hier")
-    console.log(file);
     return this.subprojectService.uploadFile(id,file,formData);
   }
 }

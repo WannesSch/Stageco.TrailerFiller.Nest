@@ -213,8 +213,6 @@ const uploadFile = async (
   file: Express.Multer.File,
   formData,
 ): Promise<HttpStatus> => {
-  console.log(file)
-  console.log(formData)
   let subproject = await database.subproject.findUnique({
     where: {
       id: parseInt(id),
@@ -222,19 +220,15 @@ const uploadFile = async (
   });
 
   const destination = './uploads'
-  console.log(destination)
   let dateTime = new Date()
       let datum = dateTime.toISOString().slice(0, 10)
-      console.log(datum)
       let filename = file.originalname + "-" + subproject.title + "-" + datum + "-" + (Math.random() + 1).toString(36).substring(7)
-      console.log(filename)
   if (!fs.existsSync(destination)) {
     fs.mkdirSync(destination, { recursive: true });
   }
     try {
       
       fs.writeFileSync(path.join(destination, filename), file.buffer);
-      console.log(destination, file.originalname, file.buffer)
     } catch (error) {
       console.error(`Error saving file ${file.originalname}:`, error);
     }
