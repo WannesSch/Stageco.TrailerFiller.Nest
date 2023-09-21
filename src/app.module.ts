@@ -7,16 +7,20 @@ import { TrailerModule } from './trailer/trailer.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProjectModule } from './project/project.module';
 import { ContentModule } from './content/content.module';
-import { FilesModule } from './files/files.module';
 import { PositionService } from './position/position.service';
 import { PositionModule } from './position/position.module';
 import { RotationModule } from './rotation/rotation.module';
-import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthGuard } from '@nestjs/passport';
+import { UserModule } from './user/user.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/role.guard';
+
 @Module({
   controllers: [AppController],
-  providers: [AppService, PositionService],
+  providers: [AppService, PositionService,{
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  },],
   imports: [
     SubprojectModule,
     ProjectModule,
@@ -24,11 +28,10 @@ import { AuthGuard } from '@nestjs/passport';
     TrailerModule,
     PrismaModule,
     ContentModule,
-    FilesModule,
     PositionModule,
     RotationModule,
-    UserModule,
-    AuthModule,
+    AuthModule, 
+    UserModule, 
   ],
 })
 export class AppModule {}

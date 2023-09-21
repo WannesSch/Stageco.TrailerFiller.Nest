@@ -10,15 +10,23 @@ import {
   HttpStatus,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
+  SetMetadata,
 } from '@nestjs/common';
 import { Subproject } from './subproject';
 import { Asset } from 'src/asset/asset';
 import { Trailer } from 'src/trailer/trailer';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/role.decorator';
 
+@SetMetadata('roles', ['admin'])
+@UseGuards(RolesGuard)
 @Controller('api/v1/subproject')
 export class SubprojectController {
   constructor(private subprojectService: SubprojectService) {}
+  
   @Get('/all')
   async getAllSubprojects(): Promise<Subproject[]> {
     return await this.subprojectService.getAllSubprojects();

@@ -9,13 +9,22 @@ import {
   Delete,
   HttpStatus,
   UseFilters,
+  UseGuards,
+  SetMetadata,
 } from '@nestjs/common';
 import { Project } from 'src/project/project';
 import { HttpExceptionFilter } from '../validation/http-exception';
+import { AuthGuard } from '@nestjs/passport'; 
+import { Roles } from 'src/auth/role.decorator';
+import { RolesGuard } from 'src/auth/role.guard';
+@SetMetadata('roles', ['admin'])
+@UseGuards(RolesGuard)
+
 @Controller('api/v1/project')
 @UseFilters(HttpExceptionFilter)
 export class ProjectController {
   constructor(private projectService: ProjectService) {}
+  
   @Get('/all')
   async getAllProjects(): Promise<Project[]> {
     return await this.projectService.getAllProjects();

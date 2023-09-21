@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  SetMetadata,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
@@ -13,14 +14,16 @@ import { Asset } from './asset';
 import { AssetService } from './asset.service';
 import { HttpExceptionFilter } from '../validation/http-exception';
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/auth/role.decorator';
+import { RolesGuard } from 'src/auth/role.guard';
+@UseGuards(RolesGuard)
 
-@UseGuards(AuthGuard('local'))
+
 @Controller('api/v1/asset')
-
 @UseFilters(HttpExceptionFilter)
 export class AssetController {
   constructor(private readonly assetService: AssetService) {}
-
+  @SetMetadata('roles', ['user'])
   @Get('/all')
   getAllAssets(): Promise<Asset[]> {
     return this.assetService.getAllAssets();

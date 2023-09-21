@@ -1,15 +1,15 @@
-import { Controller, Post, Body, Res, HttpStatus, HttpException, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus, HttpException, Request, UseGuards, Get } from '@nestjs/common';
 import { Response } from 'express';
 import  {UserService}  from './user.service';
 import { User } from './user'; 
 import { UserInput } from './userInput';
 import { AuthGuard } from '@nestjs/passport';
-@UseGuards(AuthGuard('local'))
+
 @Controller('api/v1/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('login')
+  @Post('/login')
   async login(@Body() userInput: UserInput, @Res() res: Response) {
     try {
       const token = await this.userService.authenticate(userInput);
@@ -19,7 +19,7 @@ export class UserController {
     }
   }
 
-  @Post('register')
+  @Post('/register')
     async register(@Body() user:User, @Res() res: Response) {
     try {
       const newUser = await this.userService.createUser(user);
@@ -28,4 +28,10 @@ export class UserController {
       throw new HttpException({ status: 'error', errorMessage: error.message }, HttpStatus.UNAUTHORIZED);
     }
 }
+
+  @Get('/logout')
+  logout(@Request() req): any {
+    req.session.destroy();
+    return { msg: 'The user session has ended' }
+  }
 }

@@ -12,6 +12,7 @@ const createUser = async (
         name,
         password,
         email,
+        role: 'user',
       },
     });
     return User.from(userPrisma);
