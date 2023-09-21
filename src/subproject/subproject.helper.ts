@@ -23,7 +23,7 @@ export const csvHelper = async (
     let currentBoxForContent: Asset | undefined = undefined;
     let littleStuffff: Content | undefined = undefined;
     const fileData = await fs.promises.readFile(
-      'src/' + filename + '.csv',
+      filename,
       'utf-8',
     );
     const lines = fileData.split('\n');

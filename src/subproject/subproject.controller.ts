@@ -89,11 +89,14 @@ export class SubprojectController {
     return this.subprojectService.csvReader(filename, id);
   }
 
-  @Post('/upload')
+  @Post('/:id/upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
+    @Param('id') id: string,
     @Body() formData: any,
     @UploadedFile() file: Express.Multer.File) {
+      console.log("hier")
     console.log(file);
+    return this.subprojectService.uploadFile(id,file,formData);
   }
 }

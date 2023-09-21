@@ -8,7 +8,8 @@ import { Asset } from 'src/asset/asset';
 import { mapToTrailers } from 'src/trailer/trailer.mapper';
 import { csvHelper } from './subproject.helper';
 import { mapToSingleProject } from 'src/project/project.mapper';
-
+import * as fs from 'fs';
+import * as path from 'path';
 const deleteAsset = async (
   id: string,
   assetId: string,
@@ -207,6 +208,42 @@ const addSubproject = async (
   return HttpStatus.OK;
 };
 
+const uploadFile = async (
+  id: string,
+  file: Express.Multer.File,
+  formData,
+): Promise<HttpStatus> => {
+  console.log(file)
+  console.log(formData)
+  let subproject = await database.subproject.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  const destination = './uploads'
+  console.log(destination)
+  let dateTime = new Date()
+      let datum = dateTime.toISOString().slice(0, 10)
+      console.log(datum)
+      let filename = file.originalname + "-" + subproject.title + "-" + datum + "-" + (Math.random() + 1).toString(36).substring(7)
+      console.log(filename)
+  if (!fs.existsSync(destination)) {
+    fs.mkdirSync(destination, { recursive: true });
+  }
+    try {
+      
+      fs.writeFileSync(path.join(destination, filename), file.buffer);
+      console.log(destination, file.originalname, file.buffer)
+    } catch (error) {
+      console.error(`Error saving file ${file.originalname}:`, error);
+    }
+    await csvReader(destination + '/' + filename, id)
+    return HttpStatus.OK;
+};
+
+
+
 export default {
   getSubprojectById,
   getSubprojects,
@@ -219,4 +256,5 @@ export default {
   getAllSubprojectsFromProject,
   csvReader,
   getAllTrailersFromSubproject,
+  uploadFile,
 };
