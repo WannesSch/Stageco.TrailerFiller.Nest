@@ -15,7 +15,7 @@ export class Asset {
   readonly position?: Position;
   readonly rotation?: Rotation;
   readonly content?: Content[];
-  readonly isLocked : boolean;
+  readonly isLocked: boolean;
 
   constructor(asset: {
     id: number;

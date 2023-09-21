@@ -22,10 +22,7 @@ export const csvHelper = async (
     let idStartContent = (await database.content.count()) + 1;
     let currentBoxForContent: Asset | undefined = undefined;
     let littleStuffff: Content | undefined = undefined;
-    const fileData = await fs.promises.readFile(
-      filename,
-      'utf-8',
-    );
+    const fileData = await fs.promises.readFile(filename, 'utf-8');
     const lines = fileData.split('\n');
     for (const line of lines) {
       const cells = line.split(';');
@@ -86,17 +83,15 @@ export const csvHelper = async (
             },
           });
           littleStuffff = littleStuff;
-          
-          
         }
-        
-        newWeight += littleStuffff.amount * littleStuffff.weight ;
+
+        newWeight += littleStuffff.amount * littleStuffff.weight;
         await database.asset.update({
           where: {
             id: currentBoxForContent.id,
           },
           data: {
-            weight:  Number(cells[4]) + newWeight,
+            weight: Number(cells[4]) + newWeight,
             content: {
               connect: { id: littleStuffff.id },
             },

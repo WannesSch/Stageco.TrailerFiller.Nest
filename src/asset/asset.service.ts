@@ -8,7 +8,7 @@ export class AssetService {
     return assetDB.getAllNoContent();
   }
 
-  addAsset(asset: Asset): Promise<Asset|HttpStatus> {
+  addAsset(asset: Asset): Promise<Asset | HttpStatus> {
     return assetDB.addAsset(asset);
   }
 
