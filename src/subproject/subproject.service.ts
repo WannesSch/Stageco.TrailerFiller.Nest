@@ -40,8 +40,7 @@ export class SubprojectService {
   csvReader(filename: string, id: string): Promise<Asset[] | HttpStatus> {
     return subprojectDB.csvReader(filename, id);
   }
-  uploadFile(id:string,file: Express.Multer.File, formData): Promise<HttpStatus> {
-    return subprojectDB.uploadFile(id,file, formData);
+  uploadFile(id: string, file: Express.Multer.File): Promise<HttpStatus> {
+    return subprojectDB.uploadFile(id, file);
   }
-  
 }

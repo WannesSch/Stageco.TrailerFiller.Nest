@@ -7,7 +7,6 @@ const mapToPosition = ({ id, x, y, z }: PositionPrisma): Position => {
     x,
     y,
     z,
-
   });
 };
 
@@ -15,6 +14,6 @@ export const mapToPositions = (positionPrisma: PositionPrisma[]): Position[] =>
   positionPrisma.map((position) => mapToPosition(position));
 
 export const mapToSinglePosition = (positionPrisma: PositionPrisma): Position =>
-mapToSinglePosition(positionPrisma);
+  mapToSinglePosition(positionPrisma);
 
 export default { mapToPositions, mapToSinglePosition };

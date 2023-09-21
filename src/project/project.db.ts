@@ -48,10 +48,10 @@ const updateProject = async (
   project: Project,
 ): Promise<HttpStatus> => {
   const time = new Date(Date.now());
-  var offset = time.getTimezoneOffset();
+  let offset = time.getTimezoneOffset();
   offset = Math.abs(offset / 60);
   time.setHours(time.getHours() + offset);
-  const tijd = time.toISOString();  
+  const tijd = time.toISOString();
   const updatedProject = await database.project.update({
     where: {
       id: id,

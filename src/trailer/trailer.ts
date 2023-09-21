@@ -9,8 +9,8 @@ export class Trailer {
   readonly type?: string;
   readonly maxWeight: number;
   readonly assets?: Asset[];
-  readonly licensePlate?: string
-  readonly description?:  string
+  readonly licensePlate?: string;
+  readonly description?: string;
 
   constructor(trailer: {
     id: number;
@@ -20,8 +20,8 @@ export class Trailer {
     weight?: number;
     type?: string;
     maxWeight?: number;
-    licensePlate?: string
-    description?:  string
+    licensePlate?: string;
+    description?: string;
     assets?: Asset[];
   }) {
     this.id = trailer.id;

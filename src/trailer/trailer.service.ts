@@ -8,7 +8,7 @@ export class TrailerService {
   getAllAssetsFromTrailer(id: string): Promise<Asset[]> {
     return trailerDb.getAllAssetsFromTrailer(id);
   }
-  addAsset(id: string, asset:Asset): Promise<HttpStatus | HttpException> {
+  addAsset(id: string, asset: Asset): Promise<HttpStatus | HttpException> {
     return trailerDb.addAsset(id, asset);
   }
   removeAsset(trailerid: string, id: string): Promise<HttpStatus> {
@@ -17,11 +17,10 @@ export class TrailerService {
   addTrailer(id: string, trailer: Trailer): Promise<HttpStatus> {
     return trailerDb.addTrailer(id, trailer);
   }
-  
+
   delete(id: string): Promise<HttpStatus> {
     return trailerDb.deleteTrailerById(Number(id));
   }
-
 
   getAllFromSubproject(id: string): Promise<Trailer[]> {
     return trailerDb.getAllFromSubproject(id);
