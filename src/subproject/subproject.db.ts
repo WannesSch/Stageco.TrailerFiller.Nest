@@ -3,12 +3,12 @@ import database from '../prisma/database';
 import { Subproject } from './subproject';
 import { Trailer } from 'src/trailer/trailer';
 import { HttpStatus } from '@nestjs/common';
-import { mapToAssets } from 'src/asset/asset.mapper';
 import { Asset } from 'src/asset/asset';
 import { mapToTrailers } from 'src/trailer/trailer.mapper';
 import { csvHelper } from './subproject.helper';
 import { mapToSingleProject } from 'src/project/project.mapper';
-
+import * as fs from 'fs';
+import * as path from 'path';
 const deleteAsset = async (
   id: string,
   assetId: string,
@@ -75,10 +75,10 @@ const updateSubproject = async (
   subproject: Subproject,
 ): Promise<HttpStatus> => {
   const time = new Date(Date.now());
-  var offset = time.getTimezoneOffset();
+  let offset = time.getTimezoneOffset();
   offset = Math.abs(offset / 60);
   time.setHours(time.getHours() + offset);
-  const tijd = time.toISOString();  
+  const tijd = time.toISOString();
   const updatedSubproject = await database.subproject.update({
     where: {
       id: parseInt(id),
@@ -127,7 +127,7 @@ const getAllAssetsFromSubproject = async (id: string): Promise<Asset[]> => {
       rotation: true,
     },
   });
-  return (assets);
+  return assets;
 };
 
 const getAllTrailersFromSubproject = async (id: string): Promise<Trailer[]> => {
@@ -207,6 +207,39 @@ const addSubproject = async (
   return HttpStatus.OK;
 };
 
+const uploadFile = async (
+  id: string,
+  file: Express.Multer.File,
+): Promise<HttpStatus> => {
+  const subproject = await database.subproject.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  const destination = './uploads';
+  const dateTime = new Date();
+  const datum = dateTime.toISOString().slice(0, 10);
+  const filename =
+    file.originalname +
+    '-' +
+    subproject.title +
+    '-' +
+    datum +
+    '-' +
+    (Math.random() + 1).toString(36).substring(7);
+  if (!fs.existsSync(destination)) {
+    fs.mkdirSync(destination, { recursive: true });
+  }
+  try {
+    fs.writeFileSync(path.join(destination, filename), file.buffer);
+  } catch (error) {
+    console.error(`Error saving file ${file.originalname}:`, error);
+  }
+  await csvReader(destination + '/' + filename, id);
+  return HttpStatus.OK;
+};
+
 export default {
   getSubprojectById,
   getSubprojects,
@@ -219,4 +252,5 @@ export default {
   getAllSubprojectsFromProject,
   csvReader,
   getAllTrailersFromSubproject,
+  uploadFile,
 };

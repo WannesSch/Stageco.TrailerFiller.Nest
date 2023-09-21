@@ -26,10 +26,8 @@ const getAllAssetsFromTrailer = async (id: string): Promise<Asset[]> => {
       rotation: true,
     },
   });
-  return (assets);
+  return assets;
 };
-
-
 
 const getById = async (id: string): Promise<Trailer> => {
   const trailer = await database.trailer.findUnique({
@@ -124,7 +122,6 @@ const removeAsset = async (
   trailerid: string,
   id: string,
 ): Promise<HttpStatus> => {
-
   const updatedTrailer = await database.trailer.update({
     where: {
       id: parseInt(trailerid),

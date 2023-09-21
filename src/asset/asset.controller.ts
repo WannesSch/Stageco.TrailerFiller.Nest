@@ -44,7 +44,7 @@ export class AssetController {
     return this.assetService.updateAsset(id, asset);
   }
   @Post('/add')
-  addAsset(@Body() asset: Asset): Promise<Asset|HttpStatus> {
+  addAsset(@Body() asset: Asset): Promise<Asset | HttpStatus> {
     return this.assetService.addAsset(asset);
   }
 }

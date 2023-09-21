@@ -43,7 +43,7 @@ const getAssets = async (): Promise<Asset[]> => {
   return mapToAssets(assets);
 };
 
-const addAsset = async (asset: Asset): Promise<Asset|HttpStatus> => {
+const addAsset = async (asset: Asset): Promise<Asset | HttpStatus> => {
   const newAsset = await database.asset.create({
     data: {
       id: asset.id,
@@ -59,7 +59,7 @@ const addAsset = async (asset: Asset): Promise<Asset|HttpStatus> => {
         create: {
           x: 0,
           y: 0,
-          z: 0, 
+          z: 0,
         },
       },
       rotation: {

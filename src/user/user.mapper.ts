@@ -2,12 +2,7 @@ import { User as UserPrisma } from '@prisma/client';
 
 import { User } from './user';
 
-const mapToUser = ({
-  id,
-  name,
-    email,
-    password,
-}: UserPrisma ): User =>
+const mapToUser = ({ id, name, email, password }: UserPrisma): User =>
   new User({
     id,
     name,
