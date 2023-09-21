@@ -8,10 +8,13 @@ import {
   Put,
   Delete,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { Subproject } from './subproject';
 import { Asset } from 'src/asset/asset';
 import { Trailer } from 'src/trailer/trailer';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/v1/subproject')
 export class SubprojectController {
@@ -84,5 +87,14 @@ export class SubprojectController {
     @Param('id') id: string,
   ): Promise<Asset[] | HttpStatus> {
     return this.subprojectService.csvReader(filename, id);
+  }
+
+  @Post('/:id/upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(
+    @Param('id') id: string,
+    @Body() formData: any,
+    @UploadedFile() file: Express.Multer.File) {
+    return this.subprojectService.uploadFile(id,file,formData);
   }
 }
