@@ -167,9 +167,8 @@ const addAssets = async (id: string, assets): Promise<HttpStatus> => {
 const csvReader = async (
   filename: string,
   id: string,
-): Promise<Asset[] | HttpStatus> => {
-  const response = csvHelper(filename, id);
-  return response;
+): Promise<HttpStatus> => {
+  return csvHelper(filename, id);
 };
 
 const addSubproject = async (
@@ -236,8 +235,8 @@ const uploadFile = async (
   } catch (error) {
     console.error(`Error saving file ${file.originalname}:`, error);
   }
-  await csvReader(destination + '/' + filename, id);
-  return HttpStatus.OK;
+  return await csvReader(destination + '/' + filename, id);
+  
 };
 
 export default {

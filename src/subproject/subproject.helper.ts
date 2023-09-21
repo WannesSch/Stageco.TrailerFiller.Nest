@@ -8,7 +8,7 @@ import * as fs from 'fs';
 export const csvHelper = async (
   filename: string,
   id: string,
-): Promise<Asset[] | HttpStatus> => {
+): Promise<HttpStatus> => {
   try {
     const subprojectId = parseInt(id);
     const assets: Asset[] = [];
@@ -133,7 +133,7 @@ export const csvHelper = async (
         idStart += count + 1;
       }
     }
-    return assets;
+    return HttpStatus.OK;
   } catch (error) {
     console.error('Error during CSV to assets conversion:', error);
     return HttpStatus.INTERNAL_SERVER_ERROR;
