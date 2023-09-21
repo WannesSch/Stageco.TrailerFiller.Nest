@@ -12,9 +12,9 @@ import {
 import { Asset } from './asset';
 import { AssetService } from './asset.service';
 import { HttpExceptionFilter } from '../validation/http-exception';
-import { AuthGuards } from '../auth/auth.guards';
+import { AuthGuard } from '@nestjs/passport';
 
-@UseGuards(AuthGuards())
+@UseGuards(AuthGuard('local'))
 @Controller('api/v1/asset')
 
 @UseFilters(HttpExceptionFilter)

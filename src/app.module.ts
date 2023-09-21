@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { APP_GUARD } from '@nestjs/core';
 import { SubprojectModule } from './subproject/subproject.module';
 import { AssetModule } from './asset/asset.module';
 import { TrailerModule } from './trailer/trailer.module';
@@ -13,16 +12,11 @@ import { PositionService } from './position/position.service';
 import { PositionModule } from './position/position.module';
 import { RotationModule } from './rotation/rotation.module';
 import { UserModule } from './user/user.module';
-import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from '@nestjs/passport';
 @Module({
   controllers: [AppController],
-  providers: [{
-    provide: APP_GUARD,
-    useClass: AuthGuard ,
-  },AppService, PositionService, AuthService],
-
+  providers: [AppService, PositionService],
   imports: [
     SubprojectModule,
     ProjectModule,
