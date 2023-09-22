@@ -18,9 +18,11 @@ const getAssetById = async (id: string): Promise<Asset> => {
 };
 
 const deleteAsset = async (id: string): Promise<HttpStatus> => {
+  if((await database.asset.findUnique({where: {id: parseInt(id)}})).category != -1) HttpStatus.BAD_REQUEST;
   const deletedAsset = await database.asset.delete({
     where: {
       id: parseInt(id),
+      
     },
     include: {
       content: true,
@@ -29,7 +31,7 @@ const deleteAsset = async (id: string): Promise<HttpStatus> => {
     },
   });
   if (deletedAsset == null) return HttpStatus.BAD_REQUEST;
-  return HttpStatus.CREATED;
+  return HttpStatus.OK;
 };
 
 const getAssets = async (): Promise<Asset[]> => {
@@ -49,7 +51,7 @@ const addAsset = async (asset: Asset): Promise<Asset | HttpStatus> => {
       id: asset.id,
       unit: asset.unit,
       name: asset.name,
-      category: asset.category,
+      category: -1,
       height: asset.height,
       width: asset.width,
       depth: asset.depth,

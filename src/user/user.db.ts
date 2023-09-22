@@ -32,6 +32,22 @@ const getAllUsers = async (): Promise<User[]> => {
   }
 };
 
+const giveAdmin = async (id): Promise<User> => {
+  try {
+    const userPrisma = await database.user.update({
+      where: { id },
+      data: {
+        role: 'admin',
+      },
+    });
+    return User.from(userPrisma);
+  } catch (error) {
+    console.error(error);
+    throw new Error('Database error. See server log for details.');
+  }
+};
+
+
 const getUserById = async ({ id }): Promise<User> => {
   try {
     const userPrisma = await database.user.findUnique({
@@ -62,4 +78,5 @@ export default {
   createUser,
   getUserById,
   getUserByName,
+  giveAdmin,
 };

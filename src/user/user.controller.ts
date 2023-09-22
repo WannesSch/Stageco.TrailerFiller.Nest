@@ -1,10 +1,12 @@
-import { Controller, Post, Body, Res, HttpStatus, HttpException, Request, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus, HttpException, Request, UseGuards, Get, Param, SetMetadata } from '@nestjs/common';
 import { Response } from 'express';
 import  {UserService}  from './user.service';
 import { User } from './user'; 
 import { UserInput } from './userInput';
-import { AuthGuard } from '@nestjs/passport';
+import  endpoint  from 'src/endpoint.roles';
+import { RolesGuard } from 'src/auth/role.guard';
 
+@UseGuards(RolesGuard)
 @Controller('api/v1/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -27,6 +29,17 @@ export class UserController {
     } catch (error) {
       throw new HttpException({ status: 'error', errorMessage: error.message }, HttpStatus.UNAUTHORIZED);
     }
+}
+
+@SetMetadata('roles', endpoint.allUsers)
+@Get('/all')
+async getAllUsers(): Promise<User[]> {
+  return await this.userService.getAllUsers();
+}
+@SetMetadata('roles', endpoint.giveAdmin)
+@Post('giveAdmin')
+async giveAdmin(@Param('id') id): Promise<User> {
+  return await this.userService.giveAdmin(id);
 }
 
   @Get('/logout')
