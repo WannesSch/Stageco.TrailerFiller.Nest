@@ -5,7 +5,7 @@ import { UserService } from 'src/user/user.service';
 
 @Module({
   imports: [], // Your other imports
-  providers: [AuthService,JwtService,UserService], // Include LocalStrategy here
+  providers: [AuthService, JwtService, UserService], // Include LocalStrategy here
   controllers: [], // Your controllers
 })
 export class AuthModule {}

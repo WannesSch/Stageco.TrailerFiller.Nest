@@ -4,7 +4,7 @@ import { AssetController } from './asset.controller';
 import { UserService } from 'src/user/user.service';
 
 @Module({
-  providers: [AssetService,UserService],
+  providers: [AssetService, UserService],
   controllers: [AssetController],
 })
 export class AssetModule {}

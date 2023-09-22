@@ -35,12 +35,10 @@ export class UserService {
     }
 
     return this.generateJWTToken(name);
-
   }
   async giveAdmin(id): Promise<User> {
     return userDB.giveAdmin(id);
   }
-  
 
   private generateJWTToken(name: string): string {
     const jwtSecret = process.env.JWT_SECRET;

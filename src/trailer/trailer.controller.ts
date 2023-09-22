@@ -16,17 +16,15 @@ import { TrailerService } from './trailer.service';
 import { Asset } from '../asset/asset';
 import { Trailer } from 'src/trailer/trailer';
 import { HttpExceptionFilter } from '../validation/http-exception';
-import { Roles } from 'src/auth/role.decorator';
-import  endpoint  from 'src/endpoint.roles';
+import endpoint from 'src/endpoint.roles';
 import { RolesGuard } from 'src/auth/role.guard';
 
 @UseGuards(RolesGuard)
-
 @Controller('api/v1/trailer')
 @UseFilters(HttpExceptionFilter)
 export class TrailerController {
   constructor(private readonly trailerService: TrailerService) {}
-  
+
   @SetMetadata('roles', endpoint.allTrailer)
   @Get('/all')
   async getAll(): Promise<Trailer[]> {

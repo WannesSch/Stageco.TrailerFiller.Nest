@@ -17,10 +17,14 @@ import { RolesGuard } from './auth/role.guard';
 
 @Module({
   controllers: [AppController],
-  providers: [AppService, PositionService,{
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  },],
+  providers: [
+    AppService,
+    PositionService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
   imports: [
     SubprojectModule,
     ProjectModule,
@@ -30,8 +34,8 @@ import { RolesGuard } from './auth/role.guard';
     ContentModule,
     PositionModule,
     RotationModule,
-    AuthModule, 
-    UserModule, 
+    AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}

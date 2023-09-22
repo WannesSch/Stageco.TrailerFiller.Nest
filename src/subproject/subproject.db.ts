@@ -164,10 +164,7 @@ const addAssets = async (id: string, assets): Promise<HttpStatus> => {
   return HttpStatus.OK;
 };
 
-const csvReader = async (
-  filename: string,
-  id: string,
-): Promise<HttpStatus> => {
+const csvReader = async (filename: string, id: string): Promise<HttpStatus> => {
   return csvHelper(filename, id);
 };
 
@@ -236,7 +233,6 @@ const uploadFile = async (
     console.error(`Error saving file ${file.originalname}:`, error);
   }
   return await csvReader(destination + '/' + filename, id);
-  
 };
 
 export default {

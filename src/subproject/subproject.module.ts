@@ -4,7 +4,7 @@ import { SubprojectController } from './subproject.controller';
 import { UserService } from 'src/user/user.service';
 
 @Module({
-  providers: [SubprojectService,UserService],
+  providers: [SubprojectService, UserService],
   controllers: [SubprojectController],
 })
 export class SubprojectModule {}

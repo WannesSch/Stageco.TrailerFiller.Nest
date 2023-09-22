@@ -13,13 +13,9 @@ import {
 import { Asset } from './asset';
 import { AssetService } from './asset.service';
 import { HttpExceptionFilter } from '../validation/http-exception';
-import { AuthGuard } from '@nestjs/passport';
-import { Roles } from 'src/auth/role.decorator';
 import { RolesGuard } from 'src/auth/role.guard';
 import endpoint from 'src/endpoint.roles';
 @UseGuards(RolesGuard)
-
-
 @Controller('api/v1/asset')
 @UseFilters(HttpExceptionFilter)
 export class AssetController {
@@ -56,6 +52,5 @@ export class AssetController {
   @Post('/delete/:id')
   deleteAsset(@Param('id') id: string): Promise<HttpStatus> {
     return this.assetService.deleteAsset(id);
+  }
 }
-}
-
