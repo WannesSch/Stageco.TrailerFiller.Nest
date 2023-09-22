@@ -12,6 +12,7 @@ const createUser = async (
         name,
         password,
         email,
+        role: 'user',
       },
     });
     return User.from(userPrisma);
@@ -30,6 +31,22 @@ const getAllUsers = async (): Promise<User[]> => {
     throw new Error('Database error. See server log for details.');
   }
 };
+
+const giveAdmin = async (id): Promise<User> => {
+  try {
+    const userPrisma = await database.user.update({
+      where: { id },
+      data: {
+        role: 'admin',
+      },
+    });
+    return User.from(userPrisma);
+  } catch (error) {
+    console.error(error);
+    throw new Error('Database error. See server log for details.');
+  }
+};
+
 
 const getUserById = async ({ id }): Promise<User> => {
   try {
@@ -61,4 +78,5 @@ export default {
   createUser,
   getUserById,
   getUserByName,
+  giveAdmin,
 };

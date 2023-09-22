@@ -1,0 +1,70 @@
+Cat;UniqueID;Unit;Omschrijving;kg;Aantal;Breedte;Hoogte;Diepte
+1;1;111220;Box Large Closed;250;1;211.5;88;116
+2;;101000;woodpad single;2;120;0;0;0
+1;2;111220;Box Large Closed;250;1;211.5;88;116
+2;;101005;woodpad double;6;125;0;0;0
+1;3;111220;Box Large Closed;250;1;211.5;88;116
+2;;101005;woodpad double;6;125;0;0;0
+1;4;111220;Box Large Closed;250;1;211.5;88;116
+2;;101005;woodpad double;6;125;0;0;0
+1;5;111220;Box Large Closed;250;1;211.5;88;116
+2;;101005;woodpad double;6;125;0;0;0
+1;6;111220;Box Large Closed;250;1;211.5;88;116
+2;;101005;woodpad double;6;125;0;0;0
+1;7;111220;Box Large Closed;250;1;211.5;88;116
+2;;101005;woodpad double;6;75;0;0;0
+2;;102010;Sta. 1m00 with pen;22;4;0;0;0
+2;;102015;Sta. 1m50 with pen;31,2;4;0;0;0
+2;;101100;Screwjack < 0m30  ( purple );28,6;11;0;0;0
+1;8;111220;Box Large Closed;250;1;211.5;88;116
+2;;101115;Screwjack stand. 0m60;4;709;0;0;0
+2;;101300;Base collar;4;539;0;0;0
+2;;102005;Sta. 0m50 with pen;6;81;0;0;0
+2;;102020;Sta. 2m00 with pen;142,8;14;0;0;0
+2;;102110;Sta. 0m50 open end;990;396;0;0;0
+1;9;111200;Rack Large Open;50;1;0;0;0
+2;;102115;Sta. 1m00 open end;432,4;94;0;0;0
+2;;102125;Sta. 2m00 open end;542,9;61;0;0;0
+2;;102225;Sta. 0m50 open end/double ring;11,2;4;0;0;0
+2;;102260A;Tralieligg. Sta. 0m50 ZP;6;2;0;0;0
+1;10;111200;Rack Large Open;50;1;0;0;0
+2;;102525;Ledger 1m036 blue;1179,2;123;0;0;0
+1;11;111200;Rack Large Open;50;1;0;0;0
+2;;102525;Ledger 1m036 blue;1179,2;145;0;0;0
+1;12;111200;Rack Large Open;50;1;0;0;0
+2;;102540;Ledger 2m072;8101,6;344;0;0;0
+1;13;111200;Rack Large Open;50;1;0;0;0
+2;;102540;Ledger 2m072;8101,6;344;0;0;0
+1;14;111200;Rack Large Open;50;1;0;0;0
+2;;102540;Ledger 2m072;8101,6;344;0;0;0
+2;;103008;Diag. brace 1m036/0m50(or-bl);259,7;53;0;0;0
+1;15;111220;Box Large Closed;250;1;211.5;88;116
+2;;106000;"Coupler fixed 1,5""-1,5"" ( pink)";66;60;0;0;0
+2;;106010;"Coupler swivel 1,5""-1,5"" ( red)";5,2;4;0;0;0
+2;;106020;"Coupler fixed 2""-1,5"" ( blue)";240;150;0;0;0
+2;;106030;"Coupler swivel 2""-1,5"" ( yellow)";25,6;16;0;0;0
+2;;106041;"Coupler fixed 3"" - 2""";77;35;0;0;0
+2;;106125;Clamp AR Rozet for standard;16,16;16;0;0;0
+2;;106126;Clamp AR Rozet for screwjack;10,2;6;0;0;0
+2;;106140;"Coupler end-to-end 1,5""";9;5;0;0;0
+2;;106170;Coupler wedge/wedge;51;30;0;0;0
+2;;106175;Coupler wedge/wedge fixed;136;80;0;0;0
+1;;xxxxxx;25 platen;800;1;207.2;103.6;2
+2;;202102;Deck 2072x1036 BSA Full;32;25;0;0;0
+1;16;xxxxxx;25 platen;800;1;207.2;103.6;2
+2;;202102;Deck 2072x1036 BSA Full;32;25;0;0;0
+1;17;xxxxxx;25 platen;800;1;207.2;103.6;2
+2;;202102;Deck 2072x1036 BSA Full;32;25;0;0;0
+1;18;xxxxxx;25 platen;800;1;207.2;103.6;2
+2;;202102;Deck 2072x1036 BSA Full;32;25;0;0;0
+1;;401015;Concrete block 2mx2mx0m20 model 95;48400;22;0;0;0
+1;;401310;Baseframe tower 750 IPE 240 L=1250;2781;10;0;0;0
+1;;401320;2016-Base cube IPE240 L=1250 clevis 90x90 (orange);557,2;2;0;0;0
+1;19;111220;Box Large Closed;250;1;207.2;103.6;2
+2;;401365;Threaded rod M27 1m +3 nuts+3 plates;110;22;0;0;0
+2;;401410;Channel beams base cube  1m;140;4;0;0;0
+2;;401415;Channel beams for frames  L=1000;160;8;0;0;0
+1;;401501;Baseframe IPE 240  L 2155;447;2;0;0;0
+1;;401505;Baseframe IPE 240 L=3500;2568,8;8;0;0;0
+1;;401545;Baseframe IPE400 L=2650 delay;4650;6;0;0;0
+1;;401555;Baseframe IPE400 L=5650 delay;1700,34;1;0;0;0
