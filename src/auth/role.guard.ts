@@ -11,7 +11,6 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector,private userService:UserService) {}
   async matchRoles(roles: string[], user: User) {
     let match = false;
-    //copilot please loop over roles and check if user.role is in roles
     for(let i = 0; i < roles.length; i++){
       if(user.role == roles[i]){
         match = true;
