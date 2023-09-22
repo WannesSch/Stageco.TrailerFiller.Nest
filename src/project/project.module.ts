@@ -4,7 +4,7 @@ import { ProjectController } from './project.controller';
 import { UserService } from 'src/user/user.service';
 
 @Module({
-  providers: [ProjectService,UserService],
+  providers: [ProjectService, UserService],
   controllers: [ProjectController],
 })
 export class ProjectModule {}

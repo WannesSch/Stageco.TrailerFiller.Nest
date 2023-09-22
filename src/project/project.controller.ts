@@ -14,8 +14,6 @@ import {
 } from '@nestjs/common';
 import { Project } from 'src/project/project';
 import { HttpExceptionFilter } from '../validation/http-exception';
-import { AuthGuard } from '@nestjs/passport'; 
-import { Roles } from 'src/auth/role.decorator';
 import { RolesGuard } from 'src/auth/role.guard';
 import endpoint from 'src/endpoint.roles';
 

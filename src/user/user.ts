@@ -13,14 +13,12 @@ export class User {
     email: string;
     password: string;
     role?: string;
-
   }) {
     this.id = user.id;
     this.name = user.name;
     this.email = user.email;
     this.password = user.password;
     this.role = user.role;
-
   }
 
   equals({ id, name, email, password }): boolean {
@@ -32,13 +30,13 @@ export class User {
     );
   }
 
-  static from({ id, name, email, password,role }: UserPrisma) {
+  static from({ id, name, email, password, role }: UserPrisma) {
     return new User({
       id,
       name,
       email,
       password,
-      role
+      role,
     });
   }
 }

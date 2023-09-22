@@ -47,7 +47,6 @@ const giveAdmin = async (id): Promise<User> => {
   }
 };
 
-
 const getUserById = async ({ id }): Promise<User> => {
   try {
     const userPrisma = await database.user.findUnique({

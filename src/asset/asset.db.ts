@@ -18,11 +18,14 @@ const getAssetById = async (id: string): Promise<Asset> => {
 };
 
 const deleteAsset = async (id: string): Promise<HttpStatus> => {
-  if((await database.asset.findUnique({where: {id: parseInt(id)}})).category != -1) HttpStatus.BAD_REQUEST;
+  if (
+    (await database.asset.findUnique({ where: { id: parseInt(id) } }))
+      .category != -1
+  )
+    HttpStatus.BAD_REQUEST;
   const deletedAsset = await database.asset.delete({
     where: {
       id: parseInt(id),
-      
     },
     include: {
       content: true,
