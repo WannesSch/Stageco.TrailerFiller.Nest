@@ -29,7 +29,11 @@ export class UserController {
       const token = await this.userService.authenticate(userInput);
       res
         .status(HttpStatus.OK)
-        .json({ message: 'Authentication successful', token });
+        .json({
+          message: 'Authentication successful',
+          token,
+          name: userInput.name,
+        });
     } catch (error) {
       throw new HttpException(
         { status: 'error', errorMessage: error.message },

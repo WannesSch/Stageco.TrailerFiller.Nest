@@ -13,7 +13,7 @@ export const csvHelper = async (
     const subprojectId = parseInt(id);
     const assets: Asset[] = [];
     const idee =
-      await database.$queryRaw`SELECT id FROM stageco."Asset" ORDER BY id DESC LIMIT 1`;
+      await database.$queryRaw`SELECT id FROM Asset ORDER BY id DESC LIMIT 1`;
     let idStart = 1;
     if ((await database.asset.count()) > 0) {
       idStart = Number(idee[0].id) + 1;
